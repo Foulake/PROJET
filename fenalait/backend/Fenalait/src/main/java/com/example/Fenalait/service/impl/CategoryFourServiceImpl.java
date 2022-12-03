@@ -13,23 +13,24 @@ import com.example.Fenalait.dto.CategoryFourDto;
 import com.example.Fenalait.dto.CategoryFourResponse;
 import com.example.Fenalait.exception.ResourceNotFoundException;
 import com.example.Fenalait.model.CategorieFournisseur;
+import com.example.Fenalait.model.Category;
 import com.example.Fenalait.repository.CategorieFournisseurRepository;
 import com.example.Fenalait.service.CategoryFourService;
 
 @Service
 public class CategoryFourServiceImpl implements CategoryFourService{
 
-	private CategorieFournisseurRepository categoryRepository; 
+	private CategorieFournisseurRepository categoryFourRepository; 
 	
-	public CategoryFourServiceImpl(CategorieFournisseurRepository categoryRepository) {
-		this.categoryRepository = categoryRepository;
+	public CategoryFourServiceImpl(CategorieFournisseurRepository categoryFourRepository) {
+		this.categoryFourRepository = categoryFourRepository;
 	}
 
 	@Override
 	public CategoryFourDto createCategoryFour(CategoryFourDto categoryDto) {
 		 // convert DTO to entity
         CategorieFournisseur category = mapToEntity(categoryDto);
-        CategorieFournisseur newCategoryFour = categoryRepository.save(category);
+        CategorieFournisseur newCategoryFour = categoryFourRepository.save(category);
 
         // convert entity to DTO
         CategoryFourDto categoryResponse = mapToDTO(newCategoryFour);
@@ -44,7 +45,7 @@ public class CategoryFourServiceImpl implements CategoryFourService{
         // create Pageable instance
         Pageable pageable = PageRequest.of(pageNo, pageSize, sort);
 
-        Page<CategorieFournisseur> categorys = categoryRepository.findAll(pageable);
+        Page<CategorieFournisseur> categorys = categoryFourRepository.findAll(pageable);
 
         // get content for page object
         List<CategorieFournisseur> listOfCategoryFours = categorys.getContent();
@@ -64,26 +65,26 @@ public class CategoryFourServiceImpl implements CategoryFourService{
 
 	@Override
 	public CategoryFourDto getCategoryFourById(Long id) {
-		CategorieFournisseur category = categoryRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("CategoryFour", "id", id));
+		CategorieFournisseur category = categoryFourRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("CategoryFour", "id", id));
         return mapToDTO(category);
 	}
 
 	@Override
 	public CategoryFourDto updateCategoryFour(CategoryFourDto categoryDto, Long id) {
 		// get category by id from the database
-        CategorieFournisseur category = categoryRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("CategoryFour", "id", id));
+        CategorieFournisseur category = categoryFourRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("CategoryFour", "id", id));
 
         category.setDescription(categoryDto.getDescription());
 
-        CategorieFournisseur updatedCategoryFour = categoryRepository.save(category);
+        CategorieFournisseur updatedCategoryFour = categoryFourRepository.save(category);
         return mapToDTO(updatedCategoryFour);
 	}
 
 	@Override
 	public void deleteCategoryFourById(Long id) {
 		// get category by id from the database
-        CategorieFournisseur category = categoryRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("CategoryFour", "id", id));
-        categoryRepository.delete(category);
+        CategorieFournisseur category = categoryFourRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("CategoryFour", "id", id));
+        categoryFourRepository.delete(category);
 	}
 
 	
@@ -113,7 +114,7 @@ public class CategoryFourServiceImpl implements CategoryFourService{
         // create Pageable instance
         Pageable pageable = PageRequest.of(pageNo, pageSize, sort);
         
-        Page<CategorieFournisseur> categoryFours = categoryRepository.findAll(pageable, keywords);
+        Page<CategorieFournisseur> categoryFours = categoryFourRepository.findAll(pageable, keywords);
         
         List<CategorieFournisseur> listOfCategoryFours = categoryFours.getContent();
         
@@ -129,5 +130,10 @@ public class CategoryFourServiceImpl implements CategoryFourService{
 
         return categoryFourResponse;
 	}
-
+    
+	@Override
+    public CategorieFournisseur getCategoryFournisseur(Long categoryId) {
+		return categoryFourRepository.findById(categoryId).orElseThrow(
+		() ->  new ResourceNotFoundException("Il n'existe pas une category Fournisseur avec id : " + categoryId, null, categoryId));	
+	}
 }

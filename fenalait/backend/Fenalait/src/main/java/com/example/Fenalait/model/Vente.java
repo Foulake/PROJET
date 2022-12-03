@@ -9,10 +9,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Past;
 
 import org.springframework.format.annotation.DateTimeFormat;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -30,11 +30,11 @@ public class Vente extends  BaseEntity{
 	private Long id;
 	
 	@Column(name="quantite")
-	@NotBlank(message = "Veuillez entrer la quantité de la vente !!")
+	//@NotBlank(message = "Veuillez entrer la quantité de la vente !!")
 	private double quantite;
 	
 	@Column(name="montant")
-	@NotBlank(message = "Le montant ne peut pas être vide !")
+	//@NotBlank(message = "Le montant ne peut pas être vide !")
 	private double montant;
 	
 	@Column(name="remise")
@@ -50,6 +50,8 @@ public class Vente extends  BaseEntity{
 	
 	@ManyToOne
 	private Client client;
+	@ManyToOne
+	private User user;
 	
 	public Vente() {
 		super();
