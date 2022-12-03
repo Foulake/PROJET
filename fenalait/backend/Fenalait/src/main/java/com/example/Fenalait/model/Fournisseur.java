@@ -20,6 +20,9 @@ import javax.validation.constraints.Past;
 import javax.validation.constraints.Pattern;
 
 import org.springframework.format.annotation.DateTimeFormat;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -57,6 +60,18 @@ public class Fournisseur extends  BaseEntity {
 	
 	@OneToMany(mappedBy = "fournisseur")
 	private List<Paiement> paiements;
+	
+	@OneToMany(mappedBy = "fournisseur")
+	@JsonManagedReference
+	private List<Approvissionnement> approvissionnements;
+
+	public void addApprovissionnement(Approvissionnement approvissionnement) {
+		approvissionnements.add(approvissionnement);
+	}
+	
+	public void removeApprovissionnement(Approvissionnement approvissionnement) {
+		approvissionnements.remove(approvissionnement);
+	}
 	
 
 }
