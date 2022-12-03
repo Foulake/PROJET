@@ -1,6 +1,8 @@
 package com.example.Fenalait.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.validation.Valid;
 
@@ -13,10 +15,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.Fenalait.dto.FournisseurDto;
+import com.example.Fenalait.dto.FournisseurResponse;
 import com.example.Fenalait.service.FournisseurService;
+import com.example.Fenalait.utils.AppConstants;
 
 @RestController
 @RequestMapping("/api/v1/fournisseurs")
@@ -28,36 +33,56 @@ public class FournisseurController {
         this.fournisseurService = fournisseurService;
     }
 
-    @PostMapping("/category/{categoryFourId}/add")
-    public ResponseEntity<FournisseurDto> createFournisseur(@PathVariable(value = "categoryFourId") Long categoryFourId,
-                                                    @Valid @RequestBody FournisseurDto fournisseurDto){
-        return new ResponseEntity<>(fournisseurService.createFournisseur(categoryFourId, fournisseurDto), HttpStatus.CREATED);
+    @PostMapping("/add")
+	//@RolesAllowed({"ROLE_ADMIN"})
+	public ResponseEntity<FournisseurResponse> addProduct(@Valid @RequestBody FournisseurDto productDto){
+		FournisseurResponse productResponseDto = fournisseurService.addFournisseur(productDto);
+		return new ResponseEntity<FournisseurResponse>(productResponseDto, HttpStatus.OK);
+	}
+   
+    @GetMapping("/get/{id}")
+	public ResponseEntity<FournisseurResponse> getProduct(@PathVariable final Long productId){
+    	FournisseurResponse productDto = fournisseurService.getFournisseurById(productId);
+		return new ResponseEntity<FournisseurResponse>(productDto, HttpStatus.OK);
+	}
+    
+    @GetMapping("/getAll")
+    public FournisseurResponse getAllProducts(
+            @RequestParam(value = "pageNo", defaultValue = AppConstants.DEFAULT_PAGE_NUMBER, required = false) int pageNo,
+            @RequestParam(value = "pageSize", defaultValue = AppConstants.DEFAULT_PAGE_SIZE, required = false) int pageSize,
+            @RequestParam(value = "sortBy", defaultValue = AppConstants.DEFAULT_SORT_BY, required = false) String sortBy,
+            @RequestParam(value = "sortDir", defaultValue = AppConstants.DEFAULT_SORT_DIRECTION, required = false) String sortDir
+    ){
+        return fournisseurService.getAllFournisseurs(pageNo, pageSize, sortBy, sortDir);
     }
+    
 
-    @GetMapping("/category/{categoryFourId}/fournisseur")
-    public List<FournisseurDto> getFournisseursByCategoryId(@PathVariable(value = "categoryFourId") Long categoryFourId){
-        return fournisseurService.getFournisseursByCategoryFourId(categoryFourId);
-    }
+    @PutMapping("/edit/{id}")
+	public ResponseEntity<FournisseurResponse> editProduct(@Valid @RequestBody final FournisseurDto productRequestDto, @PathVariable final Long id){
+    	FournisseurResponse productResponseDto = fournisseurService.editFournisseur(id, productRequestDto);
+		return new ResponseEntity<>(productResponseDto, HttpStatus.OK);
+	}
+    
+    @DeleteMapping("/delete/{id}")
+	//@RolesAllowed({"ROLE_ADMIN"})
+	public ResponseEntity<Map<String, Boolean>> deletePrroduct(@PathVariable final Long id){
+		fournisseurService.deleteFournisseur(id);
+		Map<String, Boolean> response =new  HashMap<>();
+    	response.put("Le fournisseur a été supprimé avec succès", Boolean.TRUE);
+    	return ResponseEntity.ok(response);
+	
+	}
 
-    @GetMapping("/category/{categoryFourId}/fournisseur/{id}")
-    public ResponseEntity<FournisseurDto> getFournisseurById(@PathVariable(value = "categoryFourId") Long categoryFourId,
-                                                     @PathVariable(value = "id") Long fournisseurId){
-        FournisseurDto fournisseurDto = fournisseurService.getFournisseurById(categoryFourId, fournisseurId);
-        return new ResponseEntity<>(fournisseurDto, HttpStatus.OK);
-    }
 
-    @PutMapping("/category/{categoryFourId}/fournisseur/{id}")
-    public ResponseEntity<FournisseurDto> updateFournisseur(@PathVariable(value = "categoryFourId") Long categoryFourId,
-                                                    @PathVariable(value = "id") Long fournisseurId,
-                                                    @Valid @RequestBody FournisseurDto fournisseurDto){
-        FournisseurDto updatedFournisseur = fournisseurService.updateFournisseur(categoryFourId, fournisseurId, fournisseurDto);
-        return new ResponseEntity<>(updatedFournisseur, HttpStatus.OK);
-    }
-
-    @DeleteMapping("/category/{categoryFourId}/fournisseur/{id}")
-    public ResponseEntity<String> deleteFournisseur(@PathVariable(value = "categoryFourId") Long categoryFourId,
-                                                @PathVariable(value = "id") Long fournisseurId){
-        fournisseurService.deleteFournisseur(categoryFourId, fournisseurId);
-        return new ResponseEntity<>("Fournisseur deleted successfully", HttpStatus.OK);
-    }
+    @GetMapping("/search/full/{keywords}")
+	public  ResponseEntity<FournisseurResponse> searchProductByFull(
+			 @RequestParam(value = "pageNo", defaultValue = AppConstants.DEFAULT_PAGE_NUMBER, required = false) int pageNo,
+	            @RequestParam(value = "pageSize", defaultValue = AppConstants.DEFAULT_PAGE_SIZE, required = false) int pageSize,
+	            @RequestParam(value = "sortBy", defaultValue = AppConstants.DEFAULT_SORT_BY, required = false) String sortBy,
+	            @RequestParam(value = "sortDir", defaultValue = AppConstants.DEFAULT_SORT_DIRECTION, required = false) String sortDir,
+			@PathVariable("keywords") String keywords){
+		FournisseurResponse result= fournisseurService.searchFournisseurFull(pageNo, pageSize, sortBy, sortDir, keywords);
+				
+		return new ResponseEntity<FournisseurResponse>(result, HttpStatus.OK);
+ }
 }

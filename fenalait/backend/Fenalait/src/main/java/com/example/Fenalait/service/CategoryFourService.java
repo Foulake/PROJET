@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.Fenalait.dto.CategoryFourDto;
 import com.example.Fenalait.dto.CategoryFourResponse;
+import com.example.Fenalait.model.CategorieFournisseur;
 
 @Service
 public interface CategoryFourService {
@@ -19,5 +20,7 @@ public interface CategoryFourService {
     void deleteCategoryFourById(Long id);
 
 	CategoryFourResponse searchCategoryFourFull(int pageNo, int pageSize, String sortBy, String sortDir, String keywords);
+
+	CategorieFournisseur getCategoryFournisseur(Long categoryId);
 
 }

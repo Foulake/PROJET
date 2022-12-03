@@ -28,6 +28,8 @@ public interface FournisseurRepository extends JpaRepository<Fournisseur, Long>{
 	public List<FournisseurResponse> getFournisseursByAppro();
 
 	List<Fournisseur> findByCategorieFournisseurId(Long categoryFourId);
+
+	boolean existsFournisseurByTel(String tel);
 	
 
 }

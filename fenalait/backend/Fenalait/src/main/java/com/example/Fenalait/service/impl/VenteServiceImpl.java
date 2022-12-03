@@ -2,7 +2,6 @@ package com.example.Fenalait.service.impl;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -12,15 +11,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import com.example.Fenalait.dto.Mapper;
 import com.example.Fenalait.dto.VenteDto;
 import com.example.Fenalait.dto.VenteResponse;
-import com.example.Fenalait.exception.BlogAPIException;
-import com.example.Fenalait.exception.ResourceAlredyExistException;
-import com.example.Fenalait.exception.ResourceNotFoundException;
 import com.example.Fenalait.exception.ResourceNotFoundExceptions;
 import com.example.Fenalait.model.Client;
 import com.example.Fenalait.model.Produit;
@@ -63,9 +58,9 @@ private VenteRepository venteRepository;
 	public VenteResponse addVente(VenteDto venteDto) {
 		Vente vente = new Vente();
 	
-		vente.setMontant(venteDto.getMontant());
+		vente.setMontant(venteDto.getQuantite()*vente.getProduit().getPrice());
 		vente.setQuantite(venteDto.getQuantite());
-		vente.setDate(venteDto.getDate());
+		vente.setDate(new Date());
 		vente.setRemise(venteDto.isRemise());
 		
 		if(venteDto.getClientId() == null ) {
@@ -88,7 +83,6 @@ private VenteRepository venteRepository;
 		vente.setMontant(vente.getMontant());
 		vente.setQuantite(vente.getQuantite());
 		vente.setMontant(venteDto.getQuantite()*vente.getProduit().getPrice());
-		//vente.setMontant(vente.getMontant());
 		vente.setRemise(vente.isRemise());
 		vente.setDate(new Date());
 		
@@ -219,7 +213,7 @@ private VenteRepository venteRepository;
         venteDto.setId(vente.getId());
         venteDto.setDate(vente.getDate());
         venteDto.setMontant(vente.getMontant());
-        //venteDto.setRemise(vente.getRemise());
+        venteDto.setRemise(vente.isRemise());
         venteDto.setQuantite(vente.getQuantite());
         return  venteDto;
     }
@@ -230,7 +224,7 @@ private VenteRepository venteRepository;
         vente.setId(venteDto.getId());
         vente.setDate(venteDto.getDate());
         vente.setQuantite(venteDto.getQuantite());
-        //vente.setRemise(venteDto.getRemise());
+        vente.setRemise(venteDto.isRemise());
         return  vente;
     }
     

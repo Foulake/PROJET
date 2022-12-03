@@ -14,11 +14,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -53,15 +48,12 @@ public class Produit extends  BaseEntity{
 	private java.sql.Date dateExp;
 	
 	@ManyToOne
-	@JsonBackReference
 	private Category category;
 
 	@ManyToOne
-	@JsonBackReference
 	private Magasin magasin;
 	
 	@ManyToOne
-	@JsonBackReference
 	private User user;
 	
 	//	@JsonInclude(JsonInclude.Include.NON_NULL)
@@ -70,7 +62,6 @@ public class Produit extends  BaseEntity{
 	private List<Vente> ventes;
 	
 	@OneToMany(mappedBy ="produit")
-	@JsonManagedReference
 	private List<Approvissionnement> approvissionnements;
 
 	public Produit() {

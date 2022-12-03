@@ -14,7 +14,6 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -38,7 +37,6 @@ public class Magasin extends  BaseEntity{
 	private Localite localite;
 	
 	@OneToMany(mappedBy = "magasin", cascade = CascadeType.ALL, orphanRemoval = true)
-	@JsonManagedReference
 	private List<Produit> produits;
 
 	public Magasin() {}

@@ -5,20 +5,21 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.example.Fenalait.dto.FournisseurDto;
+import com.example.Fenalait.dto.FournisseurResponse;
 import com.example.Fenalait.model.Fournisseur;
 
 @Service
 public interface FournisseurService {
+	
+	public FournisseurResponse addFournisseur(FournisseurDto fournisseurDto );
+	public FournisseurResponse getFournisseurById(Long fournisseurId);
+	public Fournisseur getFournisseur(Long fournisseurId);
+	public List<FournisseurResponse> getFournisseurs();
+	public FournisseurResponse getAllFournisseurs(int pageNo, int pageSize, String sortBy, String sortDir);
+	public FournisseurResponse deleteFournisseur(Long fournisseurId);
+	public FournisseurResponse editFournisseur(Long fournisseurId, FournisseurDto fournisseurDto);
+	
+	public FournisseurResponse searchFournisseurFull(int pageNo, int pageSize, String sortBy, String sortDir, String keyword);
 
-	FournisseurDto createFournisseur(Long categoryFourId, FournisseurDto fournisseurDto);
 
-	 List<FournisseurDto> getFournisseursByCategoryFourId(Long categoryFourId);
-
-	 FournisseurDto getFournisseurById(Long categoryFourId, Long fournisseurId);
-
-	 FournisseurDto updateFournisseur(Long categoryFourId, Long fournisseurId, FournisseurDto fournisseurDto);
-
-	 void deleteFournisseur(Long categoryFourId, Long fournisseurId);
-
-	Fournisseur getFournisseur(Long fournisseurId);
 }

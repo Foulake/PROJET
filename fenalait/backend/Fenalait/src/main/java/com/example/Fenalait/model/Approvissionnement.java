@@ -13,17 +13,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.Past;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
-import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -57,20 +49,16 @@ public class Approvissionnement extends  BaseEntity{
 	
 	@ManyToOne
 	@JoinColumn(name="id_prdt")
-	@JsonBackReference
 	private Produit produit;
 	
 	@ManyToOne
 	@JoinColumn(name="id_Four")
-	@JsonBackReference
 	private Fournisseur fournisseur;
 	
 	@ManyToOne
-	@JsonBackReference
 	private User user;
 	
 	@OneToMany(mappedBy = "approvissionnement")
-	@JsonManagedReference
 	private List<Paiement>  paiements;
 	
 	public Approvissionnement(Long id) {
