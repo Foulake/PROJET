@@ -15,6 +15,7 @@ import { LocaliteComponent } from './localite/localite.component';
 import { MagasinListComponent } from './magasin-list/magasin-list.component';
 import { MagasinComponent } from './magasin/magasin.component';
 import { MenuComponent } from './menu/menu.component';
+import { ProduitListComponent } from './produit-list/produit-list.component';
 import { ProduitComponent } from './produit/produit.component';
 import { UserComponent } from './user/user.component';
 
@@ -22,7 +23,7 @@ const routes: Routes = [
   {path:"client",component:ClientListComponent},
   {path:"addClient",component:ClientComponent},
   {path:"dasbord",component:MenuComponent},
-  {path:"localie",component:LocaliteListComponent},
+  {path:"localite",component:LocaliteListComponent},
   {path:"addLocalite",component:LocaliteComponent},
   {path:"fournisseur",component:FournisseurListComponent},
    { path:"addFournisseur",component:FournisseurComponent},
@@ -35,7 +36,9 @@ const routes: Routes = [
    {path:"category",component:CategoryListComponent},
    {path:"addCategory",component:CategoryComponent},
    {path:"appro",component:ApprovissionnementListComponent},
-   {path:"addAppro",component:ApprovissionnementComponent}
+   {path:"addAppro",component:ApprovissionnementComponent},
+   {path:"payer",component:EmployeListComponent},
+   {path:"produit",component:ProduitListComponent}
 
  ];
 
