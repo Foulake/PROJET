@@ -22,7 +22,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.Fenalait.dto.ApproDto;
 import com.example.Fenalait.dto.ApproResponse;
-import com.example.Fenalait.model.Approvissionnement;
+import com.example.Fenalait.dto.FournisseurResponse;
+import com.example.Fenalait.model.Fournisseur;
+import com.example.Fenalait.repository.FournisseurRepository;
 import com.example.Fenalait.service.ApproService;
 import com.example.Fenalait.utils.AppConstants;
 
@@ -32,9 +34,10 @@ import com.example.Fenalait.utils.AppConstants;
 public class ApproController {
 	
 	private ApproService approService;
-
-    public ApproController(ApproService approService) {
+	private FournisseurRepository fournisseurRepository;
+    public ApproController(ApproService approService, FournisseurRepository fournisseurRepository) {
         this.approService = approService;
+        this.fournisseurRepository = fournisseurRepository;
     }
 
     @PostMapping("/add")
@@ -104,4 +107,39 @@ public class ApproController {
 		return approvissionnements;
 	}
 
+    @GetMapping("/countapprointerval/{fournisseur}={dateStart}/{dateEnd}")
+  	public ApproResponse counttApproJourIntervals(
+  			@PathVariable Fournisseur fournisseur,
+  			@PathVariable
+  			@DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateStart, 
+  			@PathVariable
+  			@DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateEnd ){
+      	ApproResponse  approvissionnements = approService.findApprovissionnementByFournisseurAndDateApproBetween(fournisseur, dateStart, dateEnd);
+      			return approvissionnements;
+  	}
+    
+    @GetMapping("/getAllFournisseurByQteAppro")
+	public ResponseEntity<List<FournisseurResponse>> getMagasinsByProduct(){
+		List<FournisseurResponse> usersResponseDtos = fournisseurRepository.getAllFournisseurWithQteCountAppro();
+		return new ResponseEntity<>(usersResponseDtos, HttpStatus.OK);
+	}
+    
+    /**
+    @GetMapping("/countapprointerval/fournisseur/produit={dateStart}/{dateEnd}")
+  	public ApproResponse counttApproJourIntervals(
+  			 @RequestParam(value = "pageNo", defaultValue = AppConstants.DEFAULT_PAGE_NUMBER, required = false) int pageNo,
+  	            @RequestParam(value = "pageSize", defaultValue = AppConstants.DEFAULT_PAGE_SIZE, required = false) int pageSize,
+  	            @RequestParam(value = "sortBy", defaultValue = AppConstants.DEFAULT_SORT_BY, required = false) String sortBy,
+  	            @RequestParam(value = "sortDir", defaultValue = AppConstants.DEFAULT_SORT_DIRECTION, required = false) String sortDir,
+  		
+  	          @RequestBody Fournisseur fournisseur,
+  	        @RequestBody Produit produit,
+  			@PathVariable
+  			@DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateStart, 
+  			@PathVariable
+  			@DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateEnd ){
+      	ApproResponse  approvissionnements = approService.countApprovissionnementJourInterval(fournisseur, produit, dateStart, dateEnd, pageNo, pageSize, sortBy, sortDir);
+  		return approvissionnements;
+  	}
+		**/
 }

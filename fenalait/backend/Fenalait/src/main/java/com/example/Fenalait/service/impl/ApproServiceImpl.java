@@ -251,5 +251,52 @@ public class ApproServiceImpl implements ApproService{
         return approResponse;
         
 	}
+
+	@Override
+	public ApproResponse countApprovissionnementJourInterval(Fournisseur fournisseur, Produit produit,
+			LocalDate dateStart, LocalDate dateEnd, int pageNo, int pageSize, String sortBy, String sortDir) {
+		Sort sort = sortDir.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortBy).ascending()
+                : Sort.by(sortBy).descending();
+
+        // create Pageable instance
+        Pageable pageable = PageRequest.of(pageNo, pageSize, sort);
+		
+        Page<Approvissionnement> approvissionnements = approvissionnementRepository.countQteApproApprovissionnementsByFournisseurAndProduitAndDateApproBetween(fournisseur, produit, dateStart, dateEnd, pageable);
+        
+        List<Approvissionnement> listOfApprovissionnements = approvissionnements.getContent();
+        
+        List<ApproDto> content = listOfApprovissionnements.stream().map(approvissionnement -> mapToDTO(approvissionnement)).collect(Collectors.toList());
+		
+        ApproResponse approResponse = new ApproResponse();
+        approResponse.setContent(content);
+        approResponse.setPageNo(approvissionnements.getNumber());
+        approResponse.setPageSize(approvissionnements.getSize());
+        approResponse.setTotalElements(approvissionnements.getTotalElements());
+        approResponse.setTotalPages(approvissionnements.getTotalPages());
+        approResponse.setLast(approvissionnements.isLast());
+
+        return approResponse;
+	}
+
+	@Override
+	public ApproResponse findApprovissionnementByFournisseurAndDateApproBetween(Fournisseur fournisseur,
+			LocalDate dateStart, LocalDate dateEnd) {
+		
+		ApproResponse approResponse = new ApproResponse();
+		Double somme = 0.0;
+		
+        List<Approvissionnement> approvissionnements = approvissionnementRepository.findApprovissionnementByFournisseurAndDateApproBetween(fournisseur, dateStart, dateEnd);
+       
+        for(int i=0; i<=approvissionnements.size(); i++) {
+        	somme = somme + fournisseur.getApprovissionnements().get(i).getQteAppro();
+        	 i++;
+        	 
+        }
+        approResponse.setQteAppro(somme);
+        
+		return approResponse;
+		
+        
+	}
     
 }

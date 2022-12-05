@@ -36,6 +36,8 @@ public class Approvissionnement extends  BaseEntity{
 	//@NotBlank(message = "Veuillez entrer la quantité d'approvissionnement !!")
 	private Double qteAppro;
 	
+	private long qteTotal;
+	
 	@Column(name="dateAppro")
 	//@Past(message = "La date ne peut être inférieure à la date courante !!")
     //@LocalDateFormat(iso = LocalDateFormat.ISO.DATE)
@@ -72,7 +74,7 @@ public class Approvissionnement extends  BaseEntity{
 		this.qteAppro = qteAppro;
 		this.dateAppro = dateAppro;
 	}
-
+	
 	public Approvissionnement() {
 		
 	}

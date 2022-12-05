@@ -1,5 +1,6 @@
 package com.example.Fenalait.dto;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -39,6 +40,7 @@ public class FournisseurResponse {
     private boolean last;
 
     private Double qteAppro;
+    private LocalDate dateAppro;
 
 	public FournisseurResponse(String nom, String prenom, String tel, Double qteAppro) {
 		super();
@@ -46,6 +48,15 @@ public class FournisseurResponse {
 		this.prenom = prenom;
 		this.tel = tel;
 		this.qteAppro = qteAppro;
+	}
+	
+	public FournisseurResponse(String nom, String prenom, String tel, Double qteAppro, LocalDate dateAppro) {
+		super();
+		this.nom = nom;
+		this.prenom = prenom;
+		this.tel = tel;
+		this.qteAppro = qteAppro;
+		this.dateAppro = dateAppro;
 	}
     
     

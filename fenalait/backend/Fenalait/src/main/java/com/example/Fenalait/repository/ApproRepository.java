@@ -13,6 +13,8 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.example.Fenalait.model.Approvissionnement;
+import com.example.Fenalait.model.Fournisseur;
+import com.example.Fenalait.model.Produit;
 
 
 @Repository
@@ -35,7 +37,9 @@ public interface ApproRepository extends JpaRepository<Approvissionnement, Long>
 
 	List<Approvissionnement> findByProduitId(Long produitId);
 	
-	
+	/**
+	  @It's works successfully
+	 **/
 	@Query( "SELECT appros FROM Approvissionnement appros WHERE appros.dateAppro BETWEEN :dateStart AND :dateEnd  ")
 	public Page<Approvissionnement> approvissionnementJourInterval(
 									@Param("dateStart")  LocalDate dateStart,  
@@ -43,6 +47,27 @@ public interface ApproRepository extends JpaRepository<Approvissionnement, Long>
 									Pageable pageable);
 	
 	
+	
+	List<Approvissionnement> findApprovissionnementByFournisseurAndDateApproBetween(
+			Fournisseur fournisseur,
+			@Param("dateStart")  LocalDate dateStart,  
+			@Param("dateEnd")  LocalDate dateEnd);
+			
+	
+	
+	
+	
+	
+	
+	Page<Approvissionnement> countQteApproApprovissionnementsByFournisseurAndProduitAndDateApproBetween(
+			Fournisseur fournisseur,
+			Produit produit,
+			@Param("dateStart")  LocalDate dateStart,  
+			@Param("dateEnd")  LocalDate dateEnd,
+			Pageable pageable);
+	
 	//Page<Approvissionnement> findByDateApproBetween(Pageable pageable, String keyword, Date startDateAppro, Date endDateAppro);
 
+	
+	
 }
