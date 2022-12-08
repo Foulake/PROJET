@@ -373,56 +373,81 @@
     </section>
 
     <!-- Main content -->
-    <div class="row">
-      <div class="col-12">
-        <div class="card">
-          <div class="card-header">
-            <a routerLink="/addClient" routerLinkActive="active" class="nav-link">
-            <button class="btn btn-primary">Ajouter client</button>
-          </a>
-            <div class="card-tools">
-              <div class="input-group input-group-sm" style="width: 150px;">
-                <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
+    <div class="border">
+      <button class="btn btn-md btn-outline-primary" (click)="open(content)">
+        <i class="fa fa-user"></i>Ajouter Client</button>
+    </div>
+    <div class="container">
+      <table class="table table-bordered table-striped">
+        <thead>
+        <tr>
+          <th>ID</th>
+          <th>NomClient</th>
+          <th>PrenomClient</th>
+          <th>TelClient</th>
+          <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let client of clients">
+          <td><span>{{client.id}}</span></td>
+          <td><span>{{client.nomClient}}</span></td>
+          <td><span>{{client.prenomClient}}</span></td>
+          <td><span>{{client.telClient}}</span></td>
+          <td>
+            <button class="btn btn-sm btn-warning">
+              <i class="fa fa-edit"></i>Modifier</button>
+            <button class="btn btn-sm btn-danger">
+              <i class="fa fa-remove"></i>Supprimer</button>
+          </td>
+          
+        </tr>
+        </tbody>
+      </table>
+    </div>
 
-                <div class="input-group-append">
-                  <button type="submit" class="btn btn-default">
-                    <i class="fas fa-search"></i>
-                  </button>
-                </div>
-              </div>
+            <ng-template #content let-modal>
+            <div class="modal-header">
+              <h4 class="modal-title" id="modal-basic-title">Nouveau Client</h4>
+              <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                <span aria-hidden="true">&times;</span>
+              </button>
             </div>
-          </div>
-          <!-- /.card-header -->
-          <div class="card-body table-responsive p-0">
-            <table class="table table-hover text-nowrap">
-              <thead>
-                <tr>
-                  <th>ID</th>
-                  <th>Nom</th>
-                  <th>Prenom</th>
-                  <th>Telephone</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-             <tbody>
-              <tr *ngFor="let client">
-                <td><span>{{client.id}}</span></td>
-                <td><span>{{client.nomClient}}</span></td>
-                <td><span>{{client.prenomClient}}</span></td>
-                <td><span>{{client.telClient}}</span></td>
-                <button class="btn btn-sm btn-warning"></button>
-                <i class="fa fa-edit">Modifier</i>
-                <button class="btn btn-sm btn-danger"></button>
-                <i class="fa fa-edit">Supprimer</i>
-              </tr>
-             </tbody>
-            </table>
-          </div>
-          <!-- /.card-body -->
+            <div class="modal-body">
+              <form  #f="ngForm" (ngSubmit)="onSubmit(f)" novalidate>
+                <div class="form-group">
+                  <label for="nomClient">NonClient</label>
+                  <div class="input-group">
+                    <input id="nomClient" class="form-control" ngModel>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="prenomClient">PrenomClient</label>
+                  <div class="input-group">
+                    <input id="prenomClient" class="form-control" ngModel >
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="telClient">TelClient</label>
+                  <div class="input-group">
+                    <input id="telClient" class="form-control" ngModel >
+                  </div>
+                </div>
+                <div class="border text-center">
+                  <button data-dismiss="modal" class="btn btn-info">Ajouter</button>
+                  </div>
+                  
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Ajouter</button>
+            </div>
+          </ng-template>   
+                
+           <!-- /.card-body -->
         </div>
         <!-- /.card -->
       </div>
-    </div>
    
 
   <!-- /.content-wrapper -->
