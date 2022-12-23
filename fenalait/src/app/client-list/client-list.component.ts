@@ -11,8 +11,8 @@ import { NgForm } from '@angular/forms';
 export class ClientListComponent implements OnInit {
   clients!: Client[];
   closeResult!:string;
-  private httpClient!: HttpClient;
-  constructor(  httpClient: HttpClient, private modalService:NgbModal) { }
+  
+  constructor( private httpClient: HttpClient, private modalService:NgbModal) { }
 
   ngOnInit(): void {
     this.getClients();
@@ -49,5 +49,7 @@ export class ClientListComponent implements OnInit {
       });
     this.modalService.dismissAll(); //dismiss the modal
   }
-}
+  
+  }
+
 

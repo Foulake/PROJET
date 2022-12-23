@@ -12,11 +12,14 @@ import { FournisseurListComponent } from './fournisseur-list/fournisseur-list.co
 import { FournisseurComponent } from './fournisseur/fournisseur.component';
 import { LocaliteListComponent } from './localite-list/localite-list.component';
 import { LocaliteComponent } from './localite/localite.component';
+import { LoginComponent } from './login/login.component';
+
 import { MagasinListComponent } from './magasin-list/magasin-list.component';
 import { MagasinComponent } from './magasin/magasin.component';
 import { MenuComponent } from './menu/menu.component';
 import { ProduitListComponent } from './produit-list/produit-list.component';
 import { ProduitComponent } from './produit/produit.component';
+import { RegistreComponent } from './registre/registre.component';
 import { UserComponent } from './user/user.component';
 
 const routes: Routes = [
@@ -38,7 +41,10 @@ const routes: Routes = [
    {path:"appro",component:ApprovissionnementListComponent},
    {path:"addAppro",component:ApprovissionnementComponent},
    {path:"payer",component:EmployeListComponent},
-   {path:"produit",component:ProduitListComponent}
+   {path:"produit",component:ProduitListComponent},
+   {path:"registre",component:RegistreComponent},
+   {path:"user",component:UserComponent},
+   {path:"login",component:LoginComponent},
 
  ];
 
