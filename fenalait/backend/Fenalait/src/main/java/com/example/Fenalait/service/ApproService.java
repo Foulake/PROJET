@@ -41,4 +41,7 @@ public interface ApproService {
 	public ApproResponse countApprovissionnementJourInterval(Fournisseur fournisseur,
 			Produit produit,LocalDate dateStart, LocalDate dateEnd, int pageNo, int pageSize, String sortBy, String sortDir);
 	
+	
+	public ApproResponse findApprovissionnementByJourInterval( Long fournisseurId,
+			Long produitId, LocalDate dateStart, LocalDate dateEnd);
 }

@@ -49,4 +49,10 @@ public interface FournisseurRepository extends JpaRepository<Fournisseur, Long>{
 	List<FournisseurResponse> getAllFournisseurWithQteCountAppro();
 	
 	
+	@Query("SELECT new com.example.Fenalait.dto.FournisseurResponse(f.nom , f.prenom, f.tel, sum(appro.qteAppro) as quantités, appro.dateAppro ) FROM Fournisseur f " +
+			"LEFT JOIN f.approvissionnements appro WHERE appro.dateAppro BETWEEN :dateStart AND :dateEnd")
+	List<FournisseurResponse> getAllFournisseurWithQteCountApproAndDate(
+			@Param("dateStart")  LocalDate dateStart,  
+			@Param("dateEnd")  LocalDate dateEnd);
+	
 }

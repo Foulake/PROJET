@@ -1,5 +1,6 @@
 package com.example.Fenalait.repository;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
@@ -20,6 +21,9 @@ public interface PaiementRepository extends JpaRepository<Paiement, Long>{
 	public Page<Paiement> findAll(Pageable pageable, String keywords);
 
 	public List<Paiement> findByFournisseurId(Long fournisseurId);
+	
+	
+	public Page<Paiement> findPaiementByApprovissionnementIdAndFournisseurIdAndDateAfter(Long ApproId, Long FourId, LocalDate dateStart, Pageable pageable);
 
 	
 

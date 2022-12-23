@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.Fenalait.dto.ApproDto;
 import com.example.Fenalait.dto.ApproResponse;
 import com.example.Fenalait.dto.FournisseurResponse;
+import com.example.Fenalait.model.Approvissionnement;
 import com.example.Fenalait.model.Fournisseur;
 import com.example.Fenalait.repository.FournisseurRepository;
 import com.example.Fenalait.service.ApproService;
@@ -63,6 +64,17 @@ public class ApproController {
         return approService.getAllApprovissionnements(pageNo, pageSize, sortBy, sortDir);
     }
     
+    @GetMapping("/interval/{fournisseurId}/{produitId}/={dateStart}/{dateEnd}")
+  	public ApproResponse ApproJourIntervals(@RequestBody Approvissionnement approvissionnement,
+  			@PathVariable Long fournisseurId,@PathVariable Long produitId,
+  			@PathVariable
+  			@DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateStart, 
+  			@PathVariable
+  			@DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateEnd ){
+    	
+      	ApproResponse  approvissionnements = approService.findApprovissionnementByJourInterval(fournisseurId, produitId, dateStart, dateEnd);
+      			return approvissionnements;
+  	}
 
     @PutMapping("/edit/{id}")
 	public ResponseEntity<ApproResponse> editProduct(@Valid @RequestBody final ApproDto approDto, @PathVariable final Long id){
@@ -118,10 +130,21 @@ public class ApproController {
       			return approvissionnements;
   	}
     
+    
     @GetMapping("/getAllFournisseurByQteAppro")
-	public ResponseEntity<List<FournisseurResponse>> getMagasinsByProduct(){
-		List<FournisseurResponse> usersResponseDtos = fournisseurRepository.getAllFournisseurWithQteCountAppro();
-		return new ResponseEntity<>(usersResponseDtos, HttpStatus.OK);
+	public ResponseEntity<List<FournisseurResponse>> getApprosByFfournisseur(){
+		List<FournisseurResponse> fournisseurResponseDtos = fournisseurRepository.getAllFournisseurWithQteCountAppro();
+		return new ResponseEntity<>(fournisseurResponseDtos, HttpStatus.OK);
+	}
+    
+    @GetMapping("/getFournisseurByQteAppro/date={dateStart}/{dateEnd}")
+	public ResponseEntity<List<FournisseurResponse>> getApprosByFfournisseurAndDate(
+			@PathVariable
+  			@DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateStart, 
+  			@PathVariable
+  			@DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateEnd){
+		List<FournisseurResponse> fournisseurResponseDtos = fournisseurRepository.getAllFournisseurWithQteCountApproAndDate(dateStart, dateEnd);
+		return new ResponseEntity<>(fournisseurResponseDtos, HttpStatus.OK);
 	}
     
     /**
@@ -142,4 +165,6 @@ public class ApproController {
   		return approvissionnements;
   	}
 		**/
+    
+   
 }

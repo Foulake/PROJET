@@ -1,9 +1,11 @@
 package com.example.Fenalait.controller;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.validation.Valid;
 
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -17,6 +19,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.Fenalait.dto.PaiementResponse;
+import com.example.Fenalait.model.Approvissionnement;
+import com.example.Fenalait.dto.ApproResponse;
 import com.example.Fenalait.dto.PaiementDto;
 import com.example.Fenalait.service.PaiementService;
 import com.example.Fenalait.utils.AppConstants;
@@ -77,4 +81,20 @@ public class PaiementController {
 		return new ResponseEntity<PaiementResponse>(result, HttpStatus.OK);
     
     }
+    
+    
+    @GetMapping("/debut={dateStart}")
+  	public PaiementResponse ApproJourIntervals(
+  			@PathVariable Long fournisseurId,@PathVariable Long produitId,
+  			@PathVariable
+  			@DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateStart,
+            @RequestParam(value = "pageNo", defaultValue = AppConstants.DEFAULT_PAGE_NUMBER, required = false) int pageNo,
+            @RequestParam(value = "pageSize", defaultValue = AppConstants.DEFAULT_PAGE_SIZE, required = false) int pageSize,
+            @RequestParam(value = "sortBy", defaultValue = AppConstants.DEFAULT_SORT_BY, required = false) String sortBy,
+            @RequestParam(value = "sortDir", defaultValue = AppConstants.DEFAULT_SORT_DIRECTION, required = false) String sortDir
+   ){
+    	
+    	PaiementResponse  approvissionnements = paiementService.getPaiementByApproFromDate(produitId, fournisseurId, dateStart, pageNo, pageSize, sortBy, sortDir);
+      			return approvissionnements;
+  	}
 }
