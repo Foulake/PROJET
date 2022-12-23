@@ -413,24 +413,24 @@
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
-            <div class="modal-body">
+            <div class="modal-body" tabindex="-1" data-backdrop="false" style="background-color: rgbd(0, 0, 0, 0.5); z-index: 1050">
               <form  #f="ngForm" (ngSubmit)="onSubmit(f)" novalidate>
                 <div class="form-group">
                   <label for="nomClient">NonClient</label>
                   <div class="input-group">
-                    <input id="nomClient" class="form-control" ngModel>
+                    <input id="nomClient" name="nomClient" class="form-control" ngModel>
                   </div>
                 </div>
                 <div class="form-group">
                   <label for="prenomClient">PrenomClient</label>
                   <div class="input-group">
-                    <input id="prenomClient" class="form-control" ngModel >
+                    <input id="prenomClient" name="prenomClient" class="form-control" ngModel >
                   </div>
                 </div>
                 <div class="form-group">
                   <label for="telClient">TelClient</label>
                   <div class="input-group">
-                    <input id="telClient" class="form-control" ngModel >
+                    <input id="telClient" name="telClient" class="form-control" ngModel >
                   </div>
                 </div>
                 <div class="border text-center">
@@ -480,4 +480,11 @@
 $(function () {
   bsCustomFileInput.init();
 });
+
+$( '.modal').click(function(event) {
+	$(event.target).modal('hide');
+	
+})
+$("#modal-basic-title").modal("show");
+$("#modal-basic-title").css("z-index", "1500");
 </script>

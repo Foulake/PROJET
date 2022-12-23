@@ -12,6 +12,7 @@ export class ClientListComponent implements OnInit {
   clients!: Client[];
   closeResult!:string;
   private httpClient!: HttpClient;
+  apiurl = 'http://localhost:8181/api/v1/clients/getAll'
   constructor(  httpClient: HttpClient, private modalService:NgbModal) { }
 
   ngOnInit(): void {
@@ -19,12 +20,13 @@ export class ClientListComponent implements OnInit {
   }
   getClients(){
     this.httpClient.get<any>('http://localhost:8181/api/v1/clients/getAll').subscribe(
-    response =>{
+    response => {
       console.log(response);
       this.clients = response;
     }
     );
     }
+    
     open(content: any) {
       this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
         this.closeResult = `Closed with: ${result}`;
