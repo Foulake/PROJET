@@ -31,6 +31,7 @@ public class ApproResponse {
 	private String produitNom;
 	private String userNom;
 	private String fournisseurNom;
+	private String categoryFournisseur;
 	
 	private List<ApproDto> content;
     private int pageNo;

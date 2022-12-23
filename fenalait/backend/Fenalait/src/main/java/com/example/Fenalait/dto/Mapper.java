@@ -52,7 +52,7 @@ public static ApproResponse approvissionnementToApproResponse(Approvissionnement
 	approResponseDto.setUserNom(approvissionnement.getUser().getPrenom());
 	approResponseDto.setProduitNom(approvissionnement.getProduit().getNomPrdt());
 	approResponseDto.setFournisseurNom(approvissionnement.getFournisseur().getPrenom());
-	
+	approResponseDto.setCategoryFournisseur(approvissionnement.getFournisseur().getCategorieFournisseur().getDescription());
 	//neeew
 	approResponseDto.setDateAppro(approvissionnement.getDateAppro());
 	approResponseDto.setQteAppro(approvissionnement.getQteAppro());

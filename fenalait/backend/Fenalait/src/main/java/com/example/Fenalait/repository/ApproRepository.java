@@ -56,9 +56,6 @@ public interface ApproRepository extends JpaRepository<Approvissionnement, Long>
 	
 	
 	
-	
-	
-	
 	Page<Approvissionnement> countQteApproApprovissionnementsByFournisseurAndProduitAndDateApproBetween(
 			Fournisseur fournisseur,
 			Produit produit,
@@ -68,6 +65,13 @@ public interface ApproRepository extends JpaRepository<Approvissionnement, Long>
 	
 	//Page<Approvissionnement> findByDateApproBetween(Pageable pageable, String keyword, Date startDateAppro, Date endDateAppro);
 
+	List<Approvissionnement> findApprovissionnementsByFournisseurIdAndProduitId(
+			Long fournisseurId,
+			Long produitId);
 	
+	List<Approvissionnement> findApprovissionnementsByFournisseurIdAndProduitIdAndDateApproBetween(Long fournisseurId,
+			Long produitId,
+			@Param("dateStart")  LocalDate dateStart,  
+			@Param("dateEnd")  LocalDate dateEnd);
 	
 }

@@ -288,7 +288,8 @@ public class ApproServiceImpl implements ApproService{
         List<Approvissionnement> approvissionnements = approvissionnementRepository.findApprovissionnementByFournisseurAndDateApproBetween(fournisseur, dateStart, dateEnd);
        
         for(int i=0; i<=approvissionnements.size(); i++) {
-        	somme = somme + fournisseur.getApprovissionnements().get(i).getQteAppro();
+        	//somme = somme + fournisseur.getApprovissionnements().get(i).getQteAppro();
+        	somme = somme + approResponse.getQteAppro();
         	 i++;
         	 
         }
@@ -297,6 +298,36 @@ public class ApproServiceImpl implements ApproService{
 		return approResponse;
 		
         
+	}
+
+	@Override
+	public ApproResponse findApprovissionnementByJourInterval( Long fournisseurId, Long produitId, LocalDate dateStart,
+			LocalDate dateEnd) {
+		
+		List<Approvissionnement> approvissionnements = approvissionnementRepository.findApprovissionnementsByFournisseurIdAndProduitIdAndDateApproBetween(fournisseurId, produitId, dateStart, dateEnd);
+    	
+		ApproResponse approResponse = new ApproResponse();
+		Double somme=0.0;
+		String four = null;
+		String prod = null;
+		String CatFour = null;
+		
+		for(int i = 0; i < approvissionnements.size(); i++) {
+			
+			somme = somme + approvissionnements.get(i).getQteAppro();
+			four = approvissionnements.get(i).getFournisseur().getNom() +" "+ approvissionnements.get(i).getFournisseur().getPrenom();
+			prod =approvissionnements.get(i).getProduit().getNomPrdt();
+			CatFour= approvissionnements.get(i).getFournisseur().getCategorieFournisseur().getDescription();
+		
+		}
+		approResponse.setQteAppro(somme);
+		approResponse.setFournisseurNom(four);
+		approResponse.setProduitNom(prod);
+		approResponse.setCategoryFournisseur(CatFour);
+		
+		return approResponse;
+		
+		
 	}
     
 }

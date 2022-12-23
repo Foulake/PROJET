@@ -1,5 +1,6 @@
 package com.example.Fenalait.service.impl;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -149,6 +150,32 @@ public class PaiementServiceImpl implements PaiementService{
 	        Pageable pageable = PageRequest.of(pageNo, pageSize, sort);
 	        
 	        Page<Paiement> paiements = paiementRepository.findAll(pageable, keywords);
+	        
+	        List<Paiement> listOfPaiements = paiements.getContent();
+	        
+	        List<PaiementDto> content = listOfPaiements.stream().map(categoryFour -> mapToDTO(categoryFour)).collect(Collectors.toList());
+			
+	        PaiementResponse paiementResponse = new PaiementResponse();
+	        paiementResponse.setContent(content);
+	        paiementResponse.setPageNo(paiements.getNumber());
+	        paiementResponse.setPageSize(paiements.getSize());
+	        paiementResponse.setTotalElements(paiements.getTotalElements());
+	        paiementResponse.setTotalPages(paiements.getTotalPages());
+	        paiementResponse.setLast(paiements.isLast());
+
+	        return paiementResponse;
+		}
+
+		@Override
+		public PaiementResponse getPaiementByApproFromDate(Long ApproId, Long FourId, LocalDate dateStart,
+				 int pageNo, int pageSize, String sortBy, String sortDir) {
+			Sort sort = sortDir.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortBy).ascending()
+	                : Sort.by(sortBy).descending();
+
+	        // create Pageable instance
+	        Pageable pageable = PageRequest.of(pageNo, pageSize, sort);
+	        
+	        Page<Paiement> paiements = paiementRepository.findPaiementByApprovissionnementIdAndFournisseurIdAndDateAfter(ApproId, FourId, dateStart, pageable);
 	        
 	        List<Paiement> listOfPaiements = paiements.getContent();
 	        
