@@ -66,7 +66,7 @@ public class ApproController {
         return approService.getAllApprovissionnements(pageNo, pageSize, sortBy, sortDir);
     }
     
-    @GetMapping("/interval/{fournisseurId}/{produitId}/={dateStart}/{dateEnd}")
+    @GetMapping("/intervaldate/{fournisseurId}/{produitId}/={dateStart}/{dateEnd}")
   	public ApproResponse ApproJourIntervals(@RequestBody Approvissionnement approvissionnement,
   			@PathVariable Long fournisseurId,@PathVariable Long produitId,
   			@PathVariable
