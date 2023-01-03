@@ -19,7 +19,7 @@ import { CategoryComponent } from './category/category.component';
 import { CategoryListComponent } from './category-list/category-list.component';
 import { ApprovissionnementComponent } from './approvissionnement/approvissionnement.component';
 import { ApprovissionnementListComponent } from './approvissionnement-list/approvissionnement-list.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AddcategorieComponent } from './addcategorie/addcategorie.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MenuComponent } from './menu/menu.component';
@@ -33,7 +33,7 @@ import{MatButtonModule}from '@angular/material/button';
 import { AuthComponent } from './auth/auth.component';
 import{MatInputModule} from '@angular/material/input';
 import { RegistreComponent } from './registre/registre.component';
-import { MatFormField, MatFormFieldModule } from '@angular/material/form-field';
+import {  MatFormFieldModule } from '@angular/material/form-field';
 import{MatCardModule} from '@angular/material/card';
 import { LoginComponent } from './login/login.component';
 import { AuthInterceptor, HttpInterceptorProviders } from './auth-interceptor';
@@ -84,7 +84,11 @@ import { AuthService } from './auth.service';
 
 
   ],
-  providers: [{ provide:HttpInterceptorProviders,useClass:AuthService,multi:true}],
+  providers: [
+    { provide:HTTP_INTERCEPTORS,
+      useClass:AuthInterceptor,
+      multi:true}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
