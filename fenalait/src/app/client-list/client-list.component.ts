@@ -12,7 +12,6 @@ export class ClientListComponent implements OnInit {
   clients!: Client[];
   closeResult!:string;
   private httpClient!: HttpClient;
-  apiurl = 'http://localhost:8181/api/v1/clients/getAll'
   constructor(  httpClient: HttpClient, private modalService:NgbModal) { }
 
   ngOnInit(): void {
@@ -51,5 +50,7 @@ export class ClientListComponent implements OnInit {
       });
     this.modalService.dismissAll(); //dismiss the modal
   }
-}
+  
+  }
+
 

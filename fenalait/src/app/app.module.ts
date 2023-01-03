@@ -21,11 +21,24 @@ import { ApprovissionnementComponent } from './approvissionnement/approvissionne
 import { ApprovissionnementListComponent } from './approvissionnement-list/approvissionnement-list.component';
 import { HttpClientModule } from '@angular/common/http';
 import { AddcategorieComponent } from './addcategorie/addcategorie.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MenuComponent } from './menu/menu.component';
 import { ProduitListComponent } from './produit-list/produit-list.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import{MatToolbarModule} from '@angular/material/toolbar';
+import{MatIconModule} from '@angular/material/icon';
+import{MatDialogModule} from '@angular/material/dialog';
+import{MatButtonModule}from '@angular/material/button';
+import { AuthComponent } from './auth/auth.component';
+import{MatInputModule} from '@angular/material/input';
+import { RegistreComponent } from './registre/registre.component';
+import { MatFormField, MatFormFieldModule } from '@angular/material/form-field';
+import{MatCardModule} from '@angular/material/card';
+import { LoginComponent } from './login/login.component';
+import { AuthInterceptor, HttpInterceptorProviders } from './auth-interceptor';
+import { AuthService } from './auth.service';
+
 
 @NgModule({
   declarations: [
@@ -48,17 +61,30 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     ApprovissionnementListComponent,
     AddcategorieComponent,
     MenuComponent,
-    ProduitListComponent
+    ProduitListComponent,
+    AuthComponent,
+    RegistreComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule,
+     AppRoutingModule,
     HttpClientModule,
     FormsModule,
     NgbModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    MatToolbarModule,
+    MatIconModule,
+    MatDialogModule,
+    MatButtonModule,
+    MatInputModule,
+    MatFormFieldModule,
+    MatCardModule,
+    ReactiveFormsModule,
+
+
   ],
-  providers: [],
+  providers: [{ provide:HttpInterceptorProviders,useClass:AuthService,multi:true}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

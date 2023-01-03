@@ -373,11 +373,12 @@
     </section>
 
     <!-- Main content -->
-    <div class="border">
-      <button class="btn btn-md btn-outline-primary" (click)="open(content)">
-        <i class="fa fa-user"></i>Ajouter Client</button>
-    </div>
+    
     <div class="container">
+      <div class="border">
+        <button class="btn btn-md btn-outline-primary">
+          <i class="fa fa-user"></i>Ajouter Client</button>
+      </div>
       <table class="table table-bordered table-striped">
         <thead>
         <tr>
@@ -413,24 +414,24 @@
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
-            <div class="modal-body" tabindex="-1" data-backdrop="false" style="background-color: rgbd(0, 0, 0, 0.5); z-index: 1050">
+            <div class="modal-body">
               <form  #f="ngForm" (ngSubmit)="onSubmit(f)" novalidate>
                 <div class="form-group">
                   <label for="nomClient">NonClient</label>
                   <div class="input-group">
-                    <input id="nomClient" name="nomClient" class="form-control" ngModel>
+                    <input id="nomClient" class="form-control" ngModel>
                   </div>
                 </div>
                 <div class="form-group">
                   <label for="prenomClient">PrenomClient</label>
                   <div class="input-group">
-                    <input id="prenomClient" name="prenomClient" class="form-control" ngModel >
+                    <input id="prenomClient" class="form-control" ngModel >
                   </div>
                 </div>
                 <div class="form-group">
                   <label for="telClient">TelClient</label>
                   <div class="input-group">
-                    <input id="telClient" name="telClient" class="form-control" ngModel >
+                    <input id="telClient" class="form-control" ngModel >
                   </div>
                 </div>
                 <div class="border text-center">
