@@ -1,10 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { FormGroup } from '@angular/forms';
-import { AuthInterceptor } from '../auth-interceptor';
-import { AuthService } from '../auth.service';
-import { AuthLoginInfo } from '../login-info';
-import { TokenStorageService } from '../token-storage.service';
+ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from '../auth.service';
+import { TokenStorageService } from '../token-storage.service';
 
 
 @Component({
@@ -14,53 +11,48 @@ import { Router } from '@angular/router';
 })
 
  export class LoginComponent implements OnInit {
-  form:any = {};
-  isLoggedIn =false;
-  isLoginFailed =false;
-  errorMessage ='';
-  roles:string[]=[];
-  private loginInfo:AuthLoginInfo | undefined;
+  
+  form: any = {
+    email: null,
+    password: null
+  };
+  isLoggedIn = false;
+  isLoginFailed = false;
+  errorMessage = '';
+  roles: string[] = [];
 
+  constructor(private authService: AuthService, 
+    private storageService: TokenStorageService,
+    private route: Router) { }
 
-  
-  
-  constructor(private authService :AuthService, private tokenStorage:TokenStorageService,private router:Router){}
-  formgroup:FormGroup | undefined;
-  ngOnInit() {
-  
+  ngOnInit(): void {
+    if (this.storageService.isLoggedIn()) {
+      this.isLoggedIn = true;
+      this.roles = this.storageService.getUser().roles;
+    }
   }
-  onSubmit(){
-    console.log(this.form);
-    this.loginInfo = new AuthLoginInfo(
-      this.form.email,
-      this.form.password);
-      this.authService.login(this.loginInfo).subscribe(
-              res=>{
-              AuthInterceptor.accessToken=res.token;
 
-          this.tokenStorage.saveToken(res.tokenAccess);
-          //this.tokenStorage.saveEmail(data.email);
-          //this.tokenStorage.saveEmail(data.email);
-         // this.tokenStorage.saveAuthorities(data.refreshToken);
-           this.isLoginFailed =false;
-           this.isLoggedIn =true;
-           this.router.navigate(['/dasbord'])
- 
+  onSubmit(): void {
+    const { email, password } = this.form;
 
-           //this.route.navigateByUrl('/dasbord')
-          // this.roles= this.tokenStorage.getAuthorities();
-          this.reloadPage();
-        },
-        (        error: any)=>{
-          console.log(error);
-          this.errorMessage
-          this.isLoginFailed =true;
-        }
-      );
+    this.authService.login(email, password).subscribe({
+      next: data => {
+        this.storageService.saveUser(data);
+      
+        this.isLoginFailed = false;
+        this.isLoggedIn = true;
+        this.roles = this.storageService.getUser().roles;
+          this.route.navigate(['']);
+          //this.reloadPage(); 
+      },
+      error: err => {
+        this.errorMessage = err.error.message;
+        this.isLoginFailed = true;
+      }
+    });
   }
-  reloadPage(){
+  reloadPage(): void {
     window.location.reload();
   }
- 
- 
 }
+ 

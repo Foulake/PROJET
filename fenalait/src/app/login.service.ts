@@ -17,12 +17,12 @@ export class LoginService {
 
   }
   Proceddlogin(usercred:any){
-    return this.http.post(this.apiUrl + 'authenticate ',usercred);
+    return this.http.post(this.apiUrl + 'authenticate',usercred);
   }
   GenerateRefreshToken(): any{
     let input ={
       "jwtToken":this.GenerateRefreshToken(),
-      "refreshToken":this.GenerateRefreshToken()
+      "refreshToken":this.GenerateRefreshToken(),
 
     }
     return this.http.post(this.apiUrl +'refresh',input);

@@ -23,8 +23,7 @@ import com.example.Fenalait.utils.AppConstants;
 
 @RestController
 @RequestMapping("/api/v1/clients")
-@CrossOrigin(origins = "http://localhost:4200")
-
+@CrossOrigin
 public class ClientController {
 
 	private ClientService clientService;

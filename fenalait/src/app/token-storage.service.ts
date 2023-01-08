@@ -1,50 +1,50 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { JwtResponse } from './jwt-response';
  const TOKEN_KEY ='authtoken';
  const USERNAME_KEY ='AuthUsername';
  const AUTHORITIES_KEY='AuthAuthorities';
+
+ const USER_KEY = 'auth-user';
+
 @Injectable({
   providedIn: 'root'
 })
 export class TokenStorageService {
-  private roles:Array<string> =[];
+  constructor(private route: Router) {}
 
-
-  constructor(private router:Router) { }
-  signOut(){
+  clean(): void {
     window.sessionStorage.clear();
   }
-  public saveToken(token:string){
-    window.sessionStorage.removeItem(TOKEN_KEY);
-    window.sessionStorage.setItem(TOKEN_KEY,token);
-    this.router.navigate(['/dasbord'])
- 
 
+  public saveUser(user: any): void {
+    window.sessionStorage.removeItem(USER_KEY);
+    window.sessionStorage.setItem(USER_KEY, JSON.stringify(user));
   }
-  public getToken(){
-    return sessionStorage.getItem(TOKEN_KEY);
+
+  public getTokenAccess(): any {
+    return window.sessionStorage.getItem(USER_KEY);
   }
-  public saveEmail(email:string){
-    window.sessionStorage.removeItem(USERNAME_KEY);
-    window.sessionStorage.setItem(USERNAME_KEY,email);
-    }
-    public getEmail(){
-      return sessionStorage.getItem(USERNAME_KEY);
-    }
-    public saveAuthorities(authorities:string){
-      window.sessionStorage.removeItem(AUTHORITIES_KEY);
-      window.sessionStorage.setItem(AUTHORITIES_KEY,JSON.stringify(authorities));
-    }
-    //public getAuthorities(): string[]{
-     // this.roles =[];
-     /// if(sessionStorage.getItem(TOKEN_KEY)){
-       // JSON.parse(sessionStorage.getItem(AUTHORITIES_KEY)).forEach
-        //(authority =>{
-          //this.roles.push(authority.authority);
-       // });
 
-     // }
-     // return this.roles;
+  public getUser(): any {
+    const user = window.sessionStorage.getItem(USER_KEY);
+    if (user) {
+      return JSON.parse(user);
     }
 
-//}
+    return {};
+  }
+
+  isConnected(jwt: JwtResponse): void {
+    sessionStorage.setItem('connectedUser', JSON.stringify(jwt));
+  }
+
+  public isLoggedIn(): boolean {
+    const user = window.sessionStorage.getItem(USER_KEY);
+    if (user) {
+      return true;
+    }
+    this.route.navigate(['/login']);
+    return false;
+  }
+}

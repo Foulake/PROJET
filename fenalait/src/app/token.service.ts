@@ -6,20 +6,45 @@ import{Router} from '@angular/router'
 export class TokenService {
 
   constructor( private router: Router) { }
-   saveToken(token:string):void{
-    localStorage.setItem('token',token)
-    this.router.navigate(['dasbord'])
+   
+  saveToken(tokenAccess:string, tokenRefresh:string):void{
+    localStorage.setItem('tokenAccess',tokenAccess)
+    localStorage.setItem('tokenRefresh', tokenRefresh)
+    this.router.navigate(['/dasbord'])
    }
+public getRoles(): [] {
+  return JSON.parse(localStorage.getItem('roles')!);
+}
 
+public setRoles( roles: []) {
+  return localStorage.setItem('roles', JSON.stringify(roles));
+}
+
+public isLoggededIn(){
+  return this.getRoles() && this.getTokenAccess() && this.getTokenRefresh();
+}
 
 islogged():boolean{
-  const token =localStorage.getItem('token')
+  const token =localStorage.getItem('tokenAccess')
   return !! token;
 }
 clearToken():void{
-  localStorage.removeItem('token')
+  localStorage.removeItem('tokenAccess');
 }
-getToken() :string |null{
-  return localStorage.getItem('token')
+getTokenAccess() :string {
+  return localStorage.getItem('tokenAccess')!;
 }
+
+getTokenRefresh() : string{
+  return localStorage.getItem('tokenRefresh')!;
+}
+
+setTokenAccess(token : string) {
+  return localStorage.setItem('tokenAccess', token);
+}
+
+setTokenRefresh(token: string){
+  return localStorage.setItem('tokenRefresh', token);
+}
+
 }

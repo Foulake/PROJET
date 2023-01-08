@@ -30,7 +30,7 @@ import com.example.Fenalait.token.JwtTokenUtil;
 
 @RestController
 @RequestMapping("/auth")
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "http://localhost:4200", exposedHeaders = "accessToken")
 
 public class AuthController {
 	
@@ -63,19 +63,16 @@ public class AuthController {
             String refreshToken = jwtUtil.generateRefreshToken(user);
 
             AuthResponse response = new AuthResponse(user.getEmail(), accessToken, refreshToken);
-
-             
-
+            response.setTokenAccess(refreshToken);
             return ResponseEntity.ok().body(response);
 
-             
+        }  catch (BadCredentialsException ex) {
 
-        } catch (BadCredentialsException ex) {
+            // return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+         	System.out.println("Invalide détails !!");
+         	throw new ResourceNotFoundExceptions("E-mail ou mot de passe incorrect !!");
 
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-
-        }
-
+         }
     }
     
     
