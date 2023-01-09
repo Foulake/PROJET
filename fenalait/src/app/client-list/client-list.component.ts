@@ -1,7 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { ModalDismissReasons,NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { NgForm } from '@angular/forms';
 import { ClientService } from '../services/client.service';
 import { Client } from '../models/client';
 @Component({
@@ -15,22 +13,58 @@ export class ClientListComponent implements OnInit {
   clients?: Client[];
   currentClient: Client = {};
   currentIndex = -1;
+  prenomClient = '';
   closeResult!:string;
+  message = '';
+
   
-  constructor( private httpClient: HttpClient, 
-    private modalService:NgbModal,
+  form: any = {
+    nomClient: '',
+    prenomClient:'',
+    telClient:''
+    
+  };
+  isSuccessful = false;
+  isSignUpFailed = false;
+
+   @Input() currentClients: Client = {
+    nomClient: '',
+    prenomClient:'',
+    telClient:''
+   };
+
+  constructor( private httpClient: HttpClient,
     private clientService: ClientService) { }
 
   ngOnInit(): void {
-    this.getAllClients();
+    this.message= '';
+     this.getAllClients();
   }
+
+  
+onSubmit(): void {
+  // const { prenomClient, nomClient, telClient } = this.form;
+ 
+   this.clientService.create(this.form).subscribe({
+     next: data => {
+       console.log(data);
+       this.isSuccessful = true;
+       this.isSignUpFailed = false;
+     },
+     error: err => {
+       this.errorMessage = err.error.message;
+       console.log(this.errorMessage);
+       this.isSignUpFailed = true;
+     }
+   });
+ }
 
   getAllClients(){
     this.clientService.getAllClient()
       .subscribe({
       next: (data) =>{
         this.clients = data;
-        console.log('Donnee', data);
+        console.log('Data', data);
       },
       error: (err) =>{
         console.log(err);
@@ -62,11 +96,28 @@ export class ClientListComponent implements OnInit {
     });
   }
 
+  removeSelected(): void {
+    this.clientService.delete(this.currentClients.id)
+    .subscribe({
+      next: (res) =>{
+        console.log(res);
+        res.message ? res.message : 'Cet client supprimer avec succès !';
+        //this.router.navigate()
+        this.refreshList();
+      },
+      error: err => {
+        this.message = this.errorMessage = err.error.message;
+        console.log(this.errorMessage);
+        
+      }
+    })
+  }
+
   searchClient(): void {
     this.currentClient = {};
     this.currentIndex = -1;
 
-    this.clientService.findClient(this.clients)
+    this.clientService.findClient(this.prenomClient)
     .subscribe({
       next: (data) =>{
         this.clients = data;

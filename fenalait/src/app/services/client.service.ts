@@ -1,11 +1,14 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { AuthInterceptor } from '../auth-interceptor';
 import { Client } from '../models/client';
 
+ 
+const httpOptions = {
+  headers: new HttpHeaders({ 'Content-Type': 'application/json' , 'Access-Control-Allow-origin': '*'})
 
-const baseUrl = 'http://localhost:8181/api/v1/clients';
+};
+
 
 @Injectable({
   providedIn: 'root'
@@ -13,8 +16,8 @@ const baseUrl = 'http://localhost:8181/api/v1/clients';
 
 export class ClientService {
 
-  
-  constructor(private http: HttpClient, intersecptor: AuthInterceptor) { }
+  baseUrl = 'http://localhost:8181/api/v1/clients';
+  constructor(private http: HttpClient) { }
 
   
    header = new HttpHeaders()
@@ -22,30 +25,30 @@ export class ClientService {
   .set('Access-Control-Allow-origin', '*');
 
   getAllClient(): Observable<Client[]> {
-      return this.http.get<Client[]>(baseUrl + '/getAll', {'headers': this.header});
+      return this.http.get<Client[]>(this.baseUrl + '/getAlls', httpOptions);
   }
 
-  get(id: number): Observable<Client[]> {
-    return this.http.get<Client[]>(`${baseUrl + '/get'}/${id}`);
+  get(id: any): Observable<Client[]> {
+    return this.http.get<Client[]>(`${this.baseUrl + '/get'}/${id}`, httpOptions);
   }
 
   create(data: any): Observable<any>{
-    return this.http.post(baseUrl + '/add', data)
+    return this.http.post(this.baseUrl + '/add', data, httpOptions)
   }
 
   update(id: any, data : any): Observable<any>{
-    return this.http.put(`${baseUrl + '/edit'}/${id}`, data);
+    return this.http.put(`${this.baseUrl + '/edit'}/${id}`, data, httpOptions);
   }
 
   delete(id: any): Observable<any> {
-    return this.http.delete(`${baseUrl + '/delete'}/${id}`);
+    return this.http.delete(`${this.baseUrl + '/delete'}/${id}`, httpOptions);
   }
   
   deleteAll(): Observable<any> {
-    return this.http.delete(baseUrl);
+    return this.http.delete(this.baseUrl);
   }
 
-  findClient(data: any): Observable<Client[]>{
-    return this.http.get<Client[]>(`${baseUrl + '/search'}?data=${data}`);
+  findClient(prenomClient: any): Observable<Client[]>{
+    return this.http.get<Client[]>(`${this.baseUrl + '/search'}?prenomClient=${prenomClient}`, httpOptions);
   }
 }

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ClientListComponent } from '../client-list/client-list.component';
+import { ClientService } from '../services/client.service';
 
 @Component({
   selector: 'app-client',
@@ -8,24 +9,11 @@ import { ClientListComponent } from '../client-list/client-list.component';
 })
 export class ClientComponent implements OnInit {
 
-  content!: string;
-
-  constructor(private clientListe: ClientListComponent) { }
+  constructor() { }
 
   ngOnInit(): void {
-    
-    /** this.clientListe.getClients().subscribe({
-      next: (data) => {
-        this.content = data;
-      },
-      error: (err: any) => {console.log(err)
-        if (err.error) {
-          this.content = JSON.parse(err.error).message;
-        } else {
-          this.content = "Error avec status: " + err.status;
-        }
-      }
-    });*/
   }
+
+  
 
 }

@@ -1,5 +1,7 @@
 package com.example.Fenalait.controller;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.http.HttpStatus;
@@ -18,6 +20,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.Fenalait.dto.ClientDto;
 import com.example.Fenalait.dto.ClientResponse;
+import com.example.Fenalait.model.Client;
+import com.example.Fenalait.repository.ClientRepository;
 import com.example.Fenalait.service.ClientService;
 import com.example.Fenalait.utils.AppConstants;
 
@@ -27,6 +31,7 @@ import com.example.Fenalait.utils.AppConstants;
 public class ClientController {
 
 	private ClientService clientService;
+	private ClientRepository repository;
 
     public ClientController(ClientService clientService) {
         this.clientService = clientService;
@@ -38,6 +43,12 @@ public class ClientController {
     @PostMapping("/add")
     public ResponseEntity<ClientDto> createClient(@Valid @RequestBody ClientDto clientDto){
         return new ResponseEntity<>(clientService.createClient(clientDto), HttpStatus.CREATED);
+    }
+    
+    // get all clients rest api
+    @GetMapping("/getAlls")
+    public List<Client> getAllClients(){
+        return clientService.getAll();
     }
 
     // get all clients rest api
@@ -86,6 +97,14 @@ public class ClientController {
 	            @RequestParam(value = "sortDir", defaultValue = AppConstants.DEFAULT_SORT_DIRECTION, required = false) String sortDir,
 			@PathVariable("keywords") String keywords){
 		ClientResponse result= clientService.searchClientFull(pageNo, pageSize, sortBy, sortDir, keywords);
+				
+		return new ResponseEntity<ClientResponse>(result, HttpStatus.OK);
+	
+	}
+	
+	@GetMapping("/search/{keywords}")
+	public  ResponseEntity<ClientResponse> searchProductByFull(@PathVariable("keywords") String keywords){
+		ClientResponse result= repository.findByPrenomClient(keywords);
 				
 		return new ResponseEntity<ClientResponse>(result, HttpStatus.OK);
 	

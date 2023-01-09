@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Client } from 'src/app/models/client';
+import { Router } from '@angular/router';
 import { ClientService } from 'src/app/services/client.service';
 
 @Component({
@@ -9,41 +9,47 @@ import { ClientService } from 'src/app/services/client.service';
 })
 export class AddClientComponent {
 
-  client: Client = {
-    nomClient: '',
-    prenomClient: '',
-    telClient: '',
+form: any = {
+  nomClient: '',
+  prenomClient:'',
+  telClient:'',
+  password:''
 };
-errorMessage!: string;
-submeted = false;
+isSuccessful = false;
+isSignUpFailed = false;
+errorMessage = '';
+successMessage = '';
 
-constructor(private clientService: ClientService){}
+constructor(private clientService: ClientService,
+  private route: Router){}
 
-saveclient(): void {
-  const data = {
-    nomClient: this.client.nomClient,
-    prenomClient: this.client.prenomClient,
-    telClient: this.client.telClient,
-  };
-  this.clientService.create(data)
-  .subscribe({
-    next: (res) => {
-      console.log(res);
-      this.submeted = true;
-      
+onSubmit(): void {
+ // const { prenomClient, nomClient, telClient } = this.form;
+
+  this.clientService.create(this.form).subscribe({
+    next: data => {
+      console.log(data);
+      //this.isSuccessful = true;
+      //this.isSignUpFailed = false;
+      if(this.isSuccessful=true){
+      this.route.navigate(['/client']);
+      this.successMessage = "Client enrégistre avec succès !";
+      }
     },
-    error: (err) => {
-      this.errorMessage= err.error.message;
+    error: err => {
+      this.errorMessage = err.error.message;
       console.log(this.errorMessage);
+      this.isSignUpFailed = true;
     }
   });
 }
 
+
 newclient(): void {
-  this.submeted = false;
-  this.client = {
-    nomClient: '',
-    prenomClient: '',
+  this.isSuccessful = false;
+  this.form = {
+    nomClientClient: '',
+    prenomClientClient: '',
     telClient: '',
   };
 }

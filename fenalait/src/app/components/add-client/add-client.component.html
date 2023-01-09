@@ -4,65 +4,97 @@
       <h2>Inscrire un client</h2>
   </div>
   <div class="card-body">
+      
       <div class="btn btn-danger" *ngIf="errorMessage">
           {{ errorMessage }}
       </div>
-  <div *ngIf="!submeted" >
+  <form
+      *ngIf="!isSuccessful"
+      name="form"
+      (ngSubmit)="f.form.valid && onSubmit()"
+      #f="ngForm"
+      novalidate>
 
-      <div class="form-group" >
-        <label for="nomClient">nomClient</label>
-        <input
-          type="text"
-          class="form-control"
-          id="nomClient"
-          required
-          [(ngModel)]="client.nomClient"
-          name="nomClient"
-        />
+      <div class="form-group">
+          <label for="prenomClient">prenomClient</label>
+          <input
+            type="text"
+            class="form-control"
+            name="prenomClient"
+            [(ngModel)]="form.prenomClient"
+            required
+            minlength="3"
+            maxlength="20"
+            #prenomClient="ngModel"
+            [ngClass]="{ 'is-invalid': f.submitted && prenomClient.errors }" />
+          <div class="invalid-feedback" *ngIf="prenomClient.errors && f.submitted">
+            <div *ngIf="prenomClient.errors['required']">Le prénomClient ne peut pas être vide !</div>
+            <div *ngIf="prenomClient.errors['minlength']">
+              Le prénomClient doit contenir au moins 20 charactères
+            </div>
+            <div *ngIf="prenomClient.errors['maxlength']">
+              Le prénomClient doit contenir au plus 20 charactères
+            </div>
+          </div>
         </div>
 
         <div class="form-group">
-          <label for="prenomClient">prenomClient</label>
+          <label for="nomClient">NomClient</label>
           <input
+            type="text"
             class="form-control"
-            id="prenomClient"
+            name="nomClient"
+            [(ngModel)]="form.nomClient"
             required
-            [(ngModel)]="client.prenomClient"
-            name="prenomClient"
-          />
-        </div>
+            minlength="3"
+            maxlength="20"
+            #nomClient="ngModel"
+            [ngClass]="{ 'is-invalid': f.submitted && nomClient.errors }" />
 
-      <div class="form-group">
-            <label for="telClient">telClient</label>
-            <input
-              type="text"
-              class="form-control"
-              id="telClient"
-              required
-              [(ngModel)]="client.telClient"
-              name="telClient"
-            />
+        <div class="invalid-feedback" *ngIf="nomClient.errors && f.submitted">
+          <div *ngIf="nomClient.errors['required']">prenomClient ne peut pas être vide !</div>
+          <div *ngIf="nomClient.errors['minlength']">
+            Le nomClient doit contenir au moins 3 charactères
           </div>
-          
+          <div *ngIf="nomClient.errors['maxlength']">
+            Le nomClient doit contenir au plus 20 charactères
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="telClient">telClient</label>
+        <input
+          type="telClient"
+          class="form-control"
+          name="telClient"
+          [(ngModel)]="form.telClient"
+          required
+          telClient
+          #telClient="ngModel"
+          [ngClass]="{ 'is-invalid': f.submitted && telClient.errors }"/>
+        <div class="invalid-feedback" *ngIf="telClient.errors && f.submitted">
+          <div *ngIf="telClient.errors['required']">L'e-mail ne peut pas être vide !</div>
+          <div *ngIf="telClient.errors['telClient']">
+            telClient doit être une adresse telClient valide !
+          </div>
+        </div>
+      </div>
+      
       <div class="form-group d-flex justify-content-between">
           
-          <button type="button" class="btn btn-danger" routerLink="/client">
-            <i class="fas fa-ban"></i> annuler
-          </button>
-          <button (click)="saveclient()" class="btn btn-primary">
+        <button type="button" class="btn btn-danger" routerLink="/client">
+          <i class="fas fa-ban"></i> annuler
+        </button>
+          <button type="submit" class="btn btn-primary">
             <i class="fas fa-save"></i> enrégistrer
           </button>
         </div>
-      </div>
+    </form>
 
-      <div class="alert alert-success" *ngIf="submeted">
-        <h3> Vous êtes enrégistrer avec succès Mr/Mme {{client.nomClient}}! </h3>
-      </div>
-
-      <div class="alert alert-warning" *ngIf="errorMessage">
-        {{ errorMessage }}
-      </div>
-
+    
+    <div class="alert alert-success" *ngIf="isSuccessful">
+      Client enrégistrer avec succès Mr/Mme {{form.nomClient}}!
+    </div>
   </div>
   </div>
 </div>

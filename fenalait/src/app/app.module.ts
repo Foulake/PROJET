@@ -36,9 +36,9 @@ import { RegistreComponent } from './registre/registre.component';
 import {  MatFormFieldModule } from '@angular/material/form-field';
 import{MatCardModule} from '@angular/material/card';
 import { LoginComponent } from './login/login.component';
-import { AuthInterceptor } from './auth-interceptor';
 import { ProfileComponent } from './profile/profile.component';
 import { AddClientComponent } from './components/add-client/add-client.component';
+import { HttpIntersepterService } from './services/http-intersepter.service';
 
 
 @NgModule({
@@ -89,7 +89,7 @@ import { AddClientComponent } from './components/add-client/add-client.component
   ],
   providers: [
     { provide:HTTP_INTERCEPTORS,
-      useClass:AuthInterceptor,
+      useClass:HttpIntersepterService,
       multi:true}
   ],
   bootstrap: [AppComponent]

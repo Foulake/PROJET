@@ -1,7 +1,19 @@
-<div class="border">
-  <button class="btn btn-md btn-outline-primary" routerLink="/addClient">
-    <i class="fa fa-user"></i>Ajouter Client</button>
+<div class="d-flex justify-content-between pt-2">
+  <div class="col-md-6 p-0">
+    <h2>Liste des clients</h2>
+  </div>
+
+  <div class="d-flex">
+    <div class="flex-flill">
+      <button type="button" class="btn btn-sm btn-success"> <i class="fas fa-download"></i>Télécharger </button>
+    </div>
+    <div class="flex-flill">
+      <button type="button" class="btn btn-sm btn-primary" routerLink="/addClient"> <i class="fas fa-plus"></i>Nouveau </button>
+    </div>
+  </div>
 </div>
+
+  
 <table class="table table-bordered table-striped">
   <thead>
     <tr>
@@ -13,7 +25,10 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let client of clients">
+    <tr *ngFor="let client of clients; let i = index"
+    [class.active]="i == currentIndex"
+    (click)="setActivetedClient(client, i)"
+  >
       <td><span>{{client.id}}</span></td>
       <td><span>{{client.nomClient}}</span></td>
       <td><span>{{client.prenomClient}}</span></td>
@@ -22,12 +37,14 @@
         <button class="btn btn-sm btn-warning">
           <i class="fa fa-edit"></i>Modifier</button>
         <button class="btn btn-sm btn-danger">
-          <i class="fa fa-remove"></i>Supprimer</button>
+          <i class="fa fa-trash"></i>Supprimer</button>
       </td>
 
     </tr>
   </tbody>
 </table>
+
+
 
 <!-- jQuery -->
 <script src="../../plugins/jquery/jquery.min.js"></script>

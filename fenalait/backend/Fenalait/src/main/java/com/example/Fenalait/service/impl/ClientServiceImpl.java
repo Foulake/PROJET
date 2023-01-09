@@ -148,4 +148,11 @@ private ClientRepository clientRepository;
 				.orElseThrow(() -> new ResourceNotFoundExceptions("Il n'existe pas de client avec id : " + clientId));
 		return client;
 	}
+
+	@Override
+	public List<Client> getAll() {
+		List<Client> clients = clientRepository.findAll();
+		return clients;
+		 
+	}
 }
