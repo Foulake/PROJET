@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Fournisseur } from '../fournisseur';
+import { Fournisseur } from '../models/fournisseur';
 import { HttpClient } from '@angular/common/http';
 import { NgForm } from '@angular/forms';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';

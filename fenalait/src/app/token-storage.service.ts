@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { JwtResponse } from './jwt-response';
-import { User } from './user';
+
  const TOKEN_KEY ='authtoken';
  const USERNAME_KEY ='AuthUsername';
  const AUTHORITIES_KEY='AuthAuthorities';
