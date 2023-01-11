@@ -44,7 +44,7 @@ private LocaliteRepository localiteRepository;
 
         // create Pageable instance
         Pageable pageable = PageRequest.of(pageNo, pageSize, sort);
-
+ 
         Page<Localite> localites = localiteRepository.findAll(pageable);
 
         // get content for page object
@@ -107,6 +107,12 @@ private LocaliteRepository localiteRepository;
         localite.setDescription(localiteRequestDto.getDescription());
         return localite;
     }
+
+	@Override
+	public List<Localite> getAll() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 
 }

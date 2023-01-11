@@ -1,5 +1,7 @@
 package com.example.Fenalait.controller;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.http.HttpStatus;
@@ -18,6 +20,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.Fenalait.dto.LocaliteRequestDto;
 import com.example.Fenalait.dto.LocaliteResponse;
+import com.example.Fenalait.model.Client;
+import com.example.Fenalait.model.Localite;
 import com.example.Fenalait.service.LocaliteService;
 import com.example.Fenalait.utils.AppConstants;
 
@@ -38,6 +42,12 @@ public class LocaliteController {
     public ResponseEntity<LocaliteRequestDto> createLocalite(@Valid @RequestBody LocaliteRequestDto localiteRequestDto){
         return new ResponseEntity<>(localiteService.createLocalite(localiteRequestDto), HttpStatus.CREATED);
     }
+ // get all clients rest api
+    @GetMapping("/getAlls")
+    public List<Localite> getAllLocalites(){
+        return localiteService.getAll();
+    }
+
 
     // get all localites rest api
     @GetMapping("/getAll")

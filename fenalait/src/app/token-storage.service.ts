@@ -1,7 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+<<<<<<< HEAD
 import { JwtResponse } from './jwt-response';
 import { User } from './user';
+=======
+>>>>>>> 9c34b142727be041fa343cd49ff99b216246e418
 
  const TOKEN_KEY ='authtoken';
  const USERNAME_KEY ='AuthUsername';

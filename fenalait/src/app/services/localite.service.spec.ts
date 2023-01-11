@@ -14,3 +14,11 @@ describe('LocaliteService', () => {
     expect(service).toBeTruthy();
   });
 });
+function beforeEach(arg0: () => void) {
+  throw new Error('Function not implemented.');
+}
+
+function expect(service: LocaliteService) {
+  throw new Error('Function not implemented.');
+}
+

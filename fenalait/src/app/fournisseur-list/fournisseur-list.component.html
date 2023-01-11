@@ -1,8 +1,19 @@
-<div class="border">
-  <button class="btn btn-md btn-outline-primary">
-    <i class="fa fa-user"></i>Ajouter Client</button>
+<div class="d-flex justify-content-between pt-2">
+  <div class="col-md-6 p-0">
+    <h2>Liste des fournisseurs</h2>
+  </div>
+
+  <div class="d-flex">
+    <div class="flex-flill">
+      <button type="button" class="btn btn-sm btn-success"> <i class="fas fa-download"></i>Télécharger </button>
+    </div>
+    <div class="flex-flill">
+      <button type="button" class="btn btn-sm btn-primary" routerLink="/addFournisseur"> <i class="fas fa-plus"></i>Nouveau </button>
+    </div>
+  </div>
 </div>
 <table class="table table-bordered table-striped">
+
   <thead>
   <tr>
     <th>ID</th>
@@ -29,29 +40,7 @@
     
   </tr>
   </tbody>
-</table>
-
-<!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-  aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        ...
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
-    </div>
-  </div>
-</div>
+  </table>
 
 <!-- jQuery -->
 <script src="../../plugins/jquery/jquery.min.js"></script>
@@ -64,15 +53,3 @@
 <!-- AdminLTE for demo purposes -->
 <script src="../../dist/js/demo.js"></script>
 <!-- Page specific script -->
-<script>
-  $(function () {
-    bsCustomFileInput.init();
-  });
-
-  $('.modal').click(function (event) {
-    $(event.target).modal('hide');
-
-  })
-  $("#modal-basic-title").modal("show");
-  $("#modal-basic-title").css("z-index", "1500");
-</script>

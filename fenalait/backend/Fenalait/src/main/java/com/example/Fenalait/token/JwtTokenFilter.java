@@ -42,126 +42,125 @@ import io.jsonwebtoken.Jwts;
 @Component
 public class JwtTokenFilter extends OncePerRequestFilter {
 
-    @Autowired
-    private JwtTokenUtil jwtUtil;
+	  @Autowired
+	    private JwtTokenUtil jwtUtil;
 
-    @Override
-    protected void doFilterInternal(HttpServletRequest request, 
+	    @Override
+	    protected void doFilterInternal(HttpServletRequest request, 
 
-                HttpServletResponse response, FilterChain filterChain)
+	                HttpServletResponse response, FilterChain filterChain)
 
-            throws ServletException, IOException {
+	            throws ServletException, IOException {
 
- 
+	 
 
-        if (!hasAuthorizationBearer(request)) {
+	        if (!hasAuthorizationBearer(request)) {
 
-            filterChain.doFilter(request, response);
+	            filterChain.doFilter(request, response);
 
-            return;
+	            return;
 
-        }
+	        }
 
-        String tokenAccess = getAccessToken(request);
+	        String tokenAccess = getAccessToken(request);
 
-        if (!jwtUtil.validateAccessToken(tokenAccess)) {
+	        if (!jwtUtil.validateAccessToken(tokenAccess)) {
 
-            filterChain.doFilter(request, response);
+	            filterChain.doFilter(request, response);
 
-            return;
+	            return;
 
-        }
-        String tokenRefresh = getRefreshToken(request);
+	        }
+	        String tokenRefresh = getRefreshToken(request);
 
-        if (!jwtUtil.validateRefreshToken(tokenRefresh)) {
+	        if (!jwtUtil.validateRefreshToken(tokenRefresh)) {
 
-            filterChain.doFilter(request, response);
+	            filterChain.doFilter(request, response);
 
-            return;
+	            return;
 
-        }
-        
-        setAuthenticationContext(tokenAccess , tokenRefresh, request);
+	        }
+	        
+	        setAuthenticationContext(tokenAccess , tokenRefresh, request);
 
-        filterChain.doFilter(request, response);
+	        filterChain.doFilter(request, response);
 
-    }
+	    }
 
-    private boolean hasAuthorizationBearer(HttpServletRequest request) {
+	    private boolean hasAuthorizationBearer(HttpServletRequest request) {
 
-        String header = request.getHeader("Authorization");
-        System.out.println("Authorisation header : " + header);
-        
-        if (ObjectUtils.isEmpty(header) || !header.startsWith("Bearer")) {
+	        String header = request.getHeader("Authorization");
+	        System.out.println("Authorisation header : " + header);
+	        
+	        if (ObjectUtils.isEmpty(header) || !header.startsWith("Bearer")) {
 
-            return false;
+	            return false;
 
-        }
-        return true;
+	        }
+	        return true;
 
-    }
-  
-    
-    private String getAccessToken(HttpServletRequest request) {
+	    }
+	    
+	    private String getAccessToken(HttpServletRequest request) {
 
-        String header = request.getHeader("Authorization");
+	        String header = request.getHeader("Authorization");
 
-        String tokenAccess = header.split(" ")[1].trim();
+	        String tokenAccess = header.split(" ")[1].trim();
 
-        return tokenAccess;
+	        return tokenAccess;
 
-    }
-    private String getRefreshToken(HttpServletRequest request) {
+	    }
+	    private String getRefreshToken(HttpServletRequest request) {
 
-        String header = request.getHeader("Authorization");
+	        String header = request.getHeader("Authorization");
 
-        String tokenRefresh = header.split(" ")[1].trim();
+	        String tokenRefresh = header.split(" ")[1].trim();
 
-        return tokenRefresh;
+	        return tokenRefresh;
 
-    }
+	    }
 
- 
-    private void setAuthenticationContext(String tokenAccess, String tokenRefresh, HttpServletRequest request) {
+	 
+	    private void setAuthenticationContext(String tokenAccess, String tokenRefresh, HttpServletRequest request) {
 
-        UserDetails userDetails = getUserDetails(tokenAccess, tokenRefresh);
+	        UserDetails userDetails = getUserDetails(tokenAccess, tokenRefresh);
 
-        UsernamePasswordAuthenticationToken 
+	        UsernamePasswordAuthenticationToken 
 
-            authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+	            authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
 
-        authentication.setDetails(
+	        authentication.setDetails(
 
-                new WebAuthenticationDetailsSource().buildDetails(request));
+	                new WebAuthenticationDetailsSource().buildDetails(request));
 
-        SecurityContextHolder.getContext().setAuthentication(authentication);
+	        SecurityContextHolder.getContext().setAuthentication(authentication);
 
-    }
+	    }
 
-    private UserDetails getUserDetails(String accessToken, String tokenRefresh) {
-        User userDetails = new User();
-        Claims claims = jwtUtil.parseClaims(accessToken, tokenRefresh);
-        
-        String claimRoles = (String) claims.get("roles");
-        
-        System.out.println("claimRoles: " + claimRoles);
-        claimRoles = claimRoles.replace("[", "").replace("]", "");
-        String[] rolesNames = claimRoles.split(",");
-        
-        for(String arolesNames : rolesNames) {
-        	userDetails.addRole(new Role(arolesNames));
-        }
-        
-        String subject = (String) claims.get(Claims.SUBJECT);                   
-        String[] jwtSubject = subject.split(",");
+	    private UserDetails getUserDetails(String accessToken, String tokenRefresh) {
+	        User userDetails = new User();
+	        Claims claims = jwtUtil.parseClaims(accessToken, tokenRefresh);
+	        
+	        String claimRoles = (String) claims.get("roles");
+	        
+	        System.out.println("claimRoles: " + claimRoles);
+	        claimRoles = claimRoles.replace("[", "").replace("]", "");
+	        String[] rolesNames = claimRoles.split(",");
+	        
+	        for(String arolesNames : rolesNames) {
+	        	userDetails.addRole(new Role(arolesNames));
+	        }
+	        
+	        String subject = (String) claims.get(Claims.SUBJECT);                   
+	        String[] jwtSubject = subject.split(",");
 
 
-        userDetails.setId(Long.parseLong(jwtSubject[0]));
-        userDetails.setEmail(jwtSubject[1]);
+	        userDetails.setId(Long.parseLong(jwtSubject[0]));
+	        userDetails.setEmail(jwtSubject[1]);
 
-        return userDetails;
+	        return userDetails;
 
-    }
+	    }
 
-    
-} 
+	    
+	} 
