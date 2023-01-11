@@ -1,6 +1,8 @@
 package com.example.Fenalait.controller;
 
 
+import java.util.Set;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,7 +64,7 @@ public class AuthController {
             String accessToken = jwtUtil.generateAccessToken(user);
             String refreshToken = jwtUtil.generateRefreshToken(user);
 
-            AuthResponse response = new AuthResponse(user.getEmail(), accessToken, refreshToken);
+            AuthResponse response = new AuthResponse(user.getEmail(), accessToken, refreshToken, user.getPrenom(), user.getNom(), user.getRoles());
             response.setTokenAccess(refreshToken);
             return ResponseEntity.ok().body(response);
 
@@ -101,7 +103,7 @@ public class AuthController {
             String accessToken = jwtUtil.generateAccessToken(user);
             String refreshToken = jwtUtil.generateRefreshToken(user);
 
-            AuthResponse response = new AuthResponse(user.getEmail(), accessToken, refreshToken);
+            AuthResponse response = new AuthResponse(user.getEmail(), accessToken, refreshToken, user.getPrenom(), user.getNom(), user.getRoles());
 
             return ResponseEntity.ok().body(response);
 

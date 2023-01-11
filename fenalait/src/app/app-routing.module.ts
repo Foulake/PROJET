@@ -7,6 +7,8 @@ import { CategoryComponent } from './category/category.component';
 import { ClientListComponent } from './client-list/client-list.component';
 import { ClientComponent } from './client/client.component';
 import { AddClientComponent } from './components/add-client/add-client.component';
+import { ChangerMotDePasseComponent } from './components/changer-mot-de-passe/changer-mot-de-passe/changer-mot-de-passe.component';
+import { ChangerProfileComponent } from './components/changer-profile/changer-profile/changer-profile.component';
 import { EmployeListComponent } from './employe-list/employe-list.component';
 import { EmployeComponent } from './employe/employe.component';
 import { FournisseurListComponent } from './fournisseur-list/fournisseur-list.component';
@@ -35,6 +37,12 @@ const routes: Routes = [
     children:[
       {
         path: "profile", component: ProfileComponent
+      },
+      {
+        path: "changerMoDePasse", component: ChangerMotDePasseComponent
+      },
+      {
+        path: "changer-profile", component: ChangerProfileComponent
       },
       
       {path:"registre",component:RegistreComponent},

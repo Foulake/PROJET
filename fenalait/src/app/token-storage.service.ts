@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { JwtResponse } from './jwt-response';
 import { User } from './user';
+
  const TOKEN_KEY ='authtoken';
  const USERNAME_KEY ='AuthUsername';
  const AUTHORITIES_KEY='AuthAuthorities';
@@ -20,10 +21,11 @@ export class TokenStorageService {
 
   
 
-  public saveUser(user: any): void {
+  public saveUser(user: User): void {
     window.sessionStorage.removeItem(USER_KEY);
-    window.sessionStorage.setItem(AUTHORITIES_KEY, JSON.stringify(user.role));
     window.sessionStorage.setItem(USER_KEY, JSON.stringify(user));
+    window.sessionStorage.setItem(AUTHORITIES_KEY, JSON.stringify(user.nom));
+
   }
 
   public getTokenAccess(): string {
@@ -38,7 +40,10 @@ export class TokenStorageService {
 
     return {};
   }
-
+  getUserRole(){
+    let user = this.getUser();
+    return user.roles[0].name;
+  }
   isConnected(user: any): void {
     sessionStorage.setItem('connectedUser', JSON.stringify(user.tokenAccess));
   }

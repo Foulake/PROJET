@@ -11,7 +11,7 @@ import { TokenStorageService } from '../token-storage.service';
 export class MenuComponent implements OnInit {
 
   
-  private roles: string[] = [];
+  currentUser: any;
   isLoggedIn = false;
   showAdminBoard = false;
   showModeratorBoard = false;
@@ -23,10 +23,9 @@ export class MenuComponent implements OnInit {
 
   ngOnInit(): void {
     this.isLoggedIn = this.storageService.isLoggedIn();
-
+    
     if (this.isLoggedIn) {
-      const user = this.storageService.getUser();
-      this.roles = user.roles;
+      this.currentUser = this.storageService.getUser();
 
       //this.showAdminBoard = this.roles.includes('ROLE_ADMIN');
      // this.showModeratorBoard = this.roles.includes('ROLE_MODERATOR');

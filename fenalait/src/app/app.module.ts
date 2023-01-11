@@ -39,6 +39,8 @@ import { LoginComponent } from './login/login.component';
 import { ProfileComponent } from './profile/profile.component';
 import { AddClientComponent } from './components/add-client/add-client.component';
 import { HttpIntersepterService } from './services/http-intersepter.service';
+import { ChangerMotDePasseComponent } from './components/changer-mot-de-passe/changer-mot-de-passe/changer-mot-de-passe.component';
+import { ChangerProfileComponent } from './components/changer-profile/changer-profile/changer-profile.component';
 
 
 @NgModule({
@@ -68,6 +70,8 @@ import { HttpIntersepterService } from './services/http-intersepter.service';
     LoginComponent,
     ProfileComponent,
     AddClientComponent,
+    ChangerMotDePasseComponent,
+    ChangerProfileComponent,
   ],
   imports: [
     BrowserModule,
