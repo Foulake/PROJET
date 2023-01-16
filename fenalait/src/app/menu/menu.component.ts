@@ -23,11 +23,14 @@ export class MenuComponent implements OnInit {
 
   ngOnInit(): void {
     this.isLoggedIn = this.storageService.isLoggedIn();
+    this.currentUser = this.storageService.getUser();
     
     if (this.isLoggedIn) {
       this.currentUser = this.storageService.getUser();
 
-      //this.showAdminBoard = this.roles.includes('ROLE_ADMIN');
+      //this.showAdminBoard = this.storageService.getUser().roles.includes('ROLE_ADMIN');
+      //console.log(this.showAdminBoard);
+      
      // this.showModeratorBoard = this.roles.includes('ROLE_MODERATOR');
 
       //this.username = user.username;

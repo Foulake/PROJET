@@ -49,6 +49,6 @@ export class ClientService {
   }
 
   findClient(prenomClient: any): Observable<Client[]>{
-    return this.http.get<Client[]>(`${this.baseUrl + '/search'}?prenomClient=${prenomClient}`, httpOptions);
+    return this.http.get<Client[]>(`${this.baseUrl + '/search/full'}?prenomClient=${prenomClient}`, httpOptions);
   }
 }

@@ -36,59 +36,107 @@ const routes: Routes = [
     canActivate: [AplicationGuard],
     children:[
       {
-        path: "profile", component: ProfileComponent
+        path: "profile", component: ProfileComponent,
+        canActivate: [AplicationGuard],
       },
       {
-        path: "changerMoDePasse", component: ChangerMotDePasseComponent
+        path: "changerMoDePasse", component: ChangerMotDePasseComponent,
+        canActivate: [AplicationGuard],
       },
       {
-        path: "changer-profile", component: ChangerProfileComponent
+        path: "changer-profile", component: ChangerProfileComponent,
+        canActivate: [AplicationGuard],
       },
       
-      {path:"registre",component:RegistreComponent},
+      { path:"registre",component:RegistreComponent,
+        canActivate: [AplicationGuard]
+      },
   
-      {path:"client",component:ClientListComponent},
+      { path:"client",component:ClientListComponent,
+        canActivate: [AplicationGuard]
+      },
       
-      {path:"addClient",component:AddClientComponent},
-      
+      {path:"addClient",component:AddClientComponent,
+        canActivate: [AplicationGuard]
+      },
+      {path:"addClient/:id",component:AddClientComponent,
+        canActivate: [AplicationGuard]
+      },
       {
-        path: "clientListe", component: ClientListComponent
+        path: "clientListe", component: ClientListComponent,
+        canActivate: [AplicationGuard]
       },
 
-      {path:"localite",component:LocaliteListComponent},
+      { path:"localite",component:LocaliteListComponent,
+        canActivate: [AplicationGuard]
+      },
       
-      {path:"addLocalite",component:LocaliteComponent},
+      {
+        path:"addLocalite",component:LocaliteComponent,
+        canActivate: [AplicationGuard]
+      },
       
-      {path:"fournisseur",component:FournisseurListComponent},
+      {
+        path:"fournisseur",component:FournisseurListComponent,
+        canActivate: [AplicationGuard]
+      },
       
       { path:"addFournisseur",component:FournisseurComponent},
       
-      {path:"addProduit",component:ProduitComponent},
+      { path:"addProduit",component:ProduitComponent,
+        canActivate: [AplicationGuard]
+      },
       
-      {path:"addUser",component:UserComponent},
+      { path:"addUser",component:UserComponent,
+        canActivate: [AplicationGuard]
+      },
       
-      {path:"magasin",component:MagasinListComponent},
+      { 
+        path:"magasin",component:MagasinListComponent,
+        canActivate: [AplicationGuard]
+      },
       
-      {path:"addMagasin",component:MagasinComponent},
-      
-      {path:"employe",component:EmployeListComponent},
-      
-      {path:"addEmploye",component:EmployeComponent},
-      
-      {path:"category",component:CategoryListComponent},
-      
-      {path:"addCategory",component:CategoryComponent},
-      
-      {path:"appro",component:ApprovissionnementListComponent},
-      
-      {path:"addAppro",component:ApprovissionnementComponent},
-      
-      {path:"payer",component:EmployeListComponent},
-      
-      {path:"produit",component:ProduitListComponent},
-      
-      {path:"user",component:UserComponent},
-      
+      { 
+        path:"addMagasin",component:MagasinComponent,
+        canActivate: [AplicationGuard]
+      },
+      {
+        path:"employe",component:EmployeListComponent,
+        canActivate: [AplicationGuard]
+      },
+      {
+        path:"addEmploye",component:EmployeComponent,
+        canActivate: [AplicationGuard]
+      },
+      {
+        path:"category",component:CategoryListComponent,
+        canActivate: [AplicationGuard]
+      },
+      {
+        path:"addCategory",component:CategoryComponent,
+        canActivate: [AplicationGuard]
+      },
+      { 
+        path:"appro",component:ApprovissionnementListComponent,
+        canActivate: [AplicationGuard]
+      },
+      {
+        path:"addAppro",component:ApprovissionnementComponent,
+        canActivate: [AplicationGuard]
+      },
+        
+      { 
+        path:"payer",component:EmployeListComponent,
+        canActivate: [AplicationGuard]
+      },
+      {
+          path:"produit",component:ProduitListComponent,
+          canActivate: [AplicationGuard]
+        },
+      { 
+        path:"user",component:UserComponent,
+        canActivate: [AplicationGuard]
+      }
      
     ]
   },

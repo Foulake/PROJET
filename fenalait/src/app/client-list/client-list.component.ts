@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ClientService } from '../services/client.service';
 import { Client } from '../models/client';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-client-list',
   templateUrl: './client-list.component.html',
@@ -13,6 +14,7 @@ export class ClientListComponent implements OnInit {
   clients?: Client[];
   currentClient: Client = {};
   currentIndex = -1;
+  selectedCltToDelete? = -1;
   prenomClient = '';
   closeResult!:string;
   message = '';
@@ -34,11 +36,12 @@ export class ClientListComponent implements OnInit {
    };
 
   constructor( private httpClient: HttpClient,
-    private clientService: ClientService) { }
+    private clientService: ClientService,
+    private route: Router) { }
 
   ngOnInit(): void {
-    this.message= '';
-     this.getAllClients();
+    this.getAllClients();
+    //this.message= '';
   }
 
   
@@ -59,6 +62,11 @@ onSubmit(): void {
    });
  }
 
+ 
+ editClient(id: number){
+  this.route.navigate(['addClient', id]);
+}
+
   getAllClients(){
     this.clientService.getAllClient()
       .subscribe({
@@ -75,12 +83,12 @@ onSubmit(): void {
   refreshList(): void {
     this.getAllClients();
     this.currentClient = {}
-    this.currentIndex = 1;
+    this.currentIndex = -1;
   }
 
   setActivetedClient(client: Client, index: number){
     this.currentClient= client;
-    this.currentIndex = -1;
+    this.currentIndex = index;
   }
 
   removeAllClient(): void {
@@ -96,21 +104,51 @@ onSubmit(): void {
     });
   }
 
+
   removeSelected(): void {
-    this.clientService.delete(this.currentClients.id)
+    this.clientService.delete(this.currentIndex)
     .subscribe({
       next: (res) =>{
         console.log(res);
         res.message ? res.message : 'Cet client supprimer avec succès !';
-        //this.router.navigate()
+        this.route.navigate(['/client']);
         this.refreshList();
       },
       error: err => {
         this.message = this.errorMessage = err.error.message;
         console.log(this.errorMessage);
-        
       }
-    })
+    });
+  }
+
+  
+  selectedClientPourSupprimer(id: number): void{
+    this.selectedCltToDelete = id;
+}
+
+  confirmDelete(): void{
+    if(this.selectedCltToDelete !== -1){
+      this.clientService.delete(this.selectedCltToDelete)
+      .subscribe({
+        next: (res) =>{
+          this.refreshList();
+          console.log(res);
+          this.message= "Client supprimer avec succès !"
+          //this.getAllClients();
+          //this.route.navigate(['/client']);
+          //window.location.reload();
+          
+        },
+        error: err => {
+          this.message = err.error.message;
+          //console.log(this.message);
+        }
+      });
+    }
+  }
+
+  annulerSuppressionClient(): void{
+    this.selectedCltToDelete = -1;
   }
 
   searchClient(): void {

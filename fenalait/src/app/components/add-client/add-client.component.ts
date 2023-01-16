@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ClientService } from 'src/app/services/client.service';
 
 @Component({
@@ -7,13 +7,12 @@ import { ClientService } from 'src/app/services/client.service';
   templateUrl: './add-client.component.html',
   styleUrls: ['./add-client.component.scss']
 })
-export class AddClientComponent {
+export class AddClientComponent implements OnInit{
 
 form: any = {
   nomClient: '',
   prenomClient:'',
-  telClient:'',
-  password:''
+  telClient:''
 };
 isSuccessful = false;
 isSignUpFailed = false;
@@ -21,11 +20,23 @@ errorMessage = '';
 successMessage = '';
 
 constructor(private clientService: ClientService,
-  private route: Router){}
+  private route: Router,
+  private activetedRoute: ActivatedRoute){}
+ 
+  ngOnInit(): void {
+    const id = this.activetedRoute.snapshot.params['id'];
+        if(id){
+          this.clientService.get(id).subscribe({
+            next: client => {
+              this.form = client;
+            }
+          })
+        }
+  }
 
 onSubmit(): void {
  // const { prenomClient, nomClient, telClient } = this.form;
-
+if(!this.form.id){
   this.clientService.create(this.form).subscribe({
     next: data => {
       console.log(data);
@@ -42,6 +53,25 @@ onSubmit(): void {
       this.isSignUpFailed = true;
     }
   });
+}else{
+  this.clientService.update(this.form.id, this.form).subscribe({
+    next: data => {
+      console.log(data);
+      //this.isSuccessful = true;
+      //this.isSignUpFailed = false;
+      if(this.isSuccessful=true){
+      this.route.navigate(['/client']);
+      this.successMessage = "Client enrégistre avec succès !";
+      }
+    },
+    error: err => {
+      this.errorMessage = err.error.message;
+      console.log(this.errorMessage);
+      this.isSignUpFailed = true;
+    }
+  });
+}
+
 }
 
 
