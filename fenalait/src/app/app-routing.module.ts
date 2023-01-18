@@ -2,6 +2,8 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ApprovissionnementListComponent } from './approvissionnement-list/approvissionnement-list.component';
 import { ApprovissionnementComponent } from './approvissionnement/approvissionnement.component';
+import { CategorieFournisseurListComponent } from './categorie-fournisseur-list/categorie-fournisseur-list.component';
+import { CategorieFournisseurComponent } from './categorie-fournisseur/categorie-fournisseur.component';
 import { CategoryListComponent } from './category-list/category-list.component';
 import { CategoryComponent } from './category/category.component';
 import { ClientListComponent } from './client-list/client-list.component';
@@ -23,6 +25,7 @@ import { ProduitComponent } from './produit/produit.component';
 import { ProfileComponent } from './profile/profile.component';
 import { RegistreComponent } from './registre/registre.component';
 import { AplicationGuard } from './shared/aplication.guard';
+import { UpadateLocaliteComponent } from './upadate-localite/upadate-localite.component';
 import { UserComponent } from './user/user.component';
 
 const routes: Routes = [
@@ -47,9 +50,12 @@ const routes: Routes = [
         path: "clientListe", component: ClientListComponent
       },
 
-      {path:"localite",component:LocaliteListComponent},
-      
+      {path:"localite",component:LocaliteListComponent},     
       {path:"addLocalite",component:LocaliteComponent},
+
+      {path:"categorieFournisseur",component:CategorieFournisseurListComponent},
+ 
+      {path:"addcategorieFournisseur",component:CategorieFournisseurComponent},
       
       {path:"fournisseur",component:FournisseurListComponent},
       
@@ -80,6 +86,8 @@ const routes: Routes = [
       {path:"produit",component:ProduitListComponent},
       
       {path:"user",component:UserComponent},
+
+      {path:"update-localite/:id",component:UpadateLocaliteComponent},
       
      
     ]

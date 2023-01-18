@@ -14,6 +14,7 @@ import com.example.Fenalait.dto.CategoryFourResponse;
 import com.example.Fenalait.exception.ResourceNotFoundException;
 import com.example.Fenalait.model.CategorieFournisseur;
 import com.example.Fenalait.model.Category;
+import com.example.Fenalait.model.Localite;
 import com.example.Fenalait.repository.CategorieFournisseurRepository;
 import com.example.Fenalait.service.CategoryFourService;
 
@@ -135,5 +136,11 @@ public class CategoryFourServiceImpl implements CategoryFourService{
     public CategorieFournisseur getCategoryFournisseur(Long categoryId) {
 		return categoryFourRepository.findById(categoryId).orElseThrow(
 		() ->  new ResourceNotFoundException("Il n'existe pas une category Fournisseur avec id : " + categoryId, null, categoryId));	
+	}
+
+	@Override
+	public List<CategorieFournisseur> getAll() {
+		List<CategorieFournisseur> categorieFournisseurs = categoryFourRepository.findAll();
+		return categorieFournisseurs;
 	}
 }

@@ -39,6 +39,11 @@ import { LoginComponent } from './login/login.component';
 import { ProfileComponent } from './profile/profile.component';
 import { AddClientComponent } from './components/add-client/add-client.component';
 import { HttpIntersepterService } from './services/http-intersepter.service';
+import { CategorieFournisseurComponent } from './categorie-fournisseur/categorie-fournisseur.component';
+import { CategorieFournisseurListComponent } from './categorie-fournisseur-list/categorie-fournisseur-list.component';
+import { UpadateLocaliteComponent } from './upadate-localite/upadate-localite.component';
+import { UpdateCategorieFourComponent } from './update-categorie-four/update-categorie-four.component';
+import { UpdateFournisseurComponent } from './update-fournisseur/update-fournisseur.component';
 
 
 @NgModule({
@@ -68,6 +73,11 @@ import { HttpIntersepterService } from './services/http-intersepter.service';
     LoginComponent,
     ProfileComponent,
     AddClientComponent,
+    CategorieFournisseurComponent,
+    CategorieFournisseurListComponent,
+    UpadateLocaliteComponent,
+    UpdateCategorieFourComponent,
+    UpdateFournisseurComponent,
   ],
   imports: [
     BrowserModule,

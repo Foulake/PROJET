@@ -1,28 +1,25 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, Input, OnInit } from '@angular/core';
-import { Localite } from '../models/localite';
-import { LocaliteService } from '../services/localite.service';
-import{Router} from '@angular/router';
+import { Component, Input } from '@angular/core';
+import { CategorieFournisseur } from '../models/categorie-fournisseur';
+import { CategorieFournisseurService } from '../services/categorie-fournisseur.service';
 
 @Component({
-  selector: 'app-localite-list',
-  templateUrl: './localite-list.component.html',
-  styleUrls: ['./localite-list.component.scss']
+  selector: 'app-categorie-fournisseur-list',
+  templateUrl: './categorie-fournisseur-list.component.html',
+  styleUrls: ['./categorie-fournisseur-list.component.scss']
 })
-export class LocaliteListComponent implements OnInit {
+export class CategorieFournisseurListComponent {
   errorMessage!: string;
-  localites?: Localite[];
-  currentLocalite: Localite = {};
+  categorieFournisseurs?: CategorieFournisseur[];
+  currentCategorieFournisseur: CategorieFournisseur = {};
   currentIndex = -1;
-    id = '';
-    nom = '';
+    description = '';
   closeResult!:string;
   message = '';
 
   
   form: any = {
-    id:'',
-    nom: '',
+  
     description:''
 
     
@@ -30,28 +27,27 @@ export class LocaliteListComponent implements OnInit {
   isSuccessful = false;
   isSignUpFailed = false;
 
-   @Input() currentLocalites: Localite = {
-    nom: '',
+   @Input() currentCategorieFournisseurs: CategorieFournisseur = {
+  
     description:''
 
    };
 
   constructor( private httpClient: HttpClient,
-    private localiteService: LocaliteService, private router :Router) { }
+    private categorieFournisseurService: CategorieFournisseurService) { }
 
   ngOnInit(): void {
     this.message= '';
-     this.getAllLocalites();
+     this.getAllCategorieFournisseurs();
   }
 
   
 onSubmit(): void {
    
-   this.localiteService.create(this.form).subscribe({
+   this.categorieFournisseurService.create(this.form).subscribe({
      next: data => {
        console.log(data);
        this.isSuccessful = true;
-       alert('localites enregistrer avec success');
        this.isSignUpFailed = false;
      },
      error: err => {
@@ -62,11 +58,11 @@ onSubmit(): void {
    });
  }
 
-  getAllLocalites(){
-    this.localiteService.getAllLocalite()
+  getAllCategorieFournisseurs(){
+    this.categorieFournisseurService.getAllCategorieFournisseur()
       .subscribe({
       next: (data) =>{
-        this.localites = data;
+        this.categorieFournisseurs = data;
         console.log('Data', data);
       },
       error: (err) =>{
@@ -76,18 +72,18 @@ onSubmit(): void {
   }
 
   refreshList(): void {
-    this.getAllLocalites();
-    this.currentLocalite = {}
+    this.getAllCategorieFournisseurs();
+    this.currentCategorieFournisseur = {}
     this.currentIndex = 1;
   }
 
-  setActivetedLocalite(localite: Localite, index: number){
-    this.currentLocalite= localite;
+  setActivetedCategorieFournisseur(categorieFournisseur: CategorieFournisseur, index: number){
+    this.currentCategorieFournisseur= categorieFournisseur;
     this.currentIndex = -1;
   }
 
-  removeAllLocalite(): void {
-    this.localiteService.deleteAll()
+  removeAllCategorieFournisseur(): void {
+    this.categorieFournisseurService.deleteAll()
     .subscribe({
       next: (res) => {
         console.log(res);
@@ -100,11 +96,11 @@ onSubmit(): void {
   }
 
   removeSelected(): void {
-    this.localiteService.delete(this.currentLocalite.id)
+    this.categorieFournisseurService.delete(this.currentCategorieFournisseur.id)
     .subscribe({
       next: (res) =>{
         console.log(res);
-        res.message ? res.message : 'Cet localite supprimer avec succès !';
+        res.message ? res.message : 'Cet CategorieFournisseur supprimer avec succès !';
         //this.router.navigate()
         this.refreshList();
       },
@@ -116,14 +112,14 @@ onSubmit(): void {
     })
   }
 
-  searchLocalite(): void {
-    this.currentLocalite = {};
+  searchCategorieFournisseur(): void {
+    this.currentCategorieFournisseur = {};
     this.currentIndex = -1;
 
-    this.localiteService.findLocalite(this.currentLocalite)
+    this.categorieFournisseurService.findCategorieFournisseur(this.currentCategorieFournisseur)
     .subscribe({
       next: (data) =>{
-        this.localites = data;
+        this.categorieFournisseurs = data;
         console.log(data);
         
       },
@@ -134,16 +130,7 @@ onSubmit(): void {
       }
     })
   }
-  updateLocalite(id:number){
-    this.router.navigate(['update-localite', id]);
-
-  }
-  deleteLocalite(id:number){
-    this.localiteService.delete(id).subscribe(data=>{
-      console.log(data);
-      this.localiteService.getAllLocalite();
-
-    })
-
-  }
 }
+
+
+

@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Fournisseur } from '../models/fournisseur';
+import { CategorieFournisseur } from '../models/categorie-fournisseur';
 
 
 const httpOptions = {
@@ -13,8 +13,9 @@ const httpOptions = {
 @Injectable({
   providedIn: 'root'
 })
-export class FournisseurService {
-  baseUrl = 'http://localhost:8181/api/v1/fournisseurs';
+export class CategorieFournisseurService {
+
+  baseUrl = 'http://localhost:8181/api/v1/categorieFournisseurs';
   constructor(private http: HttpClient) { }
 
   
@@ -22,12 +23,12 @@ export class FournisseurService {
   .set('Content-Type', 'application/json')
   .set('Access-Control-Allow-origin', '*');
 
-  getAllFournisseur(): Observable<Fournisseur[]> {
-      return this.http.get<Fournisseur[]>(this.baseUrl + '/getAll', httpOptions);
+  getAllCategorieFournisseur(): Observable<CategorieFournisseur[]> {
+      return this.http.get<CategorieFournisseur[]>(this.baseUrl + '/getAlls', httpOptions);
   }
 
-  get(id: any): Observable<Fournisseur[]> {
-    return this.http.get<Fournisseur[]>(`${this.baseUrl + '/get'}/${id}`, httpOptions);
+  get(id: any): Observable<CategorieFournisseur[]> {
+    return this.http.get<CategorieFournisseur[]>(`${this.baseUrl + '/get'}/${id}`, httpOptions);
   }
 
   create(data: any): Observable<any>{
@@ -46,7 +47,8 @@ export class FournisseurService {
     return this.http.delete(this.baseUrl);
   }
 
-  findFournisseur(nom: any): Observable<Fournisseur[]>{
-    return this.http.get<Fournisseur[]>(`${this.baseUrl + '/search'}?nom=${nom}`, httpOptions);
+  findCategorieFournisseur(description: any): Observable<CategorieFournisseur[]>{
+    return this.http.get<CategorieFournisseur[]>(`${this.baseUrl + '/search'}?description=${description}`, httpOptions);
   }
 }
+

@@ -1,5 +1,7 @@
 package com.example.Fenalait.controller;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.http.HttpStatus;
@@ -18,7 +20,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.Fenalait.dto.CategoryFourDto;
-import com.example.Fenalait.dto.CategoryFourResponse; 
+import com.example.Fenalait.dto.CategoryFourResponse;
+import com.example.Fenalait.model.CategorieFournisseur;
+import com.example.Fenalait.model.Localite;
 import com.example.Fenalait.service.CategoryFourService;
 import com.example.Fenalait.utils.AppConstants;
 
@@ -41,6 +45,12 @@ public class CategoryFourController {
     public ResponseEntity<CategoryFourDto> createCategoryFour(@Valid @RequestBody CategoryFourDto categoryFourDto){
         return new ResponseEntity<>(categoryFourService.createCategoryFour(categoryFourDto), HttpStatus.CREATED);
     }
+    // get all CATEGORYFOURs rest api
+    @GetMapping("/getAlls")
+    public List<CategorieFournisseur> getAllCategorieFournisseurs(){
+        return categoryFourService.getAll();
+    }
+
 
     // get all categoryFours rest api
     @GetMapping("/getAll")
@@ -69,7 +79,7 @@ public class CategoryFourController {
        return new ResponseEntity<>(categoryFourResponse, HttpStatus.OK);
     }
 
-    @PostAuthorize("hasRole('ADMIN')")
+   // @PostAuthorize("hasRole('ADMIN')")
     // delete categoryFour rest api
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> deleteCategoryFour(@PathVariable(name = "id") Long id){

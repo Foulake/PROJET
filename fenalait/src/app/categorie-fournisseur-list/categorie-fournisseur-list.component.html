@@ -1,0 +1,53 @@
+<div class="d-flex justify-content-between pt-2">
+    <div class="col-md-6 p-0">
+      <h2>Liste des categorieFournisseurs</h2>
+    </div>
+  
+    <div class="d-flex">
+      <div class="flex-flill">
+        <button type="button" class="btn btn-sm btn-success"> <i class="fas fa-download"></i>Télécharger </button>
+      </div>
+      <div class="flex-flill">
+        <button type="button" class="btn btn-sm btn-primary" routerLink="/addcategorieFournisseur"> <i class="fas fa-plus"></i>Nouveau </button>
+      </div>
+    </div>
+  </div>
+        <table class="table table-bordered table-striped">
+          <thead>
+          <tr>
+            <th>ID</th>
+            <th>Description</th>
+            <th>Actions</th>
+          </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let categorieFournisseur of categorieFournisseurs; let i = index"
+            [class.active]="i == currentIndex"
+            (click)="setActivetedCategorieFournisseur(categorieFournisseur, i)" >  
+  
+            <td><span>{{categorieFournisseur.id}}</span></td>
+            <td><span>{{categorieFournisseur.description}}</span></td>
+            <td>
+              <button class="btn btn-sm btn-warning">
+                <i class="fa fa-edit"></i>Modifier</button>
+              <button class="btn btn-sm btn-danger">
+                <i class="fa fa-trash"></i>Supprimer</button>
+            </td>
+            
+          </tr>
+          </tbody>
+        </table>
+     
+    
+  
+  <!-- jQuery -->
+  <script src="../../plugins/jquery/jquery.min.js"></script>
+  <!-- Bootstrap 4 -->
+  <script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <!-- bs-custom-file-input -->
+  <script src="../../plugins/bs-custom-file-input/bs-custom-file-input.min.js"></script>
+  <!-- AdminLTE App -->
+  <script src="../../dist/js/adminlte.min.js"></script>
+  <!-- AdminLTE for demo purposes -->
+  <script src="../../dist/js/demo.js"></script>
+  <!-- Page specific script -->

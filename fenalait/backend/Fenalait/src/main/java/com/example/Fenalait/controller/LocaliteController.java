@@ -42,7 +42,7 @@ public class LocaliteController {
     public ResponseEntity<LocaliteRequestDto> createLocalite(@Valid @RequestBody LocaliteRequestDto localiteRequestDto){
         return new ResponseEntity<>(localiteService.createLocalite(localiteRequestDto), HttpStatus.CREATED);
     }
- // get all clients rest api
+ // get all localites rest api
     @GetMapping("/getAlls")
     public List<Localite> getAllLocalites(){
         return localiteService.getAll();
@@ -76,7 +76,7 @@ public class LocaliteController {
        return new ResponseEntity<>(localiteResponse, HttpStatus.OK);
     }
 
-    @PostAuthorize("hasRole('ADMIN')")
+   // @PostAuthorize("hasRole('ADMIN')")
     // delete localite rest api
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> deleteLocalite(@PathVariable(name = "id") Long id){

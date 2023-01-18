@@ -1,10 +1,13 @@
 package com.example.Fenalait.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.example.Fenalait.dto.CategoryFourDto;
 import com.example.Fenalait.dto.CategoryFourResponse;
 import com.example.Fenalait.model.CategorieFournisseur;
+import com.example.Fenalait.model.Localite;
 
 @Service
 public interface CategoryFourService {
@@ -22,5 +25,6 @@ public interface CategoryFourService {
 	CategoryFourResponse searchCategoryFourFull(int pageNo, int pageSize, String sortBy, String sortDir, String keywords);
 
 	CategorieFournisseur getCategoryFournisseur(Long categoryId);
+	List<CategorieFournisseur> getAll();
 
 }

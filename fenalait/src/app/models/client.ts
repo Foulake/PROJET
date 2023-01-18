@@ -3,4 +3,5 @@ export class Client {
     nomClient?: string;
     prenomClient?: string;
     telClient?: string;
+    catFournisseur?:string;
 }

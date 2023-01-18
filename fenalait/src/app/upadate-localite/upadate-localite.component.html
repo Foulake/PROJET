@@ -1,0 +1,83 @@
+<div class="container my-container ">
+    <div class="card justify-content-md-center">
+    <div class="card-header header-color text-center pb-0">
+        <h2>Inscrire un localite</h2>
+    </div>
+    <div class="card-body">
+        
+        <!-- <div class="btn btn-danger" *ngIf="errorMessage">
+            {{ errorMessage }}
+        </div>
+     -->
+    <form
+    
+        name="form"
+        (ngSubmit)="f.form.valid && onSubmit()"
+        #f="ngForm"
+        novalidate>
+  
+        <div class="form-group">
+            <label for="nom">Nom:</label>
+            <input
+              type="text"
+              class="form-control"
+              name="nom"
+              [(ngModel)]="form.nom"
+              required
+              minlength="3"
+              maxlength="20"
+              #nom="ngModel"
+              [ngClass]="{ 'is-invalid': f.submitted && nom.errors }" />
+            <div class="invalid-feedback" *ngIf="nom.errors && f.submitted">
+              <div *ngIf="nom.errors['required']">Le nom ne peut pas être vide !</div>
+              <div *ngIf="nom.errors['minlength']">
+                Le nom doit contenir au moins 20 charactères
+              </div>
+              <div *ngIf="nom.errors['maxlength']">
+                Le description contenir au plus 20 charactères
+              </div>
+            </div>
+          </div>
+  
+          <div class="form-group">
+            <label for="description">Description:</label>
+            <input
+              type="text"
+              class="form-control"
+              name="description"
+              [(ngModel)]="form.description"
+              required
+              minlength="3"
+              maxlength="20"
+              #description="ngModel"
+              [ngClass]="{ 'is-invalid': f.submitted && description.errors }" />
+  
+          <div class="invalid-feedback" *ngIf="description.errors && f.submitted">
+            <div *ngIf="description.errors['required']">description ne peut pas être vide !</div>
+            <div *ngIf="description.errors['minlength']">
+              Le description doit contenir au moins 3 charactères
+            </div>
+            <div *ngIf="description.errors['maxlength']">
+              La description doit contenir au plus 20 charactères
+            </div>
+          </div>
+        </div>
+        
+        <div class="form-group d-flex justify-content-between">
+            
+          <button type="button" class="btn btn-danger" routerLink="/localite">
+            <i class="fas fa-ban"></i> annuler
+          </button>
+            <button type="submit" class="btn btn-primary">
+              <i class="fas fa-save"></i> Modifier
+            </button>
+          </div>
+      </form>
+  
+      
+      <!-- <div class="alert alert-success" *ngIf="isSuccessful">
+        loclite enrégistrer avec succès  {{form.nom}}!
+      </div> -->
+    </div>
+    </div>
+  </div>

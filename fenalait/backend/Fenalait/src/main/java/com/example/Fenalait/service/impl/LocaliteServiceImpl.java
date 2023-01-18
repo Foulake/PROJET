@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import com.example.Fenalait.dto.LocaliteRequestDto;
 import com.example.Fenalait.dto.LocaliteResponse;
 import com.example.Fenalait.exception.ResourceNotFoundException;
+import com.example.Fenalait.model.Client;
 import com.example.Fenalait.model.Localite;
 import com.example.Fenalait.repository.LocaliteRepository;
 import com.example.Fenalait.service.LocaliteService;
@@ -110,8 +111,8 @@ private LocaliteRepository localiteRepository;
 
 	@Override
 	public List<Localite> getAll() {
-		// TODO Auto-generated method stub
-		return null;
+		List<Localite> localites = localiteRepository.findAll();
+		return localites;
 	}
 
 
