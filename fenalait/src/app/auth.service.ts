@@ -49,4 +49,8 @@ signout(): void {
 logout(): Observable<any> {
   return this.http.post(Url + 'signout', { }, httpOptions);
 }
+/**
+hasRole(): void {
+  return this.login.role.includes(role);
+} */
 }

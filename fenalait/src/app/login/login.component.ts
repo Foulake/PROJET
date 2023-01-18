@@ -28,7 +28,7 @@ import { TokenStorageService } from '../token-storage.service';
   ngOnInit(): void {
     if (this.storageService.isLoggedIn()) {
       this.isLoggedIn = true;
-      this.roles = this.storageService.getUser().roles;
+      this.roles = this.storageService.getUser();
     }
   }
 
@@ -41,7 +41,7 @@ import { TokenStorageService } from '../token-storage.service';
       
         this.isLoginFailed = false;
         this.isLoggedIn = true;
-        this.roles = this.storageService.getUser().roles;
+        this.roles = this.storageService.getUser().nom;
           this.route.navigate(['']);
           //this.reloadPage(); 
       },

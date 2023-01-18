@@ -9,6 +9,8 @@ import { CategoryComponent } from './category/category.component';
 import { ClientListComponent } from './client-list/client-list.component';
 import { ClientComponent } from './client/client.component';
 import { AddClientComponent } from './components/add-client/add-client.component';
+import { ChangerMotDePasseComponent } from './components/changer-mot-de-passe/changer-mot-de-passe/changer-mot-de-passe.component';
+import { ChangerProfileComponent } from './components/changer-profile/changer-profile/changer-profile.component';
 import { EmployeListComponent } from './employe-list/employe-list.component';
 import { EmployeComponent } from './employe/employe.component';
 import { FournisseurListComponent } from './fournisseur-list/fournisseur-list.component';
@@ -37,58 +39,122 @@ const routes: Routes = [
     canActivate: [AplicationGuard],
     children:[
       {
-        path: "profile", component: ProfileComponent
+        path: "profile", component: ProfileComponent,
+        canActivate: [AplicationGuard],
+      },
+      {
+        path: "changerMoDePasse", component: ChangerMotDePasseComponent,
+        canActivate: [AplicationGuard],
+      },
+      {
+        path: "changer-profile", component: ChangerProfileComponent,
+        canActivate: [AplicationGuard],
       },
       
-      {path:"registre",component:RegistreComponent},
+      { path:"registre",component:RegistreComponent,
+        canActivate: [AplicationGuard]
+      },
   
-      {path:"client",component:ClientListComponent},
+      { path:"client",component:ClientListComponent,
+        canActivate: [AplicationGuard]
+      },
       
-      {path:"addClient",component:AddClientComponent},
-      
+      {path:"addClient",component:AddClientComponent,
+        canActivate: [AplicationGuard]
+      },
+      {path:"addClient/:id",component:AddClientComponent,
+        canActivate: [AplicationGuard]
+      },
       {
-        path: "clientListe", component: ClientListComponent
+        path: "clientListe", component: ClientListComponent,
+        canActivate: [AplicationGuard]
       },
 
+<<<<<<< HEAD
       {path:"localite",component:LocaliteListComponent},     
       {path:"addLocalite",component:LocaliteComponent},
 
       {path:"categorieFournisseur",component:CategorieFournisseurListComponent},
  
       {path:"addcategorieFournisseur",component:CategorieFournisseurComponent},
+=======
+      { path:"localite",component:LocaliteListComponent,
+        canActivate: [AplicationGuard]
+      },
       
-      {path:"fournisseur",component:FournisseurListComponent},
+      {
+        path:"addLocalite",component:LocaliteComponent,
+        canActivate: [AplicationGuard]
+      },
+>>>>>>> fae3c26f10aa140b22a5dd56075e3f1632600401
+      
+      {
+        path:"fournisseur",component:FournisseurListComponent,
+        canActivate: [AplicationGuard]
+      },
       
       { path:"addFournisseur",component:FournisseurComponent},
       
-      {path:"addProduit",component:ProduitComponent},
+      { path:"addProduit",component:ProduitComponent,
+        canActivate: [AplicationGuard]
+      },
       
-      {path:"addUser",component:UserComponent},
+      { path:"addUser",component:UserComponent,
+        canActivate: [AplicationGuard]
+      },
       
-      {path:"magasin",component:MagasinListComponent},
-      
-      {path:"addMagasin",component:MagasinComponent},
-      
-      {path:"employe",component:EmployeListComponent},
-      
-      {path:"addEmploye",component:EmployeComponent},
-      
-      {path:"category",component:CategoryListComponent},
-      
-      {path:"addCategory",component:CategoryComponent},
-      
-      {path:"appro",component:ApprovissionnementListComponent},
-      
-      {path:"addAppro",component:ApprovissionnementComponent},
-      
-      {path:"payer",component:EmployeListComponent},
-      
-      {path:"produit",component:ProduitListComponent},
-      
+<<<<<<< HEAD
       {path:"user",component:UserComponent},
 
       {path:"update-localite/:id",component:UpadateLocaliteComponent},
+=======
+      { 
+        path:"magasin",component:MagasinListComponent,
+        canActivate: [AplicationGuard]
+      },
+>>>>>>> fae3c26f10aa140b22a5dd56075e3f1632600401
       
+      { 
+        path:"addMagasin",component:MagasinComponent,
+        canActivate: [AplicationGuard]
+      },
+      {
+        path:"employe",component:EmployeListComponent,
+        canActivate: [AplicationGuard]
+      },
+      {
+        path:"addEmploye",component:EmployeComponent,
+        canActivate: [AplicationGuard]
+      },
+      {
+        path:"category",component:CategoryListComponent,
+        canActivate: [AplicationGuard]
+      },
+      {
+        path:"addCategory",component:CategoryComponent,
+        canActivate: [AplicationGuard]
+      },
+      { 
+        path:"appro",component:ApprovissionnementListComponent,
+        canActivate: [AplicationGuard]
+      },
+      {
+        path:"addAppro",component:ApprovissionnementComponent,
+        canActivate: [AplicationGuard]
+      },
+        
+      { 
+        path:"payer",component:EmployeListComponent,
+        canActivate: [AplicationGuard]
+      },
+      {
+          path:"produit",component:ProduitListComponent,
+          canActivate: [AplicationGuard]
+        },
+      { 
+        path:"user",component:UserComponent,
+        canActivate: [AplicationGuard]
+      }
      
     ]
   },

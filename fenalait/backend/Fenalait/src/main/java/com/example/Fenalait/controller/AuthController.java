@@ -62,7 +62,6 @@ public class AuthController {
             String accessToken = jwtUtil.generateAccessToken(user);
             String refreshToken = jwtUtil.generateRefreshToken(user);
 
-            
             AuthResponse response = new AuthResponse(user.getId(), user.getEmail(), user.getRoles(), accessToken, refreshToken, user.getPrenom(), user.getNom());
             response.setTokenAccess(refreshToken);
             return ResponseEntity.ok().body(response);
@@ -102,11 +101,9 @@ public class AuthController {
             String accessToken = jwtUtil.generateAccessToken(user);
             String refreshToken = jwtUtil.generateRefreshToken(user);
 
-           
             AuthResponse response = new AuthResponse(user.getId(), user.getEmail(), user.getRoles(), accessToken, refreshToken, user.getPrenom(), user.getNom());
 
             return ResponseEntity.ok().body(response);
 
     }
-    
 }
