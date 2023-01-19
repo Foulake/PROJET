@@ -14,14 +14,12 @@ export class LocaliteListComponent implements OnInit {
   localites?: Localite[];
   currentLocalite: Localite = {};
   currentIndex = -1;
-    id = '';
     nom = '';
   closeResult!:string;
   message = '';
 
   
   form: any = {
-    id:'',
     nom: '',
     description:''
 
@@ -61,6 +59,10 @@ onSubmit(): void {
      }
    });
  }
+  updateLocalite(id:number){
+    this.router.navigate(['addLocalite', id]);
+
+  }
 
   getAllLocalites(){
     this.localiteService.getAllLocalite()
@@ -134,14 +136,11 @@ onSubmit(): void {
       }
     })
   }
-  updateLocalite(id:number){
-    this.router.navigate(['update-localite', id]);
-
-  }
+ 
   deleteLocalite(id:number){
     this.localiteService.delete(id).subscribe(data=>{
       console.log(data);
-      this.localiteService.getAllLocalite();
+     this.getAllLocalites();
 
     })
 

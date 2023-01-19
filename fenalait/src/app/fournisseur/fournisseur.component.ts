@@ -19,6 +19,7 @@ export class FournisseurComponent {
   isSignUpFailed = false;
   errorMessage = '';
   successMessage = '';
+categorieFournisseur: any;
   
   constructor(private fournisseurService: FournisseurService,
     private route: Router){}

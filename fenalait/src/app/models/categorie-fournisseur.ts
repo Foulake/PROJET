@@ -1,4 +1,4 @@
 export class CategorieFournisseur {
-    id?:number;
+    id?:any;
     description?:string;
 }

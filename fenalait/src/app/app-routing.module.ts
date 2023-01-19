@@ -27,7 +27,6 @@ import { ProduitComponent } from './produit/produit.component';
 import { ProfileComponent } from './profile/profile.component';
 import { RegistreComponent } from './registre/registre.component';
 import { AplicationGuard } from './shared/aplication.guard';
-import { UpadateLocaliteComponent } from './upadate-localite/upadate-localite.component';
 import { UserComponent } from './user/user.component';
 
 const routes: Routes = [
@@ -70,14 +69,19 @@ const routes: Routes = [
         canActivate: [AplicationGuard]
       },
 
-<<<<<<< HEAD
-      {path:"localite",component:LocaliteListComponent},     
-      {path:"addLocalite",component:LocaliteComponent},
 
-      {path:"categorieFournisseur",component:CategorieFournisseurListComponent},
+      {path:"categorieFournisseur",component:CategorieFournisseurListComponent,
+      canActivate: [AplicationGuard]
+      },
  
-      {path:"addcategorieFournisseur",component:CategorieFournisseurComponent},
-=======
+      {path:"addcategorieFournisseur",component:CategorieFournisseurComponent,
+       canActivate: [AplicationGuard]
+         },
+         {path:"addcategorieFournisseur/:id",component:CategorieFournisseurComponent,
+       canActivate: [AplicationGuard]
+         },
+
+
       { path:"localite",component:LocaliteListComponent,
         canActivate: [AplicationGuard]
       },
@@ -86,7 +90,9 @@ const routes: Routes = [
         path:"addLocalite",component:LocaliteComponent,
         canActivate: [AplicationGuard]
       },
->>>>>>> fae3c26f10aa140b22a5dd56075e3f1632600401
+      {path:"addLocalite/:id",component:LocaliteComponent,
+        canActivate: [AplicationGuard]
+    },
       
       {
         path:"fournisseur",component:FournisseurListComponent,
@@ -102,17 +108,15 @@ const routes: Routes = [
       { path:"addUser",component:UserComponent,
         canActivate: [AplicationGuard]
       },
-      
-<<<<<<< HEAD
+
       {path:"user",component:UserComponent},
 
-      {path:"update-localite/:id",component:UpadateLocaliteComponent},
-=======
+      
+
       { 
         path:"magasin",component:MagasinListComponent,
         canActivate: [AplicationGuard]
       },
->>>>>>> fae3c26f10aa140b22a5dd56075e3f1632600401
       
       { 
         path:"addMagasin",component:MagasinComponent,

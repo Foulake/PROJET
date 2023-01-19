@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, Input } from '@angular/core';
+import { Route, Router } from '@angular/router';
 import { CategorieFournisseur } from '../models/categorie-fournisseur';
 import { CategorieFournisseurService } from '../services/categorie-fournisseur.service';
 
@@ -34,7 +35,7 @@ export class CategorieFournisseurListComponent {
    };
 
   constructor( private httpClient: HttpClient,
-    private categorieFournisseurService: CategorieFournisseurService) { }
+    private categorieFournisseurService: CategorieFournisseurService, private route: Router) { }
 
   ngOnInit(): void {
     this.message= '';
@@ -111,6 +112,18 @@ onSubmit(): void {
       }
     })
   }
+  updateCatfour(id:number){
+    this.route.navigate(['addcategorieFournisseur', id]);
+
+  }
+  deleteCatfour(id:number){
+    this.categorieFournisseurService.delete(id).subscribe(data=>{
+      console.log(data);
+     this.getAllCategorieFournisseurs();
+
+
+  })
+}
 
   searchCategorieFournisseur(): void {
     this.currentCategorieFournisseur = {};

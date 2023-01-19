@@ -1,5 +1,5 @@
 export class Localite {
-    id?:number;
+    id?:any;
     nom?:string;
     description?:string;
     

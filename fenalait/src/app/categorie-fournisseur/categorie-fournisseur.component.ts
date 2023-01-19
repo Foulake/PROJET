@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
+import { CategorieFournisseur } from '../models/categorie-fournisseur';
 import { CategorieFournisseurService } from '../services/categorie-fournisseur.service';
 
 @Component({
@@ -7,7 +8,7 @@ import { CategorieFournisseurService } from '../services/categorie-fournisseur.s
   templateUrl: './categorie-fournisseur.component.html',
   styleUrls: ['./categorie-fournisseur.component.scss']
 })
-export class CategorieFournisseurComponent {
+export class CategorieFournisseurComponent implements OnInit {
   form: any = {
     description:''
   };
@@ -17,10 +18,22 @@ export class CategorieFournisseurComponent {
   successMessage = '';
   
   constructor(private categorieFournisseurService: CategorieFournisseurService,
-    private route: Router){}
+    private route: Router, private activetedRoute: ActivatedRoute){}
 
+    ngOnInit(): void {
+      const id = this.activetedRoute.snapshot.params['id'];
+          if(id){
+            this.categorieFournisseurService.get(id).subscribe({
+              next: categorieFournisseur => {
+                this.form = categorieFournisseur;
+              }
+            })
+          }
+    }
+  
   onSubmit(): void {
-     
+  
+  if(!this.form.id){
     this.categorieFournisseurService.create(this.form).subscribe({
       next: data => {
         console.log(data);
@@ -28,7 +41,24 @@ export class CategorieFournisseurComponent {
         //this.isSignUpFailed = false;
         if(this.isSuccessful=true){
         this.route.navigate(['/categorieFournisseur']);
-        this.successMessage = "CategorieFournisseur enrégistre avec succès !";
+        this.successMessage = "categorieFournisseur enrégistre avec succès !";
+        }
+      },
+      error: err => {
+        this.errorMessage = err.error.message;
+        console.log(this.errorMessage);
+        this.isSignUpFailed = true;
+      }
+    });
+  }else{
+    this.categorieFournisseurService.update(this.form.id, this.form).subscribe({
+      next: data => {
+        console.log(data);
+        //this.isSuccessful = true;
+        //this.isSignUpFailed = false;
+        if(this.isSuccessful=true){
+        this.route.navigate(['/categorieFournisseur']);
+        this.successMessage = "categorieFournisseur enrégistre avec succès !";
         }
       },
       error: err => {
@@ -39,17 +69,16 @@ export class CategorieFournisseurComponent {
     });
   }
   
+  }
   
-  newcategorieFournisseur(): void {
+  
+  newclient(): void {
     this.isSuccessful = false;
     this.form = {
-    
+      nom: '',
       description: ''
-      
     };
   }
   
   }
   
-
-

@@ -39,16 +39,10 @@ import { LoginComponent } from './login/login.component';
 import { ProfileComponent } from './profile/profile.component';
 import { AddClientComponent } from './components/add-client/add-client.component';
 import { HttpIntersepterService } from './services/http-intersepter.service';
-<<<<<<< HEAD
 import { CategorieFournisseurComponent } from './categorie-fournisseur/categorie-fournisseur.component';
 import { CategorieFournisseurListComponent } from './categorie-fournisseur-list/categorie-fournisseur-list.component';
-import { UpadateLocaliteComponent } from './upadate-localite/upadate-localite.component';
-import { UpdateCategorieFourComponent } from './update-categorie-four/update-categorie-four.component';
-import { UpdateFournisseurComponent } from './update-fournisseur/update-fournisseur.component';
-=======
 import { ChangerMotDePasseComponent } from './components/changer-mot-de-passe/changer-mot-de-passe/changer-mot-de-passe.component';
 import { ChangerProfileComponent } from './components/changer-profile/changer-profile/changer-profile.component';
->>>>>>> fae3c26f10aa140b22a5dd56075e3f1632600401
 
 
 @NgModule({
@@ -78,16 +72,10 @@ import { ChangerProfileComponent } from './components/changer-profile/changer-pr
     LoginComponent,
     ProfileComponent,
     AddClientComponent,
-<<<<<<< HEAD
     CategorieFournisseurComponent,
     CategorieFournisseurListComponent,
-    UpadateLocaliteComponent,
-    UpdateCategorieFourComponent,
-    UpdateFournisseurComponent,
-=======
     ChangerMotDePasseComponent,
     ChangerProfileComponent,
->>>>>>> fae3c26f10aa140b22a5dd56075e3f1632600401
   ],
   imports: [
     BrowserModule,

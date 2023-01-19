@@ -28,9 +28,9 @@
             <td><span>{{categorieFournisseur.id}}</span></td>
             <td><span>{{categorieFournisseur.description}}</span></td>
             <td>
-              <button class="btn btn-sm btn-warning">
+              <button  (click)="updateCatfour(categorieFournisseur.id)"class="btn btn-sm btn-warning" >
                 <i class="fa fa-edit"></i>Modifier</button>
-              <button class="btn btn-sm btn-danger">
+              <button (click)="deleteCatfour(categorieFournisseur.id)"  class="btn btn-sm btn-danger" >
                 <i class="fa fa-trash"></i>Supprimer</button>
             </td>
             
