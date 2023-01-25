@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ClientService } from 'src/app/services/client.service';
+import { NotificationServiceService } from 'src/app/services/notification.service';
 
 @Component({
   selector: 'app-add-client',
@@ -21,6 +22,7 @@ successMessage = '';
 
 constructor(private clientService: ClientService,
   private route: Router,
+  private notifyService: NotificationServiceService,
   private activetedRoute: ActivatedRoute){}
  
   ngOnInit(): void {
@@ -40,6 +42,7 @@ if(!this.form.id){
   this.clientService.create(this.form).subscribe({
     next: data => {
       console.log(data);
+      this.notifyService.showSuccess("Client ajouté avec succès!", "Ajout");
       //this.isSuccessful = true;
       //this.isSignUpFailed = false;
       if(this.isSuccessful=true){
@@ -57,6 +60,7 @@ if(!this.form.id){
   this.clientService.update(this.form.id, this.form).subscribe({
     next: data => {
       console.log(data);
+      this.notifyService.showSuccess("Client modifié avec succès!", "Edit");
       //this.isSuccessful = true;
       //this.isSignUpFailed = false;
       if(this.isSuccessful=true){

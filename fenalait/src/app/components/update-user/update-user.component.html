@@ -1,0 +1,115 @@
+<div class="container my-container">
+    <div class="card justify-content-md-center">
+    <div class="card-header header-color text-center pb-0">
+        <h3>S'inscrire</h3>
+    </div>
+    <div class="card-body">
+        <div class="btn btn-danger" *ngIf="msg">
+            {{ msg }}
+        </div>
+    <form
+        *ngIf="currentUser.id"
+        #f="ngForm"
+        novalidate>
+
+        <div class="form-group">
+            <label for="prenom">prenom</label>
+            <input
+              type="text"
+              class="form-control"
+              name="prenom"
+              [(ngModel)]="currentUser.prenom"
+              required
+              minlength="3"
+              maxlength="20"
+              #prenom="ngModel"
+              [ngClass]="{ 'is-invalid': prenom.errors }" />
+            <div class="invalid-feedback" *ngIf="prenom.errors">
+              <div *ngIf="prenom.errors['required']">Le prénom ne peut pas être vide !</div>
+              <div *ngIf="prenom.errors['minlength']">
+                Le prénom doit contenir au moins 20 charactères
+              </div>
+              <div *ngIf="prenom.errors['maxlength']">
+                Le prénom doit contenir au plus 20 charactères
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="nom">Nom</label>
+            <input
+              type="text"
+              class="form-control"
+              name="nom"
+              [(ngModel)]="currentUser.nom"
+              required
+              minlength="3"
+              maxlength="20"
+              #nom="ngModel"
+              [ngClass]="{ 'is-invalid': nom.errors }" />
+
+          <div class="invalid-feedback" *ngIf="nom.errors">
+            <div *ngIf="nom.errors['required']">prenom ne peut pas être vide !</div>
+            <div *ngIf="nom.errors['minlength']">
+              Le nom doit contenir au moins 3 charactères
+            </div>
+            <div *ngIf="nom.errors['maxlength']">
+              Le nom doit contenir au plus 20 charactères
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input
+            type="email"
+            class="form-control"
+            name="email"
+            [(ngModel)]="currentUser.email"
+            required
+            email
+            #email="ngModel"
+            [ngClass]="{ 'is-invalid': email.errors }"/>
+          <div class="invalid-feedback" *ngIf="email.errors">
+            <div *ngIf="email.errors['required']">L'e-mail ne peut pas être vide !</div>
+            <div *ngIf="email.errors['email']">
+              Email doit être une adresse email valide !
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input
+            type="password"
+            class="form-control"
+            name="password"
+            [(ngModel)]="currentUser.password"
+            required
+            minlength="4"
+            #password="ngModel"
+            [ngClass]="{ 'is-invalid': password.errors }"
+          />
+          <div class="invalid-feedback" *ngIf="password.errors">
+            <div *ngIf="password.errors['required']">Mot de passe ne peut pas être vide !</div>
+            <div *ngIf="password.errors['minlength']">
+              Mot de passe doit contenir au moins 4 charactères
+            </div>
+          </div>
+        </div>
+        <div class="form-group d-flex justify-content-between">
+            
+          <button type="button" class="btn btn-danger" routerLink="/user">
+            <i class="fas fa-ban"></i> annuler
+          </button>
+            <button type="submit" class="btn btn-primary" [disabled]="f.invalid" (click)="update()">
+              <i class="fas fa-save"></i> Modifier
+            </button>
+          </div>
+  
+        <div class="alert alert-success" *ngIf="successMesg">
+          <p>{{ successMesg }}</p>
+        </div>
+    </form>
+  
+    </div>
+    </div>
+  </div>

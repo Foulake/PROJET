@@ -1,9 +1,7 @@
 export class Employe {
     id!: number ;
-    nom!: string;
-    prenom!:string;
-    tel!:string;
-    dateFour!:Date;
-
-
+    titre!: string;
+    firstName!: string;
+    lastName!:string;
+    telEmploye!:string;
 }

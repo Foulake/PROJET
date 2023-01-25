@@ -1,10 +1,39 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { Employe } from '../models/employe';
+
+const httpOptions = {
+  headers: new HttpHeaders({ 'Content-Type': 'application/json' , 'Access-Control-Allow-origin': '*'})
+
+};
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class EmployeService {
-   private baseURL="http://localhost:9191/api/v1/employes"
+   private baseURL="http://localhost:8181/api/v1/employes"
+
   constructor(private httpClient :HttpClient) { }
+
+  get(id: any): Observable<Employe[]> {
+    return this.httpClient.get<Employe[]>(`${this.baseURL + '/get'}/${id}`, httpOptions);
+  }
+
+  getAllEmploye(params: any): Observable<Employe[]> {
+    return this.httpClient.get<Employe[]>(this.baseURL + '/getAll', { params })
+  }
+
+  addEmploye(data: any): Observable<any>{
+    return this.httpClient.post(this.baseURL + '/add', data, httpOptions);
+  }
+
+  update(id: any, data: any): Observable<any>{
+    return this.httpClient.put(`${this.baseURL + '/edit'}/${id}`, data, httpOptions)
+  }
+
+  delete(id: any): Observable<any>{
+    return this.httpClient.delete(`${this.baseURL + '/delete'}/${id}`, httpOptions)
+  }
 }
