@@ -43,6 +43,9 @@ import { CategorieFournisseurComponent } from './categorie-fournisseur/categorie
 import { CategorieFournisseurListComponent } from './categorie-fournisseur-list/categorie-fournisseur-list.component';
 import { ChangerMotDePasseComponent } from './components/changer-mot-de-passe/changer-mot-de-passe/changer-mot-de-passe.component';
 import { ChangerProfileComponent } from './components/changer-profile/changer-profile/changer-profile.component';
+import { UpdateLocaliteComponent } from './update-localite/update-localite.component';
+import { UpdateCatfourComponent } from './update-catfour/update-catfour.component';
+import { UpdatefournisseurComponent } from './updatefournisseur/updatefournisseur.component';
 
 
 @NgModule({
@@ -76,6 +79,9 @@ import { ChangerProfileComponent } from './components/changer-profile/changer-pr
     CategorieFournisseurListComponent,
     ChangerMotDePasseComponent,
     ChangerProfileComponent,
+    UpdateLocaliteComponent,
+    UpdateCatfourComponent,
+    UpdatefournisseurComponent,
   ],
   imports: [
     BrowserModule,

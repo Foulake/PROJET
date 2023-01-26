@@ -23,7 +23,9 @@ export class FournisseurListComponent implements OnInit {
     nom: '',
     prenom:'',
     tel:'',
-    dateFour:''
+    dateFour:'',
+    categoryFourNom:''
+    
 
 
     
@@ -34,6 +36,7 @@ export class FournisseurListComponent implements OnInit {
     nom: '',
     prenom:'',
     tel:'',
+    categoryFourNom:'',
   
    };
 

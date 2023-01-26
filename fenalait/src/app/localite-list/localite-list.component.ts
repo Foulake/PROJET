@@ -60,7 +60,7 @@ onSubmit(): void {
    });
  }
   updateLocalite(id:number){
-    this.router.navigate(['addLocalite', id]);
+    this.router.navigate(['updateLocalite', id]);
 
   }
 

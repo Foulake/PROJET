@@ -1,3 +1,4 @@
+<div class="col-md-12 col-md-offset-2 scroll ">
 <div class="container my-container ">
     <div class="card justify-content-md-center">
     <div class="card-header header-color text-center pb-0">
@@ -98,9 +99,9 @@
             </div>
           </div>
           <div class="form-group">
-            <label for="dateFour">Categorie</label>
-            <select class="form-control" name="" id="">
-              <option *ngFor="let categorieFournisseur of categorieFournisseur" value="{{categorieFournisseur.id}}">{{categorieFournisseur.description}}</option>
+            <label for="categoryFourId">Categorie</label>
+            <select class="form-control" name="categoryFourId" id="categoryFourId">
+              <option *ngFor="let categorieFournisseur of listCategorieFournisseur" value="{{categorieFournisseur.categorieFournisseur.id}}">{{categorieFournisseur.categorieFournisseur.description}}</option>
 
             </select>
             
@@ -122,8 +123,10 @@
       
       <div class="alert alert-success" *ngIf="isSuccessful">
         fournisseur enrégistrer avec succès Mr/Mme {{form.nom}}!
+
       </div>
     </div>
     </div>
   </div>
+</div>
   

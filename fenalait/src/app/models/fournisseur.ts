@@ -1,7 +1,9 @@
 export class Fournisseur {
-id?: number;
+id?: any;
 nom?: string;
 prenom?: string;
 dateFour?: Date;
 tel?: string;
+categoryFourNom?:string;
+categoryFourId?:any;
 }

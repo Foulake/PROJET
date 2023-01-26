@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { CategorieFournisseurService } from '../services/categorie-fournisseur.service';
 import { FournisseurService } from '../services/fournisseur.service';
 
 @Component({
@@ -13,16 +14,17 @@ export class FournisseurComponent {
     nom: '',
       prenom: '',
       tel: '',
-      dateFour:''
+      dateFour:'',
+      categoryFourId:''
   };
   isSuccessful = false;
   isSignUpFailed = false;
   errorMessage = '';
   successMessage = '';
-categorieFournisseur: any;
+listCategorieFournisseur: any[]=[];
   
-  constructor(private fournisseurService: FournisseurService,
-    private route: Router){}
+  constructor(private fournisseurService: FournisseurService, private categorieFournisseurService:CategorieFournisseurService
+   , private route: Router){}
   
   onSubmit(): void {
     this.fournisseurService.create(this.form).subscribe({
