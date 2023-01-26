@@ -1,8 +1,10 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
+import { User } from './models/user';
 
 const Url="http://localhost:8181/auth/";
+const BaseUrl="http://localhost:8181/api/users/";
  const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' , 'Access-Control-Allow-origin': '*'})
 
@@ -38,6 +40,26 @@ register(prenom: string, nom: string, email: string, password: string): Observab
     },
     httpOptions
   );
+}
+
+getAllUsers(params: any): Observable<User[]>{
+  return this.http.get<User[]>(BaseUrl + 'getAllUsers', {params});
+}
+
+get(id: any): Observable<User> {
+  return this.http.get<User>(`${BaseUrl + 'get'}/${id}`);
+}
+
+update(id: any, data : any): Observable<any>{
+  return this.http.put(`${BaseUrl + 'edit'}/${id}`, data, httpOptions);
+}
+
+delete(id: any): Observable<any> {
+  if(id){
+  return this.http.delete(`${BaseUrl + '/delete'}/${id}`, httpOptions);
+  }else{
+    return of();
+  }
 }
 
 signout(): void {

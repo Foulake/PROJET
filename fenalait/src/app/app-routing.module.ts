@@ -6,13 +6,16 @@ import { CategorieFournisseurListComponent } from './categorie-fournisseur-list/
 import { CategorieFournisseurComponent } from './categorie-fournisseur/categorie-fournisseur.component';
 import { CategoryListComponent } from './category-list/category-list.component';
 import { CategoryComponent } from './category/category.component';
-import { ClientListComponent } from './client-list/client-list.component';
-import { ClientComponent } from './client/client.component';
 import { AddClientComponent } from './components/add-client/add-client.component';
+import { AddEmployeComponent } from './components/add-employe/add-employe.component';
 import { ChangerMotDePasseComponent } from './components/changer-mot-de-passe/changer-mot-de-passe/changer-mot-de-passe.component';
 import { ChangerProfileComponent } from './components/changer-profile/changer-profile/changer-profile.component';
-import { EmployeListComponent } from './employe-list/employe-list.component';
-import { EmployeComponent } from './employe/employe.component';
+import { ClientListComponent } from './components/client-list/client-list.component';
+import { EmployeListComponent } from './components/employe-list/employe-list.component';
+import { EmployeComponent } from './components/employe/employe.component';
+import { UpdateUserComponent } from './components/update-user/update-user.component';
+import { UserListComponent } from './components/user-list/user-list.component';
+import { UserComponent } from './components/user/user.component';
 import { FournisseurListComponent } from './fournisseur-list/fournisseur-list.component';
 import { FournisseurComponent } from './fournisseur/fournisseur.component';
 import { LocaliteListComponent } from './localite-list/localite-list.component';
@@ -27,9 +30,6 @@ import { ProduitComponent } from './produit/produit.component';
 import { ProfileComponent } from './profile/profile.component';
 import { RegistreComponent } from './registre/registre.component';
 import { AplicationGuard } from './shared/aplication.guard';
-import { UpdateLocaliteComponent } from './update-localite/update-localite.component';
-import { UpdateCatfourComponent } from './update-catfour/update-catfour.component';
-import { UserComponent } from './user/user.component';
 
 const routes: Routes = [
   {path:"login",component:LoginComponent},
@@ -55,7 +55,22 @@ const routes: Routes = [
       { path:"registre",component:RegistreComponent,
         canActivate: [AplicationGuard]
       },
-  
+
+      { path:"registre/:id",component:RegistreComponent,
+        canActivate: [AplicationGuard]
+      },
+      {
+        path: "user", component: UserListComponent,
+        canActivate: [AplicationGuard],
+      },
+      { path:"user-list",component:UserListComponent,
+        canActivate: [AplicationGuard]
+       },
+
+       { path:"updateUser/:id",component:UpdateUserComponent,
+        canActivate: [AplicationGuard]
+      },
+
       { path:"client",component:ClientListComponent,
         canActivate: [AplicationGuard]
       },
@@ -79,7 +94,7 @@ const routes: Routes = [
       {path:"addcategorieFournisseur",component:CategorieFournisseurComponent,
        canActivate: [AplicationGuard]
          },
-         {path:"updatecatFour/:id",component:UpdateCatfourComponent,
+         {path:"addcategorieFournisseur/:id",component:CategorieFournisseurComponent,
        canActivate: [AplicationGuard]
          },
 
@@ -92,7 +107,7 @@ const routes: Routes = [
         path:"addLocalite",component:LocaliteComponent,
         canActivate: [AplicationGuard]
       },
-      {path:"updateLocalite/:id",component:UpdateLocaliteComponent,
+      {path:"addLocalite/:id",component:LocaliteComponent,
         canActivate: [AplicationGuard]
     },
       
@@ -110,30 +125,34 @@ const routes: Routes = [
       { path:"addUser",component:UserComponent,
         canActivate: [AplicationGuard]
       },
-
-      {path:"user",component:UserComponent},
-
       
-
       { 
         path:"magasin",component:MagasinListComponent,
         canActivate: [AplicationGuard]
       },
-      
+
       { 
         path:"addMagasin",component:MagasinComponent,
         canActivate: [AplicationGuard]
       },
       {
-        path:"employe",component:EmployeListComponent,
+        path:"employe", component:EmployeListComponent,
         canActivate: [AplicationGuard]
       },
       {
-        path:"addEmploye",component:EmployeComponent,
+        path:"employeListe", component:EmployeListComponent,
         canActivate: [AplicationGuard]
       },
       {
-        path:"category",component:CategoryListComponent,
+        path:"addEmploye", component:AddEmployeComponent,
+        canActivate: [AplicationGuard]
+      },
+      {
+        path:"addEmploye/:id", component:AddEmployeComponent,
+        canActivate: [AplicationGuard]
+      },
+      {
+        path:"category", component:CategoryListComponent,
         canActivate: [AplicationGuard]
       },
       {

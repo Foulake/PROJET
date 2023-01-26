@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ClientService } from 'src/app/services/client.service';
 import { ClientListComponent } from '../client-list/client-list.component';
-import { ClientService } from '../services/client.service';
 
 @Component({
   selector: 'app-client',

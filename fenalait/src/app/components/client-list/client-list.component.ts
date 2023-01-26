@@ -1,23 +1,33 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { ClientService } from '../services/client.service';
-import { Client } from '../models/client';
+import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Observable, of } from 'rxjs';
+import { Client } from 'src/app/models/client';
+import { ClientService } from 'src/app/services/client.service';
+import { NotificationServiceService } from 'src/app/services/notification.service';
+
 @Component({
   selector: 'app-client-list',
   templateUrl: './client-list.component.html',
   styleUrls: ['./client-list.component.scss']
 })
 export class ClientListComponent implements OnInit {
+
   
   errorMessage!: string;
-  clients?: Client[];
+  clients!: Client[];
   currentClient: Client = {};
   currentIndex = -1;
   selectedCltToDelete? = -1;
   prenomClient = '';
   closeResult!:string;
   message = '';
+
+ 
+  page= 1;
+  count =0;
+  pageSize= 5;
+  totalPages=[5,10, 15];
 
   
   form: any = {
@@ -29,56 +39,79 @@ export class ClientListComponent implements OnInit {
   isSuccessful = false;
   isSignUpFailed = false;
 
+  searFormGroup!: FormGroup;
+/** 
    @Input() currentClients: Client = {
     nomClient: '',
     prenomClient:'',
     telClient:''
-   };
+   }; */
 
-  constructor( private httpClient: HttpClient,
-    private clientService: ClientService,
-    private route: Router) { }
+  constructor( private clientService: ClientService,
+    private route: Router,
+    private notifyService : NotificationServiceService,
+    private fb: FormBuilder) { }
 
   ngOnInit(): void {
+    
+    this.searFormGroup=this.fb.group({
+      keyword : this.fb.control("")
+    });
     this.getAllClients();
     //this.message= '';
   }
-
-  
-onSubmit(): void {
-  // const { prenomClient, nomClient, telClient } = this.form;
- 
-   this.clientService.create(this.form).subscribe({
-     next: data => {
-       console.log(data);
-       this.isSuccessful = true;
-       this.isSignUpFailed = false;
-     },
-     error: err => {
-       this.errorMessage = err.error.message;
-       console.log(this.errorMessage);
-       this.isSignUpFailed = true;
-     }
-   });
- }
-
- 
+   
  editClient(id: number){
   this.route.navigate(['addClient', id]);
 }
 
-  getAllClients(){
-    this.clientService.getAllClient()
+  
+ getRequestParams(searchPrenomClient: String, page: number, pageSize: number): any {
+  let params : any = {};
+
+  if(searchPrenomClient){
+    params[`prenomClient`]= searchPrenomClient;
+  }
+
+  if(page){
+    params[`page`] = page - 1;
+  }
+
+  if(pageSize){
+    params[`size`] = pageSize;
+  }
+  return params;
+ }
+
+  getAllClients(): void{
+    const params = this.getRequestParams(this.prenomClient, this.page, this.pageSize);
+
+    this.clientService.getAllClient(params)
       .subscribe({
-      next: (data) =>{
-        this.clients = data;
-        console.log('Data', data);
+      next: (response:any) =>{
+        const { clients, totalItems} = response.content;
+        this.clients = response.content;
+        this.count = response.total;
+        console.log('response', response.content);
       },
       error: (err) =>{
-        console.log(err);
+        this.errorMessage = err.error.message;
+        console.log(this.errorMessage);
       }
     });
   }
+
+  hadlePageChange(event: number): void {
+    this.page = event;
+    this.getAllClients();
+  }
+
+  hadlePageSizeChange(event: any): void {
+    this.pageSize = event.target.value;
+    this.page = 1;
+    this.getAllClients();
+  }
+
 
   refreshList(): void {
     this.getAllClients();
@@ -110,12 +143,13 @@ onSubmit(): void {
     .subscribe({
       next: (res) =>{
         console.log(res);
-        res.message ? res.message : 'Cet client supprimer avec succès !';
+        res.message ? res.message : 'Client supprimé avec succès !';
         this.route.navigate(['/client']);
         this.refreshList();
       },
       error: err => {
         this.message = this.errorMessage = err.error.message;
+        this.notifyService.showError(this.message, "Erreur");
         console.log(this.errorMessage);
       }
     });
@@ -127,20 +161,19 @@ onSubmit(): void {
 }
 
   confirmDelete(): void{
-    if(this.selectedCltToDelete !== -1){
+    if(this.selectedCltToDelete !== -1) {
       this.clientService.delete(this.selectedCltToDelete)
       .subscribe({
         next: (res) =>{
-          this.refreshList();
-          console.log(res);
-          this.message= "Client supprimer avec succès !"
-          //this.getAllClients();
-          //this.route.navigate(['/client']);
-          //window.location.reload();
+          let index = this.clients.indexOf(this.currentClient.id);
+          this.clients.splice(index, 1);
+          this.notifyService.showSuccess("Client supprimé avec succès!", "Suppréssion");
+          this.getAllClients();
           
         },
         error: err => {
           this.message = err.error.message;
+          this.notifyService.showError(this.message, "Erreur");
           //console.log(this.message);
         }
       });
@@ -151,15 +184,38 @@ onSubmit(): void {
     this.selectedCltToDelete = -1;
   }
 
+  showToasterSuccess(){
+    this.notifyService.showSuccess("Client modifier avec succès !!", "Edit")
+  }
+
+  
+  searchClients(keyword:string): Observable<Client[]>{
+    let clients = this.clients.filter(c=>c.prenomClient!.includes(keyword));
+    return of(clients);
+  }
+
+  handleSearchClients(){
+    let keyword = this.searFormGroup.value.keyword;
+    this.searchClients(keyword).subscribe({
+      next: (response) =>{
+        this.clients = response;
+        console.log(this.clients);
+        
+      }
+    });
+  }
+
   searchClient(): void {
-    this.currentClient = {};
-    this.currentIndex = -1;
+    this.page = 1;
+    this.getAllClients();
+    /**this.currentClient = {};
+    //this.currentIndex = -1;
 
     this.clientService.findClient(this.prenomClient)
     .subscribe({
-      next: (data) =>{
-        this.clients = data;
-        console.log(data);
+      next: (response) =>{
+        this.clients = response;
+        console.log(response);
         
       },
       error: (err) => {
@@ -167,7 +223,7 @@ onSubmit(): void {
         console.log(err);
         
       }
-    })
+    })*/
   }
 
    /**  open(content: any) {

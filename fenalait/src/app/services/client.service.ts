@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { Client } from '../models/client';
 
  
@@ -24,9 +24,9 @@ export class ClientService {
   .set('Content-Type', 'application/json')
   .set('Access-Control-Allow-origin', '*');
 
-  getAllClient(): Observable<Client[]> {
-      return this.http.get<Client[]>(this.baseUrl + '/getAlls', httpOptions);
-  }
+  getAllClient(params: any): Observable<Client[]> {
+    return this.http.get<Client[]>(this.baseUrl + '/getAll', {params});
+}
 
   get(id: any): Observable<Client[]> {
     return this.http.get<Client[]>(`${this.baseUrl + '/get'}/${id}`, httpOptions);
@@ -41,7 +41,11 @@ export class ClientService {
   }
 
   delete(id: any): Observable<any> {
+    if(id){
     return this.http.delete(`${this.baseUrl + '/delete'}/${id}`, httpOptions);
+    }else{
+      return of();
+    }
   }
   
   deleteAll(): Observable<any> {
