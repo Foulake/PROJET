@@ -30,6 +30,8 @@ import { ProduitComponent } from './produit/produit.component';
 import { ProfileComponent } from './profile/profile.component';
 import { RegistreComponent } from './registre/registre.component';
 import { AplicationGuard } from './shared/aplication.guard';
+import { UpdateCatfourComponent } from './update-catfour/update-catfour.component';
+import { UpdateLocaliteComponent } from './update-localite/update-localite.component';
 
 const routes: Routes = [
   {path:"login",component:LoginComponent},
@@ -94,7 +96,7 @@ const routes: Routes = [
       {path:"addcategorieFournisseur",component:CategorieFournisseurComponent,
        canActivate: [AplicationGuard]
          },
-         {path:"addcategorieFournisseur/:id",component:CategorieFournisseurComponent,
+         {path:"updatecatFour/:id",component:UpdateCatfourComponent,
        canActivate: [AplicationGuard]
          },
 
@@ -107,7 +109,7 @@ const routes: Routes = [
         path:"addLocalite",component:LocaliteComponent,
         canActivate: [AplicationGuard]
       },
-      {path:"addLocalite/:id",component:LocaliteComponent,
+      {path:"updateLocalite/:id",component:UpdateLocaliteComponent,
         canActivate: [AplicationGuard]
     },
       

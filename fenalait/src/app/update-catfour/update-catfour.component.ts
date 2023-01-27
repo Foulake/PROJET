@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { CategorieFournisseur } from '../models/categorie-fournisseur';
 import { CategorieFournisseurService } from '../services/categorie-fournisseur.service';
 
 @Component({
