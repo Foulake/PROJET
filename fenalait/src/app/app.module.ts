@@ -39,6 +39,7 @@ import { CategorieFournisseurComponent } from './categorie-fournisseur/categorie
 import { CategorieFournisseurListComponent } from './categorie-fournisseur-list/categorie-fournisseur-list.component';
 import { ChangerMotDePasseComponent } from './components/changer-mot-de-passe/changer-mot-de-passe/changer-mot-de-passe.component';
 import { ChangerProfileComponent } from './components/changer-profile/changer-profile/changer-profile.component';
+
 import { AddEmployeComponent } from './components/add-employe/add-employe.component';
 import { ClientComponent } from './components/client/client.component';
 import { ClientListComponent } from './components/client-list/client-list.component';
@@ -47,9 +48,13 @@ import { ToastrModule } from 'ngx-toastr';
 import { UserListComponent } from './components/user-list/user-list.component';
 import { UpdateUserComponent } from './components/update-user/update-user.component';
 import { AddProduitComponent } from './components/add-produit/add-produit.component';
-import { ProduitComponent } from './components/produit/produit.component';
 import { ProduitListComponent } from './components/produit-list/produit-list.component';
+import { ProduitComponent } from './components/produit/produit.component';
+import { UpdateCatfourComponent } from './update-catfour/update-catfour.component';
+import { UpdateLocaliteComponent } from './update-localite/update-localite.component';
+import { UpdatefournisseurComponent } from './updatefournisseur/updatefournisseur.component';
 import { CategoryProduitListComponent } from './components/category-produit-list/category-produit-list.component';
+
 
 
 @NgModule({
@@ -84,9 +89,13 @@ import { CategoryProduitListComponent } from './components/category-produit-list
     CategorieFournisseurListComponent,
     ChangerMotDePasseComponent,
     ChangerProfileComponent,
+    UpdateLocaliteComponent,
+    UpdateCatfourComponent,
+    UpdatefournisseurComponent,
     AddEmployeComponent,
     UserListComponent,
     UpdateUserComponent,
+
     AddProduitComponent,
     CategoryProduitListComponent,
   ],

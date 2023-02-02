@@ -113,7 +113,7 @@ onSubmit(): void {
     })
   }
   updateCatfour(id:number){
-    this.route.navigate(['addcategorieFournisseur', id]);
+    this.route.navigate(['updatecatFour', id]);
 
   }
   deleteCatfour(id:number){

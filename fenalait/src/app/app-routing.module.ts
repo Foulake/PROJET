@@ -7,11 +7,15 @@ import { CategorieFournisseurComponent } from './categorie-fournisseur/categorie
 import { CategoryListComponent } from './category-list/category-list.component';
 import { CategoryComponent } from './components/category/category.component';
 import { AddClientComponent } from './components/add-client/add-client.component';
+import { AddEmployeComponent } from './components/add-employe/add-employe.component';
 import { ChangerMotDePasseComponent } from './components/changer-mot-de-passe/changer-mot-de-passe/changer-mot-de-passe.component';
 import { ChangerProfileComponent } from './components/changer-profile/changer-profile/changer-profile.component';
 import { ClientListComponent } from './components/client-list/client-list.component';
 import { EmployeListComponent } from './components/employe-list/employe-list.component';
 import { EmployeComponent } from './components/employe/employe.component';
+import { UpdateUserComponent } from './components/update-user/update-user.component';
+import { UserListComponent } from './components/user-list/user-list.component';
+import { UserComponent } from './components/user/user.component';
 import { FournisseurListComponent } from './fournisseur-list/fournisseur-list.component';
 import { FournisseurComponent } from './fournisseur/fournisseur.component';
 import { LocaliteListComponent } from './localite-list/localite-list.component';
@@ -24,14 +28,11 @@ import { MenuComponent } from './menu/menu.component';
 import { ProfileComponent } from './profile/profile.component';
 import { RegistreComponent } from './registre/registre.component';
 import { AplicationGuard } from './shared/aplication.guard';
-import { UserComponent } from './components/user/user.component';
-import { AddEmployeComponent } from './components/add-employe/add-employe.component';
-import { UpdateUserComponent } from './components/update-user/update-user.component';
-import { UserListComponent } from './components/user-list/user-list.component';
+import { CategoryProduitListComponent } from './components/category-produit-list/category-produit-list.component';
+import { UpdateLocaliteComponent } from './update-localite/update-localite.component';
 import { AddProduitComponent } from './components/add-produit/add-produit.component';
 import { ProduitListComponent } from './components/produit-list/produit-list.component';
-import { CategoryProduitListComponent } from './components/category-produit-list/category-produit-list.component';
-
+import { UpdateCatfourComponent } from './update-catfour/update-catfour.component';
 
 const routes: Routes = [
   {path:"login",component:LoginComponent},
@@ -97,6 +98,16 @@ const routes: Routes = [
         canActivate: [AplicationGuard]
       },
 
+      {path:"categorieFournisseur",component:CategorieFournisseurListComponent,
+      canActivate: [AplicationGuard]
+      },
+ 
+      {path:"addcategorieFournisseur",component:CategorieFournisseurComponent,
+       canActivate: [AplicationGuard]
+         },
+         {path:"updatecatFour/:id",component:UpdateCatfourComponent,
+       canActivate: [AplicationGuard]
+         },
       { path:"localite",component:LocaliteListComponent,
         canActivate: [AplicationGuard]
       },
@@ -105,7 +116,10 @@ const routes: Routes = [
         path:"addLocalite",component:LocaliteComponent,
         canActivate: [AplicationGuard]
       },
-
+      {path:"updateLocalite/:id",component:UpdateLocaliteComponent,
+        canActivate: [AplicationGuard]
+    },
+      
       {
         path:"fournisseur",component:FournisseurListComponent,
         canActivate: [AplicationGuard]
