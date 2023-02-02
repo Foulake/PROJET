@@ -123,6 +123,16 @@ export class EmployeListComponent implements OnInit {
     this.selectedCltToDelete = -1;
   }
 
+  searchEmployeName(){
+    if(this.titre == ''){
+      this.getAll();
+    }else{
+      this.employes = this.employes.filter( res => {
+        return res.titre?.toLocaleLowerCase().match(this.titre.toLocaleLowerCase());
+      })
+    }
+  }
+
   searchEmploye(): void {
     this.page = 1;
     this.getAll();

@@ -1,7 +1,7 @@
 <div class="container my-container ">
     <div class="card justify-content-md-center">
     <div class="card-header header-color text-center pb-0">
-        <h2>Ajouter un employe</h2>
+        <h2> {{ pageTitle  }} </h2>
     </div>
     <div class="card-body">
         
@@ -100,7 +100,7 @@
         
         <div class="form-group d-flex justify-content-between">
             
-          <button type="button" class="btn btn-danger" routerLink="/client">
+          <button type="button" class="btn btn-danger" routerLink="/employe">
             <i class="fas fa-ban"></i> annuler
           </button>
             <button type="submit" class="btn btn-primary" [disabled]="f.invalid">

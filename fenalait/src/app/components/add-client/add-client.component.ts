@@ -15,6 +15,8 @@ form: any = {
   prenomClient:'',
   telClient:''
 };
+
+public pageTitle!: string;
 isSuccessful = false;
 isSignUpFailed = false;
 errorMessage = '';
@@ -31,13 +33,16 @@ constructor(private clientService: ClientService,
           this.clientService.get(id).subscribe({
             next: client => {
               this.form = client;
+              this.pageTitle= `Modifier le client ${this.form.prenomClient}`;
             }
           })
+        }else{
+          this.pageTitle= 'Ajouter un client';
         }
   }
 
 onSubmit(): void {
- // const { prenomClient, nomClient, telClient } = this.form;
+
 if(!this.form.id){
   this.clientService.create(this.form).subscribe({
     next: data => {

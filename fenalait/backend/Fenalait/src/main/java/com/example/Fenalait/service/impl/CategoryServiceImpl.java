@@ -102,6 +102,7 @@ public class CategoryServiceImpl implements CategoryService{
         return categoryDto;
     }
 
+    
     // convert DTO to entity
     private Category mapToEntity(CategoryDto categoryDto){
         //Category category = mapper.map(categoryDto, Category.class);

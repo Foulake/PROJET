@@ -135,6 +135,14 @@ export class UserListComponent implements OnInit{
     this.selectedCltToDelete = -1;
   }
 
-
+  searchUserName(){
+    if(this.prenom == ''){
+      this.getAll();
+    }else{
+      this.users = this.users.filter( res => {
+        return res.prenom?.toLocaleLowerCase().match(this.prenom.toLocaleLowerCase());
+      })
+    }
+  }
 
 }

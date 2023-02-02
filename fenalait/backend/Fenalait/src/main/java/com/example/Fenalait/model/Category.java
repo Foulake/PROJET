@@ -15,9 +15,11 @@ import javax.validation.constraints.Size;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 @Data
 @EqualsAndHashCode(callSuper=false)
+@ToString
 @Entity
 @Table(name="categories")
 public class Category extends  BaseEntity{
@@ -29,10 +31,11 @@ public class Category extends  BaseEntity{
 	@Size(min = 2, max = 125,  message = "La taille doit être comprise entre 2-125 ")
 	private String nom;
 	
-	@OneToMany(mappedBy = "category", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
 	private List<Produit> produits ;
 	
 	public Category() {}
+	
 	public Category(String nom, List<Produit> produits) {
 		super();
 		this.nom = nom;
@@ -45,7 +48,5 @@ public class Category extends  BaseEntity{
 	public void removeProduit(Produit produit) {
 		produits.remove(produit);
 	}
-	
-	
 
 }
