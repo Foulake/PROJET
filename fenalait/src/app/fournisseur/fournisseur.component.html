@@ -2,7 +2,7 @@
 <div class="container my-container ">
     <div class="card justify-content-md-center">
     <div class="card-header header-color text-center pb-0">
-        <h2>Inscrire un fournisseur</h2>
+        <h2>Ajouter un fournisseur</h2>
     </div>
     <div class="card-body">
         
@@ -17,8 +17,9 @@
         novalidate>
   
         <div class="form-group">
-            <label for="prenom">Prénom</label>
+            <label for="prenom">Prénom:</label>
             <input
+            placeholder="veuillez saisir le prénom"
               type="text"
               class="form-control"
               name="prenom"
@@ -40,8 +41,10 @@
           </div>
   
           <div class="form-group">
-            <label for="nom">Nom</label>
+            <label for="nom">Nom:</label>
             <input
+            
+            placeholder="veuillez saisir le nom"  
               type="text"
               class="form-control"
               name="nom"
@@ -63,14 +66,15 @@
           </div>
         </div>
         <div class="form-group">
-          <label for="tel">Telephone</label>
+          <label for="tel">Telephone:</label>
           <input
-            type="tel"
+          
+          placeholder="veuillez saisir le numéro tel"
+            type="text"
             class="form-control"
             name="tel"
             [(ngModel)]="form.tel"
             required
-            tel
             #tel="ngModel"
             [ngClass]="{ 'is-invalid': f.submitted && tel.errors }"/>
           <div class="invalid-feedback" *ngIf="tel.errors && f.submitted">
@@ -81,14 +85,15 @@
           </div>
         </div>
         <div class="form-group">
-            <label for="dateFour">Date</label>
+            <label for="dateFour">Date:</label>
+            
             <input
+            placeholder="veuillez saisir la date"
               type="date"
               class="form-control"
               name="dateFour"
               [(ngModel)]="form.dateFour"
               required
-              dateFour
               #dateFour="ngModel"
               [ngClass]="{ 'is-invalid': f.submitted && dateFour.errors }"/>
             <div class="invalid-feedback" *ngIf="dateFour.errors && f.submitted">
@@ -99,9 +104,10 @@
             </div>
           </div>
           <div class="form-group">
-            <label for="categoryFourId">Categorie</label>
-            <select class="form-control" name="categoryFourId" id="categoryFourId">
-              <option *ngFor="let categorieFournisseur of listCategorieFournisseur" value="{{categorieFournisseur.categorieFournisseur.id}}">{{categorieFournisseur.categorieFournisseur.description}}</option>
+            <label for="categoryFourNom">Categorie</label>
+          
+            <select class="form-control" name="categorieFournisseur" id="categorieFournisseur">
+              <option *ngFor="let categorieFournisseur of categorieFournisseurs" value="{{categorieFournisseur.id}}">{{categorieFournisseur.description}}</option>
 
             </select>
             

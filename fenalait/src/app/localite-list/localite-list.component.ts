@@ -3,6 +3,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Localite } from '../models/localite';
 import { LocaliteService } from '../services/localite.service';
 import{Router} from '@angular/router';
+import { NotificationServiceService } from '../services/notification.service';
 
 @Component({
   selector: 'app-localite-list',
@@ -10,13 +11,20 @@ import{Router} from '@angular/router';
   styleUrls: ['./localite-list.component.scss']
 })
 export class LocaliteListComponent implements OnInit {
+
   errorMessage!: string;
-  localites?: Localite[];
+  localites: Localite[] = [];
   currentLocalite: Localite = {};
   currentIndex = -1;
     nom = '';
   closeResult!:string;
   message = '';
+  selectedCltToDelete= -1;
+
+  page= 1;
+  count =0;
+  pageSize= 5;
+  totalPages=[5,10, 15];
 
   
   form: any = {
@@ -25,124 +33,113 @@ export class LocaliteListComponent implements OnInit {
 
     
   };
-  isSuccessful = false;
-  isSignUpFailed = false;
+  
+  //  @Input() currentLocalites: Localite = {
+  //   nom: '',
+  //   description:''
 
-   @Input() currentLocalites: Localite = {
-    nom: '',
-    description:''
-
-   };
+  //  };
 
   constructor( private httpClient: HttpClient,
-    private localiteService: LocaliteService, private router :Router) { }
+    private localiteService: LocaliteService, private router :Router,
+    private notifyService: NotificationServiceService ) { }
 
-  ngOnInit(): void {
-    this.message= '';
-     this.getAllLocalites();
+    ngOnInit(): void {
+      this.getAll();
+    }
+  
+    getRequestParams(searchNom: string , page: number, pageSize: number): any {
+      let params: any = {};
+  
+      if(searchNom){
+        params[`nom`] = searchNom;
+      }
+  
+      if(page){
+        params[`page`] = page - 1; 
+      }
+  
+      if(pageSize){
+        params[`size`] = pageSize;
+      }
+  
+      return params;
+    }
+  
+    getAll(): void{
+      
+      const params = this.getRequestParams(this.nom, this.page, this.pageSize);
+  
+      this.localiteService.getAllLocalite(params)
+    
+        .subscribe({
+          next: (response: any) =>{
+            const { localites, totalItems } = response.content;
+            this.localites = response.content;
+            this.count = totalItems;
+            console.log(this.localites);
+            
+          },
+          error: err =>{
+            this.errorMessage = err.error.message;
+            console.log(this.errorMessage);
+            
+          }
+        });
+    }
+  
+    updateLocalite(id: any): void {
+      this.router.navigate(['updateLocalite', id]);
+    }
+  
+    hadlePageChange(event: number): void {
+      this.page = event;
+      this.getAll();
+    }
+  
+    hadlePageSizeChange(event: any): void {
+      this.pageSize = event.target.value;
+      this.page= 1;
+      this.getAll();
+    }
+  
+     
+    selectedLocalitePourSupprimer(id: number): void{
+      this.selectedCltToDelete = id;
+  }
+  
+    confirmDelete(): void{
+      if(this.selectedCltToDelete !== -1) {
+        this.localiteService.delete(this.selectedCltToDelete)
+        .subscribe({
+          next: (res) =>{
+          
+            console.log(res);
+            this.notifyService.showError("Localite supprimer avec succès !", "Suppréssion")
+        
+            this.getAll();
+            
+            
+          },
+          error: err => {
+            this.errorMessage = err.error.message;
+            
+          }
+        });
+      }
+    }
+  
+    annulerSuppressionLocalite(): void{
+      this.selectedCltToDelete = -1;
+    }
+  
+    searchLocalite(): void {
+      this.page = 1;
+      this.getAll();
+      
+    }
+  
+  
   }
 
   
-onSubmit(): void {
-   
-   this.localiteService.create(this.form).subscribe({
-     next: data => {
-       console.log(data);
-       this.isSuccessful = true;
-       alert('localites enregistrer avec success');
-       this.isSignUpFailed = false;
-     },
-     error: err => {
-       this.errorMessage = err.error.message;
-       console.log(this.errorMessage);
-       this.isSignUpFailed = true;
-     }
-   });
- }
-  updateLocalite(id:number){
-    this.router.navigate(['updateLocalite', id]);
-
-  }
-
-  getAllLocalites(){
-    this.localiteService.getAllLocalite()
-      .subscribe({
-      next: (data) =>{
-        this.localites = data;
-        console.log('Data', data);
-      },
-      error: (err) =>{
-        console.log(err);
-      }
-    });
-  }
-
-  refreshList(): void {
-    this.getAllLocalites();
-    this.currentLocalite = {}
-    this.currentIndex = 1;
-  }
-
-  setActivetedLocalite(localite: Localite, index: number){
-    this.currentLocalite= localite;
-    this.currentIndex = -1;
-  }
-
-  removeAllLocalite(): void {
-    this.localiteService.deleteAll()
-    .subscribe({
-      next: (res) => {
-        console.log(res);
-        this.refreshList();
-      },
-      error: err => {
-        this.errorMessage= err.error.message;
-      }
-    });
-  }
-
-  removeSelected(): void {
-    this.localiteService.delete(this.currentLocalite.id)
-    .subscribe({
-      next: (res) =>{
-        console.log(res);
-        res.message ? res.message : 'Cet localite supprimer avec succès !';
-        //this.router.navigate()
-        this.refreshList();
-      },
-      error: err => {
-        this.message = this.errorMessage = err.error.message;
-        console.log(this.errorMessage);
-        
-      }
-    })
-  }
-
-  searchLocalite(): void {
-    this.currentLocalite = {};
-    this.currentIndex = -1;
-
-    this.localiteService.findLocalite(this.currentLocalite)
-    .subscribe({
-      next: (data) =>{
-        this.localites = data;
-        console.log(data);
-        
-      },
-      error: (err) => {
-        this.errorMessage = err.error.message;
-        console.log(err);
-        
-      }
-    })
-  }
- 
-  deleteLocalite(id:number){
-    this.localiteService.delete(id).subscribe(data=>{
-      console.log(data);
-     this.getAllLocalites();
-
-    })
-
-  }
-}

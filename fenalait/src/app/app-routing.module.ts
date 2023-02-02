@@ -32,6 +32,7 @@ import { RegistreComponent } from './registre/registre.component';
 import { AplicationGuard } from './shared/aplication.guard';
 import { UpdateCatfourComponent } from './update-catfour/update-catfour.component';
 import { UpdateLocaliteComponent } from './update-localite/update-localite.component';
+import { UpdatefournisseurComponent } from './updatefournisseur/updatefournisseur.component';
 
 const routes: Routes = [
   {path:"login",component:LoginComponent},
@@ -118,7 +119,12 @@ const routes: Routes = [
         canActivate: [AplicationGuard]
       },
       
-      { path:"addFournisseur",component:FournisseurComponent},
+      { path:"addFournisseur",component:FournisseurComponent,
+      canActivate: [AplicationGuard]},
+
+      { path:"updateFour/:id",component:UpdatefournisseurComponent ,
+      canActivate: [AplicationGuard]},
+      
       
       { path:"addProduit",component:ProduitComponent,
         canActivate: [AplicationGuard]

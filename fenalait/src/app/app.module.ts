@@ -41,11 +41,9 @@ import { CategorieFournisseurComponent } from './categorie-fournisseur/categorie
 import { CategorieFournisseurListComponent } from './categorie-fournisseur-list/categorie-fournisseur-list.component';
 import { ChangerMotDePasseComponent } from './components/changer-mot-de-passe/changer-mot-de-passe/changer-mot-de-passe.component';
 import { ChangerProfileComponent } from './components/changer-profile/changer-profile/changer-profile.component';
-<<<<<<< HEAD
 import { UpdateLocaliteComponent } from './update-localite/update-localite.component';
 import { UpdateCatfourComponent } from './update-catfour/update-catfour.component';
 import { UpdatefournisseurComponent } from './updatefournisseur/updatefournisseur.component';
-=======
 import { AddEmployeComponent } from './components/add-employe/add-employe.component';
 import { ClientComponent } from './components/client/client.component';
 import { ClientListComponent } from './components/client-list/client-list.component';
@@ -53,7 +51,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { ToastrModule } from 'ngx-toastr';
 import { UserListComponent } from './components/user-list/user-list.component';
 import { UpdateUserComponent } from './components/update-user/update-user.component';
->>>>>>> 759445e284e266cc1adb8ecbc809b7f293428f75
+import { UpdateMagasinComponent } from './update-magasin/update-magasin.component';
 
 
 @NgModule({
@@ -87,15 +85,14 @@ import { UpdateUserComponent } from './components/update-user/update-user.compon
     CategorieFournisseurListComponent,
     ChangerMotDePasseComponent,
     ChangerProfileComponent,
-<<<<<<< HEAD
     UpdateLocaliteComponent,
     UpdateCatfourComponent,
     UpdatefournisseurComponent,
-=======
     AddEmployeComponent,
     UserListComponent,
     UpdateUserComponent,
->>>>>>> 759445e284e266cc1adb8ecbc809b7f293428f75
+    UpdateMagasinComponent,
+
   ],
   imports: [
     BrowserModule,

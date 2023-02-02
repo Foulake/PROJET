@@ -23,8 +23,8 @@ export class CategorieFournisseurService {
   .set('Content-Type', 'application/json')
   .set('Access-Control-Allow-origin', '*');
 
-  getAllCategorieFournisseur(): Observable<CategorieFournisseur[]> {
-      return this.http.get<CategorieFournisseur[]>(this.baseUrl + '/getAlls', httpOptions);
+  getAllCategorieFournisseur(params:any): Observable<CategorieFournisseur[]> {
+      return this.http.get<CategorieFournisseur[]>(this.baseUrl + '/getAll', {params});
   }
 
   get(id: any): Observable<CategorieFournisseur[]> {

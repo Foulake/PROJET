@@ -1,7 +1,7 @@
 <div class="container my-container ">
   <div class="card justify-content-md-center">
   <div class="card-header header-color text-center pb-0">
-      <h2>Inscrire un localite</h2>
+      <h2>Ajouter une localite</h2>
   </div>
   <div class="card-body">
       
@@ -16,8 +16,9 @@
       novalidate>
 
       <div class="form-group">
-          <label for="nom">NOM</label>
+          <label for="nom">Nom:</label>
           <input
+          placeholder="veuillez saisir le nom"
             type="text"
             class="form-control"
             name="nom"
@@ -33,14 +34,15 @@
               Le nom doit contenir au moins 20 charactères
             </div>
             <div *ngIf="nom.errors['maxlength']">
-              Le prénomClient doit contenir au plus 20 charactères
+              Le nom doit contenir au plus 20 charactères
             </div>
           </div>
         </div>
 
         <div class="form-group">
-          <label for="description">Description</label>
+          <label for="description">Description:</label>
           <input
+          placeholder="veuillez saisir la description"
             type="text"
             class="form-control"
             name="description"

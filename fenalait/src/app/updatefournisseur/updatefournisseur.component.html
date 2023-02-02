@@ -1,1 +1,138 @@
-<p>updatefournisseur works!</p>
+<div class="col-md-12 col-md-offset-2 scroll ">
+    <div class="container my-container ">
+        <div class="card justify-content-md-center">
+        <div class="card-header header-color text-center pb-0">
+            <h2>Modifier un fournisseur</h2>
+        </div>
+        <div class="card-body">
+            
+            <div class="btn btn-danger" *ngIf="errorMessage">
+                {{ errorMessage }}
+            </div>
+        <form
+            *ngIf="!isSuccessful"
+            name="form"
+            (ngSubmit)="f.form.valid && onSubmit()"
+            #f="ngForm"
+            novalidate>
+      
+            <div class="form-group">
+                <label for="prenom">Prénom:</label>
+                <input
+                placeholder="veuillez saisir le prénom"
+                  type="text"
+                  class="form-control"
+                  name="prenom"
+                  [(ngModel)]="form.prenom"
+                  required
+                  minlength="3"
+                  maxlength="20"
+                  #prenom="ngModel"
+                  [ngClass]="{ 'is-invalid': f.submitted && prenom.errors }" />
+                <div class="invalid-feedback" *ngIf="prenom.errors && f.submitted">
+                  <div *ngIf="prenom.errors['required']">Le prénom ne peut pas être vide !</div>
+                  <div *ngIf="prenom.errors['minlength']">
+                    Le prénom doit contenir au moins 20 charactères
+                  </div>
+                  <div *ngIf="prenom.errors['maxlength']">
+                    Le prénom doit contenir au plus 20 charactères
+                  </div>
+                </div>
+              </div>
+      
+              <div class="form-group">
+                <label for="nom">Nom:</label>
+                <input
+                
+                placeholder="veuillez saisir le nom"  
+                  type="text"
+                  class="form-control"
+                  name="nom"
+                  [(ngModel)]="form.nom"
+                  required
+                  minlength="3"
+                  maxlength="20"
+                  #nom="ngModel"
+                  [ngClass]="{ 'is-invalid': f.submitted && nom.errors }" />
+      
+              <div class="invalid-feedback" *ngIf="nom.errors && f.submitted">
+                <div *ngIf="nom.errors['required']"> nom ne peut pas être vide !</div>
+                <div *ngIf="nom.errors['minlength']">
+                  Le nom doit contenir au moins 3 charactères
+                </div>
+                <div *ngIf="nom.errors['maxlength']">
+                  Le nom doit contenir au plus 20 charactères
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="tel">Telephone:</label>
+              <input
+              
+              placeholder="veuillez saisir le numéro tel"
+                type="text"
+                class="form-control"
+                name="tel"
+                [(ngModel)]="form.tel"
+                required
+                #tel="ngModel"
+                [ngClass]="{ 'is-invalid': f.submitted && tel.errors }"/>
+              <div class="invalid-feedback" *ngIf="tel.errors && f.submitted">
+                <div *ngIf="tel.errors['required']"> Tel ne peut pas être vide !</div>
+                <div *ngIf="tel.errors['tel']">
+                  tel doit être une numero te valide !
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+                <label for="dateFour">Date:</label>
+                
+                <input
+                placeholder="veuillez saisir la date"
+                  type="date"
+                  class="form-control"
+                  name="dateFour"
+                  [(ngModel)]="form.dateFour"
+                  required
+                  #dateFour="ngModel"
+                  [ngClass]="{ 'is-invalid': f.submitted && dateFour.errors }"/>
+                <div class="invalid-feedback" *ngIf="dateFour.errors && f.submitted">
+                  <div *ngIf="dateFour.errors['required']"> dateFour ne peut pas être vide !</div>
+                  <div *ngIf="dateFour.errors['dateFour']">
+                    dateFour doit être une adresse dateFour valide !
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="categoryFourNom">Categorie</label>
+              
+                <select class="form-control" name="categorieFournisseur" id="categorieFournisseur">
+                  <option *ngFor="let categorieFournisseur of categorieFournisseurs" value="{{categorieFournisseur.id}}">{{categorieFournisseur.description}}</option>
+    
+                </select>
+                
+              </div>
+            
+              
+            
+            <div class="form-group d-flex justify-content-between">
+                
+              <button type="button" class="btn btn-danger" routerLink="/fournisseur">
+                <i class="fas fa-ban"></i> annuler
+              </button>
+                <button type="submit" class="btn btn-primary">
+                  <i class="fas fa-save"></i> enrégistrer
+                </button>
+              </div>
+          </form>
+      
+          
+          <div class="alert alert-success" *ngIf="isSuccessful">
+            fournisseur enrégistrer avec succès Mr/Mme {{form.nom}}!
+    
+          </div>
+        </div>
+        </div>
+      </div>
+    </div>
+      

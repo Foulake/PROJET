@@ -22,8 +22,8 @@ export class FournisseurService {
   .set('Content-Type', 'application/json')
   .set('Access-Control-Allow-origin', '*');
 
-  getAllFournisseur(): Observable<Fournisseur[]> {
-      return this.http.get<Fournisseur[]>(this.baseUrl + '/getAll', httpOptions);
+  getAllFournisseur(params:any): Observable<Fournisseur[]> {
+      return this.http.get<Fournisseur[]>(this.baseUrl + '/getAll', {params});
   }
 
   get(id: any): Observable<Fournisseur[]> {
