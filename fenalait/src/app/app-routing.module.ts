@@ -5,7 +5,7 @@ import { ApprovissionnementComponent } from './approvissionnement/approvissionne
 import { CategorieFournisseurListComponent } from './categorie-fournisseur-list/categorie-fournisseur-list.component';
 import { CategorieFournisseurComponent } from './categorie-fournisseur/categorie-fournisseur.component';
 import { CategoryListComponent } from './category-list/category-list.component';
-import { CategoryComponent } from './category/category.component';
+import { CategoryComponent } from './components/category/category.component';
 import { AddClientComponent } from './components/add-client/add-client.component';
 import { ChangerMotDePasseComponent } from './components/changer-mot-de-passe/changer-mot-de-passe/changer-mot-de-passe.component';
 import { ChangerProfileComponent } from './components/changer-profile/changer-profile/changer-profile.component';
@@ -21,8 +21,6 @@ import { LoginComponent } from './login/login.component';
 import { MagasinListComponent } from './magasin-list/magasin-list.component';
 import { MagasinComponent } from './magasin/magasin.component';
 import { MenuComponent } from './menu/menu.component';
-import { ProduitListComponent } from './produit-list/produit-list.component';
-import { ProduitComponent } from './produit/produit.component';
 import { ProfileComponent } from './profile/profile.component';
 import { RegistreComponent } from './registre/registre.component';
 import { AplicationGuard } from './shared/aplication.guard';
@@ -30,6 +28,9 @@ import { UserComponent } from './components/user/user.component';
 import { AddEmployeComponent } from './components/add-employe/add-employe.component';
 import { UpdateUserComponent } from './components/update-user/update-user.component';
 import { UserListComponent } from './components/user-list/user-list.component';
+import { AddProduitComponent } from './components/add-produit/add-produit.component';
+import { ProduitListComponent } from './components/produit-list/produit-list.component';
+import { CategoryProduitListComponent } from './components/category-produit-list/category-produit-list.component';
 
 
 const routes: Routes = [
@@ -87,6 +88,15 @@ const routes: Routes = [
         canActivate: [AplicationGuard]
       },
 
+      { path:"catProd",component:CategoryComponent,
+        canActivate: [AplicationGuard]
+      },
+      
+      {
+        path: "catProdListe", component: CategoryProduitListComponent,
+        canActivate: [AplicationGuard]
+      },
+
       { path:"localite",component:LocaliteListComponent,
         canActivate: [AplicationGuard]
       },
@@ -102,10 +112,6 @@ const routes: Routes = [
       },
       
       { path:"addFournisseur",component:FournisseurComponent},
-      
-      { path:"addProduit",component:ProduitComponent,
-        canActivate: [AplicationGuard]
-      },
       
       { path:"addUser",component:UserComponent,
         canActivate: [AplicationGuard]
@@ -134,6 +140,18 @@ const routes: Routes = [
       },
       {
         path:"addEmploye/:id", component:AddEmployeComponent,
+        canActivate: [AplicationGuard]
+      },
+      {
+        path:"produitList", component:ProduitListComponent,
+        canActivate: [AplicationGuard]
+      },
+      {
+        path:"addProduit", component:AddProduitComponent,
+        canActivate: [AplicationGuard]
+      },
+      {
+        path:"addProduit/:id", component:AddProduitComponent,
         canActivate: [AplicationGuard]
       },
       {

@@ -22,4 +22,5 @@ public interface CategoryService {
 	CategoryResponse searchCategoryFull(int pageNo, int pageSize, String sortBy, String sortBy2, String keywords);
 
 	Category getCategory(Long categoryId);
+		 
 }

@@ -1,5 +1,7 @@
 package com.example.Fenalait.controller;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.http.HttpStatus;
@@ -17,6 +19,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.Fenalait.dto.CategoryDto;
 import com.example.Fenalait.dto.CategoryResponse;
+import com.example.Fenalait.model.Category;
+import com.example.Fenalait.repository.CategoryRepository;
 import com.example.Fenalait.service.CategoryService;
 import com.example.Fenalait.utils.AppConstants;
 
@@ -27,9 +31,11 @@ import com.example.Fenalait.utils.AppConstants;
 public class CategoryController {
 
 	private CategoryService categoryService;
+	private CategoryRepository cat;
 
-    public CategoryController(CategoryService categoryService) {
+    public CategoryController(CategoryService categoryService, CategoryRepository cat) {
         this.categoryService = categoryService;
+        this.cat = cat;
     }
 
    
@@ -50,7 +56,7 @@ public class CategoryController {
     ){
         return categoryService.getAllCategories(pageNo, pageSize, sortBy, sortDir);
     }
-
+    
     // get category by id
     @GetMapping(value = "/get/{id}")
     public ResponseEntity<CategoryDto> getCategoryById(@PathVariable(name = "id") long id){

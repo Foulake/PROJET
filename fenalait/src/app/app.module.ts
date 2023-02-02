@@ -5,7 +5,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { UserComponent } from './components/user/user.component';
 import { FournisseurComponent } from './fournisseur/fournisseur.component';
-import { ProduitComponent } from './produit/produit.component';
 import { FournisseurListComponent } from './fournisseur-list/fournisseur-list.component';
 import { LocaliteComponent } from './localite/localite.component';
 import { LocaliteListComponent } from './localite-list/localite-list.component';
@@ -13,7 +12,7 @@ import { MagasinComponent } from './magasin/magasin.component';
 import { MagasinListComponent } from './magasin-list/magasin-list.component';
 import { EmployeComponent } from './components/employe/employe.component';
 import { EmployeListComponent } from './components/employe-list/employe-list.component';
-import { CategoryComponent } from './category/category.component';
+import { CategoryComponent } from './components/category/category.component';
 import { CategoryListComponent } from './category-list/category-list.component';
 import { ApprovissionnementComponent } from './approvissionnement/approvissionnement.component';
 import { ApprovissionnementListComponent } from './approvissionnement-list/approvissionnement-list.component';
@@ -21,7 +20,6 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AddcategorieComponent } from './addcategorie/addcategorie.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MenuComponent } from './menu/menu.component';
-import { ProduitListComponent } from './produit-list/produit-list.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import{MatToolbarModule} from '@angular/material/toolbar';
@@ -48,6 +46,10 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { ToastrModule } from 'ngx-toastr';
 import { UserListComponent } from './components/user-list/user-list.component';
 import { UpdateUserComponent } from './components/update-user/update-user.component';
+import { AddProduitComponent } from './components/add-produit/add-produit.component';
+import { ProduitComponent } from './components/produit/produit.component';
+import { ProduitListComponent } from './components/produit-list/produit-list.component';
+import { CategoryProduitListComponent } from './components/category-produit-list/category-produit-list.component';
 
 
 @NgModule({
@@ -56,7 +58,6 @@ import { UpdateUserComponent } from './components/update-user/update-user.compon
     UserComponent,
     ClientComponent,
     FournisseurComponent,
-    ProduitComponent,
     ClientListComponent,
     FournisseurListComponent,
     LocaliteComponent,
@@ -71,6 +72,8 @@ import { UpdateUserComponent } from './components/update-user/update-user.compon
     ApprovissionnementListComponent,
     AddcategorieComponent,
     MenuComponent,
+    AddProduitComponent,
+    ProduitComponent,
     ProduitListComponent,
     AuthComponent,
     RegistreComponent,
@@ -84,6 +87,8 @@ import { UpdateUserComponent } from './components/update-user/update-user.compon
     AddEmployeComponent,
     UserListComponent,
     UpdateUserComponent,
+    AddProduitComponent,
+    CategoryProduitListComponent,
   ],
   imports: [
     BrowserModule,

@@ -205,6 +205,16 @@ export class ClientListComponent implements OnInit {
     });
   }
 
+  searchClientName(){
+    if(this.prenomClient == ''){
+      this.getAllClients();
+    }else{
+      this.clients = this.clients.filter( res => {
+        return res.prenomClient?.toLocaleLowerCase().match(this.prenomClient.toLocaleLowerCase());
+      })
+    }
+  }
+
   searchClient(): void {
     this.page = 1;
     this.getAllClients();

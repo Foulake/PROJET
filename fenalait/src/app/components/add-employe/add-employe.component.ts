@@ -18,6 +18,7 @@ export class AddEmployeComponent implements OnInit{
     telEmploye:''
   };
 
+  pageTitle!: string;
   isSuccessful = false;
   errorMessage = '';
   successMessage = '';
@@ -29,8 +30,11 @@ export class AddEmployeComponent implements OnInit{
       this.employeService.get(id).subscribe({
         next: employe => {
           this.form = employe;
+          this.pageTitle = `Modifier l'\employe ${this.form.firstName}`
         }
-      })
+      });
+    }else{
+      this.pageTitle = 'Ajouter un employe';
     }
   
   }
