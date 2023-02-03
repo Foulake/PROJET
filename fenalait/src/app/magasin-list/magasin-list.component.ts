@@ -29,7 +29,7 @@ export class MagasinListComponent implements OnInit {
   
   form: any = {
     nomMagasin: '',
-    localiteNom:''
+   
 
     
   };

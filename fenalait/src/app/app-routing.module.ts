@@ -4,7 +4,6 @@ import { ApprovissionnementListComponent } from './approvissionnement-list/appro
 import { ApprovissionnementComponent } from './approvissionnement/approvissionnement.component';
 import { CategorieFournisseurListComponent } from './categorie-fournisseur-list/categorie-fournisseur-list.component';
 import { CategorieFournisseurComponent } from './categorie-fournisseur/categorie-fournisseur.component';
-import { CategoryListComponent } from './category-list/category-list.component';
 import { CategoryComponent } from './components/category/category.component';
 import { AddClientComponent } from './components/add-client/add-client.component';
 import { AddEmployeComponent } from './components/add-employe/add-employe.component';
@@ -32,6 +31,7 @@ import { AddProduitComponent } from './components/add-produit/add-produit.compon
 import { ProduitListComponent } from './components/produit-list/produit-list.component';
 import { UpdateCatfourComponent } from './update-catfour/update-catfour.component';
 import { UpdatefournisseurComponent } from './updatefournisseur/updatefournisseur.component';
+import { UpdateMagasinComponent } from './update-magasin/update-magasin.component';
 
 const routes: Routes = [
   {path:"login",component:LoginComponent},
@@ -144,6 +144,10 @@ const routes: Routes = [
         path:"addMagasin",component:MagasinComponent,
         canActivate: [AplicationGuard]
       },
+      { 
+        path:"updateMagasin/:id",component:UpdateMagasinComponent,
+        canActivate: [AplicationGuard]
+      },
       {
         path:"employe", component:EmployeListComponent,
         canActivate: [AplicationGuard]
@@ -173,7 +177,7 @@ const routes: Routes = [
         canActivate: [AplicationGuard]
       },
       {
-        path:"category", component:CategoryListComponent,
+        path:"category", component:CategoryComponent,
         canActivate: [AplicationGuard]
       },
       {

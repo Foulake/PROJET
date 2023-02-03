@@ -106,13 +106,15 @@
           <div class="form-group">
             <label for="categoryFourNom">Categorie</label>
           
-            <select class="form-control" name="categorieFournisseur" id="categorieFournisseur">
-              <option *ngFor="let categorieFournisseur of categorieFournisseurs" value="{{categorieFournisseur.id}}">{{categorieFournisseur.description}}</option>
+            <select class="form-control" name="categorieFournisseur" id="categorieFournisseur.id">
+              <option >Selectionnez une catégorie</option>
+ 
+              <option *ngFor="let categorieFournisseur of listCategorieFournisseur" value="{{categorieFournisseur.id}}">{{categorieFournisseur.description}}</option>
 
             </select>
             
           </div>
-        
+  
           
         
         <div class="form-group d-flex justify-content-between">

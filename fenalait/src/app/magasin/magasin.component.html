@@ -1,7 +1,7 @@
 <div class="container my-container ">
     <div class="card justify-content-md-center">
     <div class="card-header header-color text-center pb-0">
-        <h2>Ajouter une localite</h2>
+        <h2>Ajouter une magasin</h2>
     </div>
     <div class="card-body">
         
@@ -38,31 +38,7 @@
               </div>
             </div>
           </div>
-  
-          <div class="form-group">
-            <label for="description">Localite:</label>
-            <input
-            placeholder="veuillez saisir la description"
-              type="text"
-              class="form-control"
-              name="description"
-              [(ngModel)]="form.description"
-              required
-              minlength="3"
-              maxlength="20"
-              #description="ngModel"
-              [ngClass]="{ 'is-invalid': f.submitted && description.errors }" />
-  
-          <div class="invalid-feedback" *ngIf="description.errors && f.submitted">
-            <div *ngIf="description.errors['required']">description ne peut pas être vide !</div>
-            <div *ngIf="description.errors['minlength']">
-              Le description doit contenir au moins 3 charactères
-            </div>
-            <div *ngIf="description.errors['maxlength']">
-              La description doit contenir au plus 20 charactères
-            </div>
-          </div>
-        </div>
+
         
         <div class="form-group d-flex justify-content-between">
             

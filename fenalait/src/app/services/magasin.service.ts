@@ -18,6 +18,9 @@ export class MagasinService {
    header = new HttpHeaders()
   .set('Content-Type', 'application/json')
   .set('Access-Control-Allow-origin', '*');
+  public getAll(): Observable<Magasin[]>{
+    return this.http.get<Magasin[]>(this.baseUrl + '/getAll', httpOptions);
+  }
 
   getAllMagasin(params:any): Observable<Magasin[]> {
       return this.http.get<Magasin[]>(this.baseUrl + '/getAll',{ params });

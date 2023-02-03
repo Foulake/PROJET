@@ -37,24 +37,24 @@ public class Localite extends BaseEntity{
 	private String description;
 	
 	
-	@OneToMany(mappedBy = "localite", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private List<Magasin> magasins;
+	//@OneToMany(mappedBy = "localite", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	//private List<Magasin> magasins;
 
 	public Localite() {}
 	
-	public Localite(String nom, String description, List<Magasin> magasins) {
+	public Localite(String nom, String description) {
 		super();
 		this.nom = nom;
 		this.description = description;
-		this.magasins = magasins;
+		//this.magasins = magasins;
 	}
 	
-	public void addMagasin(Magasin magasin) {
-		magasins.add(magasin);
-	}
-	public void removeMagasin(Magasin magasin) {
-		magasins.remove(magasin);
-	}
+	//public void addMagasin(Magasin magasin) {
+	//	magasins.add(magasin);
+	//}
+	//public void removeMagasin(Magasin magasin) {
+		//magasins.remove(magasin);
+	//}
 	
 	
 }

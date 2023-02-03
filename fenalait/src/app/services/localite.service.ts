@@ -20,6 +20,9 @@ export class LocaliteService {
   .set('Content-Type', 'application/json')
   .set('Access-Control-Allow-origin', '*');
 
+  public getAll(): Observable<Localite[]>{
+    return this.http.get<Localite[]>(this.baseUrl + '/getAll', httpOptions);
+  }
   getAllLocalite(params:any): Observable<Localite[]> {
       return this.http.get<Localite[]>(this.baseUrl + '/getAll',{ params });
   }

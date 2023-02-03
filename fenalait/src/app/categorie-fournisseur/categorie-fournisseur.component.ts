@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { CategorieFournisseur } from '../models/categorie-fournisseur';
 import { CategorieFournisseurService } from '../services/categorie-fournisseur.service';
+import { NotificationServiceService } from '../services/notification.service';
+
 
 @Component({
   selector: 'app-categorie-fournisseur',
@@ -18,7 +20,8 @@ export class CategorieFournisseurComponent implements OnInit {
   successMessage = '';
   
   constructor(private categorieFournisseurService: CategorieFournisseurService,
-    private route: Router, private activetedRoute: ActivatedRoute){}
+    private route: Router, private activetedRoute: ActivatedRoute,
+    private toast: NotificationServiceService,){}
 
     ngOnInit(): void {
       const id = this.activetedRoute.snapshot.params['id'];
@@ -32,28 +35,11 @@ export class CategorieFournisseurComponent implements OnInit {
     }
   
   onSubmit(): void {
-  
-  if(!this.form.id){
     this.categorieFournisseurService.create(this.form).subscribe({
       next: data => {
         console.log(data);
-        //this.isSuccessful = true;
-        //this.isSignUpFailed = false;
-        if(this.isSuccessful=true){
-        this.route.navigate(['/categorieFournisseur']);
-        this.successMessage = "categorieFournisseur enrégistre avec succès !";
-        }
-      },
-      error: err => {
-        this.errorMessage = err.error.message;
-        console.log(this.errorMessage);
-        this.isSignUpFailed = true;
-      }
-    });
-  }else{
-    this.categorieFournisseurService.update(this.form.id, this.form).subscribe({
-      next: data => {
-        console.log(data);
+        this.toast.showSuccess("catefour ajouté avec succès !!", "Ajouter");
+        this.isSuccessful = true;
         //this.isSuccessful = true;
         //this.isSignUpFailed = false;
         if(this.isSuccessful=true){
@@ -68,17 +54,5 @@ export class CategorieFournisseurComponent implements OnInit {
       }
     });
   }
-  
-  }
-  
-  
-  newclient(): void {
-    this.isSuccessful = false;
-    this.form = {
-      nom: '',
-      description: ''
-    };
-  }
-  
   }
   

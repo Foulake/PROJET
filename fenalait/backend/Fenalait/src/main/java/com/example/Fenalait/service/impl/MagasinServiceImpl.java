@@ -122,62 +122,62 @@ private LocaliteRepository localiteRepository;
     
     /** new codes **/
 
-	@Override
-	public MagasinRequestDto createMagasin(Long localiteId, MagasinRequestDto magasinRequestDto) {
-		Magasin magasin = mapToEntity(magasinRequestDto);
+	//@Override
+	//public MagasinRequestDto createMagasin( MagasinRequestDto magasinRequestDto) {
+	//	Magasin magasin = mapToEntity(magasinRequestDto);
 
         // retrieve localite entity by id
-        Localite localite = localiteRepository.findById(localiteId).orElseThrow(
-                () -> new ResourceNotFoundException("Localite", "id", localiteId));
+        //Localite localite = localiteRepository.findById(localiteId).orElseThrow(
+               // () -> new ResourceNotFoundException("Localite", "id", localiteId));
 
         // set localite to magasin entity
-        magasin.setLocalite(localite);
+        //magasin.setLocalite(localite);
 
         // magasin entity to DB
-        Magasin newMagasin =  magasinRepository.save(magasin);
+       // Magasin newMagasin =  magasinRepository.save(magasin);
 
-        return mapToDTO(newMagasin);
-	}
+        //return mapToDTO(newMagasin);
+	//}
 
-	@Override
-	public List<MagasinRequestDto> getMagasinsByLocaliteId(Long localiteId) {
+	//@Override
+	//public List<MagasinRequestDto> getMagasinsByLocaliteId(Long localiteId) {
 		// retrieve magasins by localiteId
-        List<Magasin> magasins = magasinRepository.findByLocaliteId(localiteId);
+      //  List<Magasin> magasins = magasinRepository.findByLocaliteId(localiteId);
 
         // convert list of magasin entities to list of magasin dto's
-        return magasins.stream().map(magasin -> mapToDTO(magasin)).collect(Collectors.toList());
-	}
+        //return magasins.stream().map(magasin -> mapToDTO(magasin)).collect(Collectors.toList());
+	//}
+//
+	//@Override
+	//public MagasinRequestDto getMagasinById( Long magasinId) {
+		// retrieve localite entity by id
+        //Localite localite = localiteRepository.findById(localiteId).orElseThrow(
+               // () -> new ResourceNotFoundException("Localite", "id", localiteId));
+
+        // retrieve magasin by id
+       // Magasin magasin = magasinRepository.findById(magasinId).orElseThrow(() ->
+               // new ResourceNotFoundException("Magasin", "id", magasinId));
+
+       // if(!magasin.getLocalite().getId().equals(localite.getId())){
+         //   throw new BlogAPIException(HttpStatus.BAD_REQUEST, "Magasin does not belong to localite");
+       // }
+
+      //  return mapToDTO(magasin);
+//	}
 
 	@Override
-	public MagasinRequestDto getMagasinById(Long localiteId, Long magasinId) {
+	public MagasinRequestDto updateMagasin( Long magasinId, MagasinRequestDto magasinRequestDto) {
 		// retrieve localite entity by id
-        Localite localite = localiteRepository.findById(localiteId).orElseThrow(
-                () -> new ResourceNotFoundException("Localite", "id", localiteId));
+       // Localite localite = localiteRepository.findById(localiteId).orElseThrow(
+           //     () -> new ResourceNotFoundException("Localite", "id", localiteId));
 
         // retrieve magasin by id
         Magasin magasin = magasinRepository.findById(magasinId).orElseThrow(() ->
                 new ResourceNotFoundException("Magasin", "id", magasinId));
 
-        if(!magasin.getLocalite().getId().equals(localite.getId())){
-            throw new BlogAPIException(HttpStatus.BAD_REQUEST, "Magasin does not belong to localite");
-        }
-
-        return mapToDTO(magasin);
-	}
-
-	@Override
-	public MagasinRequestDto updateMagasin(Long localiteId, Long magasinId, MagasinRequestDto magasinRequestDto) {
-		// retrieve localite entity by id
-        Localite localite = localiteRepository.findById(localiteId).orElseThrow(
-                () -> new ResourceNotFoundException("Localite", "id", localiteId));
-
-        // retrieve magasin by id
-        Magasin magasin = magasinRepository.findById(magasinId).orElseThrow(() ->
-                new ResourceNotFoundException("Magasin", "id", magasinId));
-
-        if(!magasin.getLocalite().getId().equals(localite.getId())){
-            throw new BlogAPIException(HttpStatus.BAD_REQUEST, "Magasin does not belongs to localite");
-        }
+        //if(!magasin.getLocalite().getId().equals(localite.getId())){
+          //  throw new BlogAPIException(HttpStatus.BAD_REQUEST, "Magasin does not belongs to localite");
+       // }
 
         magasin.setNomMagasin(magasinRequestDto.getNomMagasin());
         
@@ -186,18 +186,18 @@ private LocaliteRepository localiteRepository;
 	}
 
 	@Override
-	public void deleteMagasin(Long localiteId, Long magasinId) {
+	public void deleteMagasin(Long magasinId) {
 		// retrieve localite entity by id
-        Localite localite = localiteRepository.findById(localiteId).orElseThrow(
-                () -> new ResourceNotFoundException("Localite", "id", localiteId));
+       // Localite localite = localiteRepository.findById(localiteId).orElseThrow(
+              //  () -> new ResourceNotFoundException("Localite", "id", localiteId));
 
         // retrieve magasin by id
         Magasin magasin = magasinRepository.findById(magasinId).orElseThrow(() ->
                 new ResourceNotFoundException("Magasin", "id", magasinId));
 
-        if(!magasin.getLocalite().getId().equals(localite.getId())){
-            throw new BlogAPIException(HttpStatus.BAD_REQUEST, "Magasin does not belongs to localite");
-        }
+       // if(!magasin.getLocalite().getId().equals(localite.getId())){
+          //  throw new BlogAPIException(HttpStatus.BAD_REQUEST, "Magasin does not belongs to localite");
+     //   }
 
         magasinRepository.delete(magasin);
 	}

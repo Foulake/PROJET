@@ -46,7 +46,7 @@ public class MagasinController {
 
    
 
-   /** @PostAuthorize("hasRole('ADMIN')")
+    //@PostAuthorize("hasRole('ADMIN')")
     // update magasin by id rest api
     @PutMapping("/edit/{id}")
     public ResponseEntity<MagasinRequestDto> updateMagasin(@Valid @RequestBody MagasinRequestDto magasinRequestDto, @PathVariable(name = "id") Long id){
@@ -54,9 +54,9 @@ public class MagasinController {
        MagasinRequestDto magasinResponse = magasinService.updateMagasin(magasinRequestDto, id);
 
        return new ResponseEntity<>(magasinResponse, HttpStatus.OK);
-    } 	**/
+    } 	
 
-   /** @PostAuthorize("hasRole('ADMIN')")
+   // @PostAuthorize("hasRole('ADMIN')")
     // delete magasin rest api
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> deleteMagasin(@PathVariable(name = "id") Long id){
@@ -64,7 +64,7 @@ public class MagasinController {
         magasinService.deleteMagasinById(id);
 
         return new ResponseEntity<>("Magasin entity deleted successfully.", HttpStatus.OK);
-    }	**/
+    }	
     
     
     /** New Codes **/
@@ -86,37 +86,37 @@ public class MagasinController {
         return ResponseEntity.ok(magasinService.getMagasinById(id));
     }
     
-    @PostMapping("/localite/{localiteId}/magasin")
-    public ResponseEntity<MagasinRequestDto> createMagasin(@PathVariable(value = "localiteId") Long localiteId,
-                                                    @Valid @RequestBody MagasinRequestDto magasinDto){
-        return new ResponseEntity<>(magasinService.createMagasin(localiteId, magasinDto), HttpStatus.CREATED);
-    }
+    //@PostMapping("/localite/{localiteId}/magasin")
+   // public ResponseEntity<MagasinRequestDto> createMagasin(@PathVariable(value = "localiteId") Long localiteId,
+                                                  //  @Valid @RequestBody MagasinRequestDto magasinDto){
+       // return new ResponseEntity<>(magasinService.createMagasin(localiteId, magasinDto), HttpStatus.CREATED);
+   // }//
 
-    @GetMapping("/localite/{localiteId}/magasin")
-    public List<MagasinRequestDto> getMagasinsByLocaliteId(@PathVariable(value = "localiteId") Long localiteId){
-        return magasinService.getMagasinsByLocaliteId(localiteId);
-    }
+  //  @GetMapping("/localite/{localiteId}/magasin")
+   // public List<MagasinRequestDto> getMagasinsByLocaliteId(@PathVariable(value = "localiteId") Long localiteId){
+      //  return magasinService.getMagasinsByLocaliteId(localiteId);
+   // }
 
-    @GetMapping("/localite/{localiteId}/magasin/{id}")
-    public ResponseEntity<MagasinRequestDto> getMagasinById(@PathVariable(value = "localiteId") Long localiteId,
-                                                     @PathVariable(value = "id") Long magasinId){
-        MagasinRequestDto magasinDto = magasinService.getMagasinById(localiteId, magasinId);
-        return new ResponseEntity<>(magasinDto, HttpStatus.OK);
-    }
+   // @GetMapping("/localite/{localiteId}/magasin/{id}")
+    //public ResponseEntity<MagasinRequestDto> getMagasinById(@PathVariable(value = "localiteId") Long localiteId,
+                                                  //   @PathVariable(value = "id") Long magasinId){
+       // MagasinRequestDto magasinDto = magasinService.getMagasinById(localiteId, magasinId);
+       // return new ResponseEntity<>(magasinDto, HttpStatus.OK);
+   // }
 
-    @PutMapping("/localite/{localiteId}/magasin/{id}")
-    public ResponseEntity<MagasinRequestDto> updateMagasin(@PathVariable(value = "localiteId") Long localiteId,
-                                                    @PathVariable(value = "id") Long magasinId,
-                                                    @Valid @RequestBody MagasinRequestDto magasinDto){
-        MagasinRequestDto updatedMagasin = magasinService.updateMagasin(localiteId, magasinId, magasinDto);
-        return new ResponseEntity<>(updatedMagasin, HttpStatus.OK);
-    }
+    //@PutMapping("/localite/{localiteId}/magasin/{id}")
+    //public ResponseEntity<MagasinRequestDto> updateMagasin(@PathVariable(value = "localiteId") Long localiteId,
+                                                   // @PathVariable(value = "id") Long magasinId,
+                                                   // @Valid @RequestBody MagasinRequestDto magasinDto){
+        //MagasinRequestDto updatedMagasin = magasinService.updateMagasin(localiteId, magasinId, magasinDto);
+        //return new ResponseEntity<>(updatedMagasin, HttpStatus.OK);
+    //}
 
-    @DeleteMapping("/localite/{localiteId}/magasin/{id}")
-    public ResponseEntity<String> deleteMagasin(@PathVariable(value = "localiteId") Long localiteId,
-                                                @PathVariable(value = "id") Long magasinId){
-        magasinService.deleteMagasin(localiteId, magasinId);
-        return new ResponseEntity<>("Magasin deleted successfully", HttpStatus.OK);
-    }
+  //  @DeleteMapping("/localite/{localiteId}/magasin/{id}")
+  //  public ResponseEntity<String> deleteMagasin(@PathVariable(value = "localiteId") Long localiteId,
+                                              //  @PathVariable(value = "id") Long magasinId){
+       // magasinService.deleteMagasin(localiteId, magasinId);
+       // return new ResponseEntity<>("Magasin deleted successfully", HttpStatus.OK);
+  //  }
 
 }
