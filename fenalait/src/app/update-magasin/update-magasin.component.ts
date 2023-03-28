@@ -1,19 +1,18 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { MagasinService } from '../services/magasin.service';
 import { NotificationServiceService } from '../services/notification.service';
 
 @Component({
-  selector: 'app-magasin',
-  templateUrl: './magasin.component.html',
-  styleUrls: ['./magasin.component.scss']
+  selector: 'app-update-magasin',
+  templateUrl: './update-magasin.component.html',
+  styleUrls: ['./update-magasin.component.scss']
 })
-export class MagasinComponent implements OnInit {
+export class UpdateMagasinComponent implements OnInit {
 
- 
+
   form: any = {
-    nomMagasin: '',
-    localiteNom:''
+    nomMagasin: ''
   };
   isSuccessful = false;
   isSignUpFailed = false;
@@ -36,11 +35,13 @@ export class MagasinComponent implements OnInit {
     }
   
   onSubmit(): void {
-    this.magasinService.create(this.form).subscribe({
+    this.magasinService.update(this.form.id , this.form).subscribe({
       next: data => {
         console.log(data);
-        this.toast.showSuccess("magasin ajouté avec succès !!", "Ajouter");
+        this.toast.showSuccess("magasin modifierr avec succès !!", "Ajouter");
         this.isSuccessful = true;
+        //this.isSuccessful = true;
+        //this.isSignUpFailed = false;
         if(this.isSuccessful=true){
         this.router.navigate(['/magasin']);
         this.successMessage = "magasin enrégistre avec succès !";
@@ -48,9 +49,14 @@ export class MagasinComponent implements OnInit {
       },
       error: err => {
         this.errorMessage = err.error.message;
-        this.toast.showError("magsin n'a pas ajouté !", "Erreur");
         console.log(this.errorMessage);
+        this.isSignUpFailed = true;
       }
     });
   }
-}
+  
+  }
+  
+  
+  
+  

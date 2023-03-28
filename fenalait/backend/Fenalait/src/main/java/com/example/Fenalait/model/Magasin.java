@@ -33,8 +33,8 @@ public class Magasin extends  BaseEntity{
 	@Size(min = 2, max = 125,  message = "La taille doit être comprise entre 2-125 ")
 	private String nomMagasin;
 	
-	@ManyToOne
-	private Localite localite;
+	//@ManyToOne
+	//private Localite localite;
 	
 	@OneToMany(mappedBy = "magasin", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Produit> produits;

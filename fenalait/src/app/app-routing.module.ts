@@ -4,7 +4,6 @@ import { ApprovissionnementListComponent } from './approvissionnement-list/appro
 import { ApprovissionnementComponent } from './approvissionnement/approvissionnement.component';
 import { CategorieFournisseurListComponent } from './categorie-fournisseur-list/categorie-fournisseur-list.component';
 import { CategorieFournisseurComponent } from './categorie-fournisseur/categorie-fournisseur.component';
-import { CategoryListComponent } from './category-list/category-list.component';
 import { CategoryComponent } from './components/category/category.component';
 import { AddClientComponent } from './components/add-client/add-client.component';
 import { AddEmployeComponent } from './components/add-employe/add-employe.component';
@@ -12,7 +11,6 @@ import { ChangerMotDePasseComponent } from './components/changer-mot-de-passe/ch
 import { ChangerProfileComponent } from './components/changer-profile/changer-profile/changer-profile.component';
 import { ClientListComponent } from './components/client-list/client-list.component';
 import { EmployeListComponent } from './components/employe-list/employe-list.component';
-import { EmployeComponent } from './components/employe/employe.component';
 import { UpdateUserComponent } from './components/update-user/update-user.component';
 import { UserListComponent } from './components/user-list/user-list.component';
 import { UserComponent } from './components/user/user.component';
@@ -21,7 +19,6 @@ import { FournisseurComponent } from './fournisseur/fournisseur.component';
 import { LocaliteListComponent } from './localite-list/localite-list.component';
 import { LocaliteComponent } from './localite/localite.component';
 import { LoginComponent } from './login/login.component';
-
 import { MagasinListComponent } from './magasin-list/magasin-list.component';
 import { MagasinComponent } from './magasin/magasin.component';
 import { MenuComponent } from './menu/menu.component';
@@ -33,6 +30,8 @@ import { UpdateLocaliteComponent } from './update-localite/update-localite.compo
 import { AddProduitComponent } from './components/add-produit/add-produit.component';
 import { ProduitListComponent } from './components/produit-list/produit-list.component';
 import { UpdateCatfourComponent } from './update-catfour/update-catfour.component';
+import { UpdatefournisseurComponent } from './updatefournisseur/updatefournisseur.component';
+import { UpdateMagasinComponent } from './update-magasin/update-magasin.component';
 
 const routes: Routes = [
   {path:"login",component:LoginComponent},
@@ -125,7 +124,12 @@ const routes: Routes = [
         canActivate: [AplicationGuard]
       },
       
-      { path:"addFournisseur",component:FournisseurComponent},
+      { path:"addFournisseur",component:FournisseurComponent,
+      canActivate: [AplicationGuard]},
+
+      { path:"updateFour/:id",component:UpdatefournisseurComponent ,
+      canActivate: [AplicationGuard]},
+      
       
       { path:"addUser",component:UserComponent,
         canActivate: [AplicationGuard]
@@ -138,6 +142,10 @@ const routes: Routes = [
 
       { 
         path:"addMagasin",component:MagasinComponent,
+        canActivate: [AplicationGuard]
+      },
+      { 
+        path:"updateMagasin/:id",component:UpdateMagasinComponent,
         canActivate: [AplicationGuard]
       },
       {
@@ -169,7 +177,7 @@ const routes: Routes = [
         canActivate: [AplicationGuard]
       },
       {
-        path:"category", component:CategoryListComponent,
+        path:"category", component:CategoryComponent,
         canActivate: [AplicationGuard]
       },
       {
@@ -189,11 +197,8 @@ const routes: Routes = [
         path:"payer",component:EmployeListComponent,
         canActivate: [AplicationGuard]
       },
-      {
-          path:"produit",component:ProduitListComponent,
-          canActivate: [AplicationGuard]
-        },
-      { 
+  
+       { 
         path:"user",component:UserComponent,
         canActivate: [AplicationGuard]
       }

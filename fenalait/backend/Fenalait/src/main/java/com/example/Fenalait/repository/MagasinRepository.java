@@ -26,5 +26,5 @@ public interface MagasinRepository extends CrudRepository<Magasin, Long>{
 			+"or p.id like %?1%")
 	public Page<Magasin> findAll(Pageable pageable, String keywords);
 	
-	List<Magasin> findByLocaliteId(Long localiteId);
+	//List<Magasin> findByLocaliteId(Long localiteId);
 }

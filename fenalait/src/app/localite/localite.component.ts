@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router , ActivatedRoute} from '@angular/router';
 import { LocaliteService } from '../services/localite.service';
+import { NotificationServiceService } from '../services/notification.service';
 
 @Component({
   selector: 'app-localite',
@@ -19,7 +20,8 @@ export class LocaliteComponent implements OnInit {
   successMessage = '';
   
   constructor(private localiteService: LocaliteService,
-    private route: Router, private activetedRoute:ActivatedRoute ){}
+    private router: Router, private activetedRoute:ActivatedRoute ,
+    private toast: NotificationServiceService,){}
 
     ngOnInit(): void {
       const id = this.activetedRoute.snapshot.params['id'];
@@ -33,53 +35,21 @@ export class LocaliteComponent implements OnInit {
     }
   
   onSubmit(): void {
-   // const { prenomClient, nomClient, telClient } = this.form;
-  if(!this.form.id){
     this.localiteService.create(this.form).subscribe({
       next: data => {
         console.log(data);
-        //this.isSuccessful = true;
-        //this.isSignUpFailed = false;
+        this.toast.showSuccess("Localite ajouté avec succès !!", "Ajouter");
+        this.isSuccessful = true;
         if(this.isSuccessful=true){
-        this.route.navigate(['/localite']);
-        this.successMessage = "localite enrégistre avec succès !";
+        this.router.navigate(['/localite']);
+        this.successMessage = "Localite enrégistre avec succès !";
         }
       },
       error: err => {
         this.errorMessage = err.error.message;
+        this.toast.showError("Localite n'a pas ajouté !", "Erreur");
         console.log(this.errorMessage);
-        this.isSignUpFailed = true;
-      }
-    });
-  }else{
-    this.localiteService.update(this.form.id, this.form).subscribe({
-      next: data => {
-        console.log(data);
-        //this.isSuccessful = true;
-        //this.isSignUpFailed = false;
-        if(this.isSuccessful=true){
-        this.route.navigate(['/localite']);
-        this.successMessage = "localite enrégistre avec succès !";
-        }
-      },
-      error: err => {
-        this.errorMessage = err.error.message;
-        console.log(this.errorMessage);
-        this.isSignUpFailed = true;
       }
     });
   }
-  
-  }
-  
-  
-  newclient(): void {
-    this.isSuccessful = false;
-    this.form = {
-      nom: '',
-      description: ''
-    };
-  }
-  
-  }
-  
+}

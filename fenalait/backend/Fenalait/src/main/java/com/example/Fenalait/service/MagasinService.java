@@ -15,7 +15,7 @@ public interface MagasinService {
 
     MagasinResponse getAllMagasins(int pageNo, int pageSize, String sortBy, String sortDir);
 
-    MagasinRequestDto getMagasinById(Long id);
+    //MagasinRequestDto getMagasinById(Long id);
 
     MagasinRequestDto updateMagasin(MagasinRequestDto MagasinDto, Long id);
 
@@ -23,15 +23,15 @@ public interface MagasinService {
     
     // New Codes
 
-    MagasinRequestDto createMagasin(Long localiteId, MagasinRequestDto MagasinRequestDto);
+   // MagasinRequestDto createMagasin( MagasinRequestDto MagasinRequestDto);
 
-	 List<MagasinRequestDto> getMagasinsByLocaliteId(Long localiteId);
+	 //List<MagasinRequestDto> getMagasinsByLocaliteId(Long localiteId);
 
-	 MagasinRequestDto getMagasinById(Long localiteId, Long magasinId);
+	 MagasinRequestDto getMagasinById(Long magasinId);
 
-	 MagasinRequestDto updateMagasin(Long localiteId, Long magasinId, MagasinRequestDto MagasinRequestDto);
+	 MagasinRequestDto updateMagasin( Long magasinId, MagasinRequestDto MagasinRequestDto);
 
-	 void deleteMagasin(Long localiteId, Long magasinId);
+	 void deleteMagasin( Long magasinId);
 
 	Magasin getMagasin(Long categoryId);
 }

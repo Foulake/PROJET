@@ -1,8 +1,24 @@
 <div class="d-flex justify-content-between pt-2">
   <div class="col-md-6 p-0">
-    <h2>Liste des fournisseurs</h2>
+    <h3>Liste des fournisseurs <select (change)="hadlePageSizeChange($event)">
+      <option *ngFor=" let size of totalPages" [ngValue]="size">
+        {{ size }}
+      </option>
+    </select></h3>
   </div>
-
+  <div class="col-md-3 p-0 ">
+    <div class="input-group">
+      <input type="text" [(ngModel)]="nom" class="form-control" 
+      placeholder=" rechercher par nom" 
+      />
+      <div class="input-group-append">
+        <button type="submit" class="btn btn-default" (click)="searchFournisseur()">
+          <i class="fas fa-search"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="d-flex mr-2">
   <div class="d-flex">
     <div class="flex-flill">
       <button type="button" class="btn btn-sm btn-success"> <i class="fas fa-download"></i>Télécharger </button>
@@ -11,6 +27,7 @@
       <button type="button" class="btn btn-sm btn-primary" routerLink="/addFournisseur"> <i class="fas fa-plus"></i>Nouveau </button>
     </div>
   </div>
+</div>
 </div>
 <table class="table table-bordered table-striped">
 
@@ -26,7 +43,14 @@
   </tr>
   </thead>
   <tbody>
-  <tr *ngFor="let fournisseur of fournisseurs">
+  <tr *ngFor="let fournisseur of fournisseurs
+  | paginate: {
+    itemsPerPage:pageSize,
+    currentPage: page,
+    totalItems: count
+  }; let i = index"
+  [class.active]="i == currentIndex"
+   >  
     <td><span>{{fournisseur.id}}</span></td>
     <td><span>{{fournisseur.nom}}</span></td>
     <td><span>{{fournisseur.prenom}}</span></td>
@@ -34,24 +58,47 @@
     <td><span>{{fournisseur.tel}}</span></td>
     <td><span>{{fournisseur.categoryFourNom}}</span></td>
     <td>
-      <button class="btn btn-sm btn-warning">
-        <i class="fa fa-edit"></i>Modifier</button>
-      <button class="btn btn-sm btn-danger">
-        <i class="fa fa-remove"></i>Supprimer</button>
-    </td>
-    
-  </tr>
+      <button class="btn btn-sm btn-warning" (click)="updateFour(fournisseur.id)">
+        <i class="fa fa-edit"></i></button>
+        <button class="btn btn-sm btn-danger" data-toggle="modal" data-target="#exampleModalLong" (click)="selectedFournisseurPourSupprimer(fournisseur.id)">
+          <i class="fa fa-trash"></i></button>
+      </td>
+    </tr>
   </tbody>
-  </table>
 
-<!-- jQuery -->
-<script src="../../plugins/jquery/jquery.min.js"></script>
-<!-- Bootstrap 4 -->
-<script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-<!-- bs-custom-file-input -->
-<script src="../../plugins/bs-custom-file-input/bs-custom-file-input.min.js"></script>
-<!-- AdminLTE App -->
-<script src="../../dist/js/adminlte.min.js"></script>
-<!-- AdminLTE for demo purposes -->
-<script src="../../dist/js/demo.js"></script>
-<!-- Page specific script -->
+  <div class="btn btn-danger text-center" *ngIf="errorMessage">
+    {{ errorMessage }}
+</div>
+
+</table>
+<div class="container col-md-12">
+  <pagination-controls previousLabel="Précedente"
+  nextLabel="Suivante"
+  [responsive]="true"
+   (pageChange)="hadlePageChange($event)">
+  </pagination-controls>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" data-backdrop="static" data-beyboard="false" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title" id="exampleModalLongTitle">Confirmation de suppréssion</h3>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="btn btn-danger text-center" *ngIf="errorMessage">
+          {{ errorMessage }}
+      </div>
+        <h2 class="text-center">Voulez vous supprimer fournisseur {{ form.nom }}</h2>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="annulerSuppressionFournisseur()"> <i class="fas fa-undo"></i> Annuler</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="confirmDelete()"> <i class="fas fa-trash"></i> Confirmer</button>
+      </div>
+    </div>
+  </div>
+</div>

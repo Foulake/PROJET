@@ -3,6 +3,8 @@ import { Component, Input } from '@angular/core';
 import { Route, Router } from '@angular/router';
 import { CategorieFournisseur } from '../models/categorie-fournisseur';
 import { CategorieFournisseurService } from '../services/categorie-fournisseur.service';
+import { NotificationServiceService } from '../services/notification.service';
+
 
 @Component({
   selector: 'app-categorie-fournisseur-list',
@@ -11,12 +13,21 @@ import { CategorieFournisseurService } from '../services/categorie-fournisseur.s
 })
 export class CategorieFournisseurListComponent {
   errorMessage!: string;
-  categorieFournisseurs?: CategorieFournisseur[];
+  categorieFournisseurs: CategorieFournisseur[]=[];
   currentCategorieFournisseur: CategorieFournisseur = {};
   currentIndex = -1;
     description = '';
   closeResult!:string;
   message = '';
+  selectedCltToDelete= -1;
+
+  page= 1;
+  count =0;
+  pageSize= 5;
+  totalPages=[5,10, 15];
+
+
+  
 
   
   form: any = {
@@ -25,125 +36,120 @@ export class CategorieFournisseurListComponent {
 
     
   };
-  isSuccessful = false;
-  isSignUpFailed = false;
-
-   @Input() currentCategorieFournisseurs: CategorieFournisseur = {
-  
-    description:''
-
-   };
-
   constructor( private httpClient: HttpClient,
-    private categorieFournisseurService: CategorieFournisseurService, private route: Router) { }
+    private categorieFournisseurService: CategorieFournisseurService,private router: Router,
+    private notifyService: NotificationServiceService) { }
 
-  ngOnInit(): void {
-    this.message= '';
-     this.getAllCategorieFournisseurs();
-  }
-
+    ngOnInit(): void {
+      this.getAll();
+    }
   
-onSubmit(): void {
-   
-   this.categorieFournisseurService.create(this.form).subscribe({
-     next: data => {
-       console.log(data);
-       this.isSuccessful = true;
-       this.isSignUpFailed = false;
-     },
-     error: err => {
-       this.errorMessage = err.error.message;
-       console.log(this.errorMessage);
-       this.isSignUpFailed = true;
-     }
-   });
- }
-
-  getAllCategorieFournisseurs(){
-    this.categorieFournisseurService.getAllCategorieFournisseur()
+    getRequestParams(searchDescription: string , page: number, pageSize: number): any {
+      let params: any = {};
+  
+      if(searchDescription){
+        params[`description`] = searchDescription;
+      }
+  
+      if(page){
+        params[`page`] = page - 1; 
+      }
+  
+      if(pageSize){
+        params[`size`] = pageSize;
+      }
+  
+      return params;
+    }
+  
+    getAll(): void{
+      
+      const params = this.getRequestParams(this.description, this.page, this.pageSize);
+  
+      this.categorieFournisseurService.getAllCategorieFournisseur(params)
+        .subscribe({
+          next: (response: any) =>{
+            const { categorieFournisseurs, totalItems } = response.content;
+            this.categorieFournisseurs = response.content;
+            this.count = totalItems;
+            console.log(this.categorieFournisseurs);
+            
+          },
+          error: err =>{
+            this.errorMessage = err.error.message;
+            console.log(this.errorMessage);
+            
+          }
+        });
+    }
+  
+    updatecatFour(id: any): void {
+      this.router.navigate(['updatecatFour', id]);
+    }
+  
+    hadlePageChange(event: number): void {
+      this.page = event;
+      this.getAll();
+    }
+  
+    hadlePageSizeChange(event: any): void {
+      this.pageSize = event.target.value;
+      this.page= 1;
+      this.getAll();
+    }
+  
+     
+    selectedCategorieFournisseurPourSupprimer(id: number): void{
+      this.selectedCltToDelete = id;
+  }
+  
+    confirmDelete(): void{
+      if(this.selectedCltToDelete !== -1) {
+        this.categorieFournisseurService.delete(this.selectedCltToDelete)
+        .subscribe({
+          next: (res) =>{
+            //this.refreshList();
+            console.log(res);
+            this.notifyService.showError("categoriefournisseur supprimer avec succès !", "Suppréssion")
+            //this.message= "Client supprimer avec succès !"
+            this.getAll();
+            //this.route.navigate(['/client']);
+            //window.location.reload();
+            
+          },
+          error: err => {
+            this.errorMessage = err.error.message;
+            //console.log(this.message);
+          }
+        });
+      }
+    }
+  
+    annulerSuppressionCategorieFournisseur(): void{
+      this.selectedCltToDelete = -1;
+    }
+  
+    searchCatfournisseur(): void {
+      this.page = 1;
+      this.getAll();
+      /**this.currentClient = {};
+      //this.currentIndex = -1;
+  
+      this.clientService.findClient(this.titreClient)
       .subscribe({
-      next: (data) =>{
-        this.categorieFournisseurs = data;
-        console.log('Data', data);
-      },
-      error: (err) =>{
-        console.log(err);
-      }
-    });
+        next: (response) =>{
+          this.clients = response;
+          console.log(response);
+          
+        },
+        error: (err) => {
+          this.errorMessage = err.error.message;
+          console.log(err);
+          
+        }
+      })*/
+    }
+  
+  
   }
-
-  refreshList(): void {
-    this.getAllCategorieFournisseurs();
-    this.currentCategorieFournisseur = {}
-    this.currentIndex = 1;
-  }
-
-  setActivetedCategorieFournisseur(categorieFournisseur: CategorieFournisseur, index: number){
-    this.currentCategorieFournisseur= categorieFournisseur;
-    this.currentIndex = -1;
-  }
-
-  removeAllCategorieFournisseur(): void {
-    this.categorieFournisseurService.deleteAll()
-    .subscribe({
-      next: (res) => {
-        console.log(res);
-        this.refreshList();
-      },
-      error: err => {
-        this.errorMessage= err.error.message;
-      }
-    });
-  }
-
-  removeSelected(): void {
-    this.categorieFournisseurService.delete(this.currentCategorieFournisseur.id)
-    .subscribe({
-      next: (res) =>{
-        console.log(res);
-        res.message ? res.message : 'Cet CategorieFournisseur supprimer avec succès !';
-        //this.router.navigate()
-        this.refreshList();
-      },
-      error: err => {
-        this.message = this.errorMessage = err.error.message;
-        console.log(this.errorMessage);
-        
-      }
-    })
-  }
-  updateCatfour(id:number){
-    this.route.navigate(['updatecatFour', id]);
-
-  }
-  deleteCatfour(id:number){
-    this.categorieFournisseurService.delete(id).subscribe(data=>{
-      console.log(data);
-     this.getAllCategorieFournisseurs();
-
-
-  })
-}
-
-  searchCategorieFournisseur(): void {
-    this.currentCategorieFournisseur = {};
-    this.currentIndex = -1;
-
-    this.categorieFournisseurService.findCategorieFournisseur(this.currentCategorieFournisseur)
-    .subscribe({
-      next: (data) =>{
-        this.categorieFournisseurs = data;
-        console.log(data);
-        
-      },
-      error: (err) => {
-        this.errorMessage = err.error.message;
-        console.log(err);
-        
-      }
-    })
-  }
-}
-
-
-
+  
