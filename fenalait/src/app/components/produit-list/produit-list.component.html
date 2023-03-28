@@ -56,10 +56,7 @@
     </div>
   </div>
   <div class="modal-body">
-   
-    
   <table class="table table-bordered table-striped">
-    
     <thead>
       <tr>
         <th>ID</th>
@@ -91,17 +88,19 @@
           <button class="btn btn-sm btn-warning" (click)="editProduit(produit.id)">
             <i class="fa fa-edit"></i>Modifier</button>
             
-          <button class="btn btn-sm btn-danger" data-toggle="modal" data-target="#exampleModalLong" (click)="selectedProduitPourSupprimer(produit.id)">
+          <button class="btn btn-sm btn-danger" data-toggle="modal" 
+            data-target="#exampleModalLong" 
+            (click)="selectedProduitPourSupprimer(produit.id)">
             <i class="fa fa-trash"></i>Supprimer</button>
         </td>
       </tr>
     </tbody>
     <div class="btn btn-danger text-center" *ngIf="errorMessage">
       {{ errorMessage }}
-  </div>
-  <div class="btn btn-danger text-center" *ngIf="message">
-    {{ message }}
-  </div>
+    </div>
+    <div class="btn btn-danger text-center" *ngIf="message">
+      {{ message }}
+    </div>
   
   </table>
   <div class="container col-md-12">

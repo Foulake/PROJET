@@ -54,12 +54,8 @@ update(id: any, data : any): Observable<any>{
   return this.http.put(`${BaseUrl + 'edit'}/${id}`, data, httpOptions);
 }
 
-delete(id: any): Observable<any> {
-  if(id){
+public delete(id: any): Observable<any>{
   return this.http.delete(`${BaseUrl + '/delete'}/${id}`, httpOptions);
-  }else{
-    return of();
-  }
 }
 
 signout(): void {

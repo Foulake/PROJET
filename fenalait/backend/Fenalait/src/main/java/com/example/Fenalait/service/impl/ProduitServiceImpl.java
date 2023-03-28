@@ -13,6 +13,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import com.example.Fenalait.dto.Mapper;
@@ -27,6 +29,7 @@ import com.example.Fenalait.model.Magasin;
 import com.example.Fenalait.repository.CategoryRepository;
 import com.example.Fenalait.repository.MagasinRepository;
 import com.example.Fenalait.repository.ProduitRepository;
+import com.example.Fenalait.repository.UserRepository;
 import com.example.Fenalait.service.CategoryService;
 import com.example.Fenalait.service.MagasinService;
 import com.example.Fenalait.service.ProduitService;
@@ -42,18 +45,18 @@ public class ProduitServiceImpl implements ProduitService{
 	private final UserService userService;
 	private final MagasinService magasinService;
 	private final MagasinRepository magasinRepository;
-	private final CategoryRepository categoryRepository;
+	private final UserRepository userRepository;
 	
 	@Autowired
 	public ProduitServiceImpl(ProduitRepository produitRepository, CategoryService categoryService,UserService userService,
-			MagasinService magasinService, MagasinRepository magasinRepository, CategoryRepository categoryRepository) {
+			MagasinService magasinService, MagasinRepository magasinRepository, UserRepository userRepository) {
 		
 		this.produitRepository = produitRepository;
 		this.categoryService = categoryService;
 		this.userService = userService;
 		this.magasinService = magasinService;
 		this.magasinRepository = magasinRepository;
-		this.categoryRepository = categoryRepository;
+		this.userRepository = userRepository;
 	}
 
 	@Transactional     
@@ -76,9 +79,9 @@ public class ProduitServiceImpl implements ProduitService{
 		if(produitDto.getMagasinId() == null) {
 			throw new IllegalArgumentException("Le produit manque de Magasin !");
 		}
-		if(produitDto.getUserId() == null) {
-			throw new IllegalArgumentException("Le produit manque du nom de l'utilisateur !");
-		}
+//		if(produitDto.getUserId() == null) {
+//			throw new IllegalArgumentException("Le produit manque du nom de l'utilisateur !");
+//		}
 		
 		Category category = categoryService.getCategory(produitDto.getCategoryId());
 		produit.setCategory(category);
@@ -86,7 +89,9 @@ public class ProduitServiceImpl implements ProduitService{
 		Magasin magasin = magasinService.getMagasin(produitDto.getCategoryId());
 		produit.setMagasin(magasin);
 		
-		User user = userService.getUser(produitDto.getUserId());;
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		
+		User user = userRepository.findByEmail(auth.getName()).get();
 		produit.setUser(user);
 		
 		produit.setNomPrdt(produit.getNomPrdt());
@@ -276,7 +281,9 @@ public class ProduitServiceImpl implements ProduitService{
         produitDto.setDate(produit.getDate());
         produitDto.setMagasinNom(produit.getMagasin().getNomMagasin());
         produitDto.setCategoryNom(produit.getCategory().getNom());
-       // produitDto.setMagasinId(produit.getMagasin().getId());
+        
+        produitDto.setCategoryId(produit.getCategory().getId());
+        produitDto.setMagasinId(produit.getMagasin().getId());
         produitDto.setEmail(produit.getUser().getEmail());
         
 //        produitDto.setDescription(produit.getDescription());

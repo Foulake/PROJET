@@ -8,6 +8,8 @@ export class Produit{
     dateExp?: Date;
     code?: string;
     price?: string;
+    categoryId?: number;
+    magasinId?: number;
     categoryNom?: string;
     magasinNom?: string;
     

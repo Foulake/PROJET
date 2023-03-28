@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
@@ -11,14 +11,17 @@ import { NotificationServiceService } from 'src/app/services/notification.servic
   templateUrl: './client-list.component.html',
   styleUrls: ['./client-list.component.scss']
 })
+
+
+
 export class ClientListComponent implements OnInit {
 
-  
+  @Output() clientAdded = new EventEmitter();
   errorMessage!: string;
   clients!: Client[];
   currentClient: Client = {};
   currentIndex = -1;
-  selectedCltToDelete? = -1;
+  selectedCltToDelete = -1;
   prenomClient = '';
   closeResult!:string;
   message = '';
@@ -83,7 +86,7 @@ export class ClientListComponent implements OnInit {
   return params;
  }
 
-  getAllClients(): void{
+getAllClients(): void{
     const params = this.getRequestParams(this.prenomClient, this.page, this.pageSize);
 
     this.clientService.getAllClient(params)
@@ -155,8 +158,7 @@ export class ClientListComponent implements OnInit {
     });
   }
 
-  
-  selectedClientPourSupprimer(id: number): void{
+  selectedCltPourSupprimer(id: number): void{
     this.selectedCltToDelete = id;
 }
 
@@ -165,17 +167,13 @@ export class ClientListComponent implements OnInit {
       this.clientService.delete(this.selectedCltToDelete)
       .subscribe({
         next: (res) =>{
-          let index = this.clients.indexOf(this.currentClient.id);
-          this.clients.splice(index, 1);
+          console.log('data', res);
           this.notifyService.showSuccess("Client supprimé avec succès!", "Suppréssion");
-          this.getAllClients();
-          
+          this.clientAdded.emit();
         },
         error: err => {
           this.message = err.error.message;
-          this.notifyService.showError(this.message, "Erreur");
-          //console.log(this.message);
-        }
+           }
       });
     }
   }
@@ -184,11 +182,6 @@ export class ClientListComponent implements OnInit {
     this.selectedCltToDelete = -1;
   }
 
-  showToasterSuccess(){
-    this.notifyService.showSuccess("Client modifier avec succès !!", "Edit")
-  }
-
-  
   searchClients(keyword:string): Observable<Client[]>{
     let clients = this.clients.filter(c=>c.prenomClient!.includes(keyword));
     return of(clients);

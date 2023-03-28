@@ -5,7 +5,7 @@
     </div>
     <div class="card-body">
         
-        <div class="btn btn-danger" *ngIf="errorMessage">
+        <div class="btn btn-danger text-center" *ngIf="errorMessage">
             {{ errorMessage }}
         </div>
     <form
@@ -21,7 +21,7 @@
               type="text"
               class="form-control"
               name="nomPrdt"
-              [(ngModel)]="form.nomPrdt"
+              [(ngModel)]="produit.nomPrdt"
               required
               minlength="3"
               maxlength="20"
@@ -41,33 +41,20 @@
           <div class="form-group">
             <label for="qte">Quantité</label>
             <input
-              type="text"
+              type="number"
               class="form-control"
               name="qte"
-              [(ngModel)]="form.qte"
-              required
-              minlength="3"
-              maxlength="20"
-              #qte="ngModel"
-              [ngClass]="{ 'is-invalid': f.submitted && qte.errors }" />
+              [(ngModel)]="produit.qte"
+              #qte="ngModel"/>
   
-          <div class="invalid-feedback" *ngIf="qte.errors && f.submitted">
-            <div *ngIf="qte.errors['required']">nomPrdt ne peut pas être vide !</div>
-            <div *ngIf="qte.errors['minlength']">
-              Le qte doit contenir au moins 3 charactères
-            </div>
-            <div *ngIf="qte.errors['maxlength']">
-              Le qte doit contenir au plus 20 charactères
-            </div>
-          </div>
         </div>
         <div class="form-group">
             <label for="code">code</label>
             <input
-              type="code"
+              type="text"
               class="form-control"
               name="code"
-              [(ngModel)]="form.code"
+              [(ngModel)]="produit.code"
               required
               code
               #code="ngModel"
@@ -82,10 +69,10 @@
         <div class="form-group">
           <label for="price">price</label>
           <input
-            type="price"
+            type="number"
             class="form-control"
             name="price"
-            [(ngModel)]="form.price"
+            [(ngModel)]="produit.price"
             required
             price
             #price="ngModel"
@@ -103,7 +90,7 @@
             type="date"
             class="form-control"
             name="dateExp"
-            [(ngModel)]="form.dateExp"
+            [(ngModel)]="produit.dateExp"
             required
             dateExp
             #dateExp="ngModel"
@@ -116,24 +103,23 @@
           </div>
         </div>
         <div class="form-group">
-          <label for="magasinNom">magasin</label>
-          <option ></option>
-          <select class="form-control" name="mag" [(ngModel)]="magasin.id">
-            <option >Selectionnez un magasin</option>
-            <option *ngFor="let mag of listMagasin" [value]="mag.id">{{mag.id}} - {{mag.nomMagasin}}</option>
+          <label for="magasinId">magasin</label>
+          <select class="form-select" aria-label="Default select example" name="magasin" id="magasin" [(ngModel)]="produit.magasinId" >
+            <option [value]="0" >Selectionnez un magasin</option>
+            <option *ngFor="let mag of listMagasin" [value]="mag.id">{{mag.nomMagasin}}</option>
           </select>
         </div>
         <div class="form-group">
-            <label for="categoryNom" >categorie</label>
-            <select class="form-control" name="catProd" [(ngModel)]="category.id">
-              <option >Selectionnez une catégorie</option>
-              <option *ngFor="let catProd of listCategories" [value]="catProd.id">{{catProd.id}} - {{catProd.nom}}</option>
+            <label for="catProd" >categorie</label>
+            <select class="form-select" aria-label="Default select example" name="catProd" [(ngModel)]="produit.categoryId">
+              <option [value]="0" selected>Selectionnez une catégorie</option>
+              <option *ngFor="let catProd of listCategories" [value]="catProd.id">{{catProd.nom}}</option>
             </select>
           </div>
         
         <div class="form-group d-flex justify-content-between">
             
-          <button type="button" class="btn btn-danger" routerLink="/client">
+          <button type="button" class="btn btn-danger" routerLink="/produit">
             <i class="fas fa-ban"></i> annuler
           </button>
             <button type="submit" class="btn btn-primary">
@@ -141,11 +127,6 @@
             </button>
           </div>
       </form>
-  
-      
-      <div class="alert alert-success" *ngIf="isSuccessful">
-        Produit enrégistrer avec succès Mr/Mme {{form.qte}}!
-      </div>
     </div>
     </div>
   </div>

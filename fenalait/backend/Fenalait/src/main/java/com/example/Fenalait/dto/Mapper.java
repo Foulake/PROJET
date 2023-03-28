@@ -21,7 +21,8 @@ public static ProduitResponse produitToProduitResponse(Produit produit) {
 	produitResponseDto.setCategoryNom(produit.getCategory().getNom());
 	produitResponseDto.setMagasinNom(produit.getMagasin().getNomMagasin());
 	produitResponseDto.setEmail(produit.getUser().getEmail());
-	
+	produitResponseDto.setCategoryId(produit.getCategory().getId());
+	produitResponseDto.setMagasinId(produit.getMagasin().getId());
 	//neeew
 	produitResponseDto.setCode(produit.getCode());
 	produitResponseDto.setPrice(produit.getPrice());

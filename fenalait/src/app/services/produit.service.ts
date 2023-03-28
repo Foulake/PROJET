@@ -20,15 +20,13 @@ export class ProduitService {
     return this.httpClient.get<Produit[]>(this.baseURL + '/getAll', {params});
   }
 
-  get(id: any): Observable<Produit[]> {
-    return this.httpClient.get<Produit[]>(`${this.baseURL + '/get'}/${id}`, httpOptions);
+  get(productId: any): Observable<any> {
+    return this.httpClient.get(`${this.baseURL + '/get'}/${productId}`, httpOptions);
   }
 
   addProduit(data: any): Observable<any>{
     return this.httpClient.post(this.baseURL + '/add', data, httpOptions);
   }
-
-  
 
   update(id: any, data: any): Observable<any>{
     return this.httpClient.put(`${this.baseURL + '/edit'}/${id}`, data, httpOptions);

@@ -41,11 +41,7 @@ export class ClientService {
   }
 
   delete(id: any): Observable<any> {
-    if(id){
     return this.http.delete(`${this.baseUrl + '/delete'}/${id}`, httpOptions);
-    }else{
-      return of();
-    }
   }
   
   deleteAll(): Observable<any> {

@@ -165,7 +165,7 @@ const routes: Routes = [
         canActivate: [AplicationGuard]
       },
       {
-        path:"addProduit/:id", component:AddProduitComponent,
+        path:"addProduit/:productId", component:AddProduitComponent,
         canActivate: [AplicationGuard]
       },
       {

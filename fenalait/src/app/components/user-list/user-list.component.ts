@@ -1,7 +1,8 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/auth.service';
 import { User } from 'src/app/models/user';
+import { NotificationServiceService } from 'src/app/services/notification.service';
 
 @Component({
   selector: 'app-user-list',
@@ -21,7 +22,7 @@ export class UserListComponent implements OnInit{
   count =0;
   pageSize= 5;
   totalPages=[5,10, 15];
-
+  @Output() userAdded= new EventEmitter();
   @Input() currentUser: User = {
     prenom: '',
     nom: '',
@@ -32,7 +33,8 @@ export class UserListComponent implements OnInit{
   };
 
   constructor(private autService: AuthService,
-    private router: Router){}
+    private router: Router,
+    private notification: NotificationServiceService){}
 
   
     ngOnInit(): void {
@@ -120,8 +122,8 @@ export class UserListComponent implements OnInit{
       this.autService.delete(this.selectedCltToDelete)
       .subscribe({
         next: (res) =>{
-          //this.message= "Client supprimer avec succès !"
-          this.getAll();
+          this.notification.showSuccess("Client supprimer avec succès !",'Suppresion')
+          this.userAdded.emit();
         },
         error: err => {
           this.message = err.error.message;

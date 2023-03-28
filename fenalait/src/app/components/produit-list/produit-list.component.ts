@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
@@ -13,6 +13,7 @@ import { ProduitService } from 'src/app/services/produit.service';
 })
 export class ProduitListComponent implements OnInit{
 
+  @Output() productAdded = new EventEmitter();
   @Input()
   errorMessage!: string;
   produits!: Produit[];
@@ -29,7 +30,7 @@ export class ProduitListComponent implements OnInit{
     dateExp: '',
     code: '',
     price: '',
-    category: '',
+    categoryNom: '',
     magasinNom: ''
   };
 
@@ -72,6 +73,7 @@ export class ProduitListComponent implements OnInit{
     if(pageSize){
       params[`size`] = pageSize;
     }
+    
     return params;
    }
 
@@ -113,17 +115,14 @@ export class ProduitListComponent implements OnInit{
       this.produitService.delete(this.selectedPrtToDelete)
       .subscribe({
         next: (res) =>{
-          //this.refreshList();
           console.log(res);
-          this.notifyService.showError("Client supprimer avec succès !", "Suppréssion")
-          //this.message= "Client supprimer avec succès !"
-          this.getAll();
-          //this.route.navigate(['/client']);
-          //window.location.reload();
+          this.notifyService.showSuccess("Client supprimer avec succès !", "Suppréssion");
+          this.productAdded.emit();
           
         },
         error: err => {
           this.errorMessage = err.error.message;
+          this.notifyService.showError(this.errorMessage, 'Erreur')
           //console.log(this.message);
         }
       });
