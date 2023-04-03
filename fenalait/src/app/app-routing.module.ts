@@ -32,6 +32,8 @@ import { ProduitListComponent } from './components/produit-list/produit-list.com
 import { UpdateCatfourComponent } from './update-catfour/update-catfour.component';
 import { UpdatefournisseurComponent } from './updatefournisseur/updatefournisseur.component';
 import { UpdateMagasinComponent } from './update-magasin/update-magasin.component';
+import { VenteListComponent } from './components/vente-list/vente-list.component';
+import { AddVenteComponent } from './components/add-vente/add-vente.component';
 
 const routes: Routes = [
   {path:"login",component:LoginComponent},
@@ -87,6 +89,16 @@ const routes: Routes = [
         path: "clientListe", component: ClientListComponent,
         canActivate: [AplicationGuard]
       },
+      {
+        path: "venteListe", component:VenteListComponent,
+        canActivate: [AplicationGuard]
+      },
+
+      {
+        path: "addVente", component:AddVenteComponent,
+        canActivate: [AplicationGuard]
+      },
+
 
       { path:"catProd",component:CategoryComponent,
         canActivate: [AplicationGuard]

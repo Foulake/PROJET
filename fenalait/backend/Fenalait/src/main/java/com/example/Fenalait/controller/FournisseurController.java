@@ -38,19 +38,19 @@ public class FournisseurController {
 
     @PostMapping("/add")
 	//@RolesAllowed({"ROLE_ADMIN"})
-	public ResponseEntity<FournisseurResponse> addProduct(@Valid @RequestBody FournisseurDto productDto){
-		FournisseurResponse productResponseDto = fournisseurService.addFournisseur(productDto);
-		return new ResponseEntity<FournisseurResponse>(productResponseDto, HttpStatus.OK);
+	public ResponseEntity<FournisseurResponse> addFournisseur(@Valid @RequestBody FournisseurDto fournisseurDto){
+		FournisseurResponse fournisseurResponseDto = fournisseurService.addFournisseur(fournisseurDto);
+		return new ResponseEntity<FournisseurResponse>(fournisseurResponseDto, HttpStatus.OK);
 	}
    
     @GetMapping("/get/{id}")
-	public ResponseEntity<FournisseurResponse> getProduct(@PathVariable final Long productId){
-    	FournisseurResponse productDto = fournisseurService.getFournisseurById(productId);
-		return new ResponseEntity<FournisseurResponse>(productDto, HttpStatus.OK);
+	public ResponseEntity<FournisseurResponse> getFournisseur(@PathVariable final Long categoryFourId){
+    	FournisseurResponse fournisseurDto = fournisseurService.getFournisseurById(categoryFourId);
+		return new ResponseEntity<FournisseurResponse>(fournisseurDto, HttpStatus.OK);
 	}
     
     @GetMapping("/getAll")
-    public FournisseurResponse getAllProducts(
+    public FournisseurResponse getAllFournisseurs(
             @RequestParam(value = "pageNo", defaultValue = AppConstants.DEFAULT_PAGE_NUMBER, required = false) int pageNo,
             @RequestParam(value = "pageSize", defaultValue = AppConstants.DEFAULT_PAGE_SIZE, required = false) int pageSize,
             @RequestParam(value = "sortBy", defaultValue = AppConstants.DEFAULT_SORT_BY, required = false) String sortBy,
@@ -61,14 +61,14 @@ public class FournisseurController {
     
 
     @PutMapping("/edit/{id}")
-	public ResponseEntity<FournisseurResponse> editProduct(@Valid @RequestBody final FournisseurDto productRequestDto, @PathVariable final Long id){
-    	FournisseurResponse productResponseDto = fournisseurService.editFournisseur(id, productRequestDto);
-		return new ResponseEntity<>(productResponseDto, HttpStatus.OK);
+	public ResponseEntity<FournisseurResponse> editFournisseur(@Valid @RequestBody final FournisseurDto fournisseurRequestDto, @PathVariable final Long id){
+    	FournisseurResponse fournisseurResponseDto = fournisseurService.editFournisseur(id, fournisseurRequestDto);
+		return new ResponseEntity<>(fournisseurResponseDto, HttpStatus.OK);
 	}
     
     @DeleteMapping("/delete/{id}")
 	//@RolesAllowed({"ROLE_ADMIN"})
-	public ResponseEntity<Map<String, Boolean>> deletePrroduct(@PathVariable final Long id){
+	public ResponseEntity<Map<String, Boolean>> deleteFournisseur(@PathVariable final Long id){
 		fournisseurService.deleteFournisseur(id);
 		Map<String, Boolean> response =new  HashMap<>();
     	response.put("Le fournisseur a été supprimé avec succès", Boolean.TRUE);
@@ -78,7 +78,7 @@ public class FournisseurController {
 
 
     @GetMapping("/search/full/{keywords}")
-	public  ResponseEntity<FournisseurResponse> searchProductByFull(
+	public  ResponseEntity<FournisseurResponse> searchFournisseurByFull(
 			 @RequestParam(value = "pageNo", defaultValue = AppConstants.DEFAULT_PAGE_NUMBER, required = false) int pageNo,
 	            @RequestParam(value = "pageSize", defaultValue = AppConstants.DEFAULT_PAGE_SIZE, required = false) int pageSize,
 	            @RequestParam(value = "sortBy", defaultValue = AppConstants.DEFAULT_SORT_BY, required = false) String sortBy,

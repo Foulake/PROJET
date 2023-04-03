@@ -50,6 +50,9 @@ import { ProduitListComponent } from './components/produit-list/produit-list.com
 import { AddProduitComponent } from './components/add-produit/add-produit.component';
 import { CategoryProduitListComponent } from './components/category-produit-list/category-produit-list.component';
 import { CategoryComponent } from './components/category/category.component';
+import { VenteListComponent } from './components/vente-list/vente-list.component';
+import { AddVenteComponent } from './components/add-vente/add-vente.component';
+import { UpdateVenteComponent } from './components/update-vente/update-vente.component';
 
 
 @NgModule({
@@ -89,6 +92,9 @@ import { CategoryComponent } from './components/category/category.component';
     UserListComponent,
     UpdateUserComponent,
     UpdateMagasinComponent,
+    VenteListComponent,
+    AddVenteComponent,
+    UpdateVenteComponent,
 
   ],
   imports: [

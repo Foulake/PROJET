@@ -69,6 +69,11 @@ public class Fournisseur extends  BaseEntity {
 	public void removeApprovissionnement(Approvissionnement approvissionnement) {
 		approvissionnements.remove(approvissionnement);
 	}
+
+	public void addFournisseur(Fournisseur fournisseur) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 
 }

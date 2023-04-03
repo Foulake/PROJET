@@ -3,6 +3,8 @@ package com.example.Fenalait.service.impl;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.transaction.Transactional;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -26,7 +28,7 @@ private ClientRepository clientRepository;
 	public ClientServiceImpl(ClientRepository clientRepository) {
 		this.clientRepository = clientRepository;
 	}
-
+@Transactional
 	@Override
 	public ClientDto createClient(ClientDto clientDto) {
 		 // convert DTO to entity
@@ -41,7 +43,7 @@ private ClientRepository clientRepository;
         ClientDto clientResponse = mapToDTO(newClient);
         return clientResponse;
 	}
-
+@Transactional
 	@Override
 	public ClientResponse getAllClients(int pageNo, int pageSize, String sortBy, String sortDir) {
 		Sort sort = sortDir.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortBy).ascending()

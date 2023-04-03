@@ -28,7 +28,9 @@ public class VenteDto {
     private Long produitId;
     
 	private Long clientId;
-	
+	private String clientNom;
+	private String produitNom;
+	private String usernom;
 	private Long userId;
 	//@NotBlank(message = "Veuillez entrer la quantité de vente !!")
 	private double quantite;

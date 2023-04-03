@@ -67,7 +67,7 @@ public class VenteController {
 	    
 	    @DeleteMapping("/delete/{id}")
 		//@RolesAllowed({"ROLE_ADMIN"})
-		public ResponseEntity<Map<String, Boolean>> deletePrroduct(@PathVariable final Long id){
+		public ResponseEntity<Map<String, Boolean>> deleteVente(@PathVariable final Long id){
 			venteService.deleteVente(id);
 			Map<String, Boolean> response =new  HashMap<>();
 	    	response.put("Le vente a été supprimé avec succès", Boolean.TRUE);

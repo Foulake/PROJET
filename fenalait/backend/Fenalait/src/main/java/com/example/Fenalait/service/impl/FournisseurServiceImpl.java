@@ -12,19 +12,14 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import com.example.Fenalait.dto.FournisseurDto;
 import com.example.Fenalait.dto.Mapper;
 import com.example.Fenalait.dto.FournisseurResponse;
-import com.example.Fenalait.exception.BlogAPIException;
 import com.example.Fenalait.exception.ResourceAlredyExistException;
-import com.example.Fenalait.exception.ResourceNotFoundException;
 import com.example.Fenalait.exception.ResourceNotFoundExceptions;
 import com.example.Fenalait.model.CategorieFournisseur;
-import com.example.Fenalait.model.Category;
 import com.example.Fenalait.model.Fournisseur;
-import com.example.Fenalait.model.User;
 import com.example.Fenalait.repository.CategorieFournisseurRepository;
 import com.example.Fenalait.repository.FournisseurRepository;
 import com.example.Fenalait.service.CategoryFourService;
@@ -59,11 +54,11 @@ private FournisseurRepository fournisseurRepository;
 	        fournisseur.setTel(fournisseurDto.getTel());	
 			
 		}
-		if(fournisseurDto.getCategoryId() == null) {
+		if(fournisseurDto.getCategoryFourId() == null) {
 			throw new IllegalArgumentException("Le fournisseur manque de CategorieFournisseur !");
 		}
 		
-		CategorieFournisseur categorieFournisseur = categoryFourService.getCategoryFournisseur(fournisseurDto.getCategoryId());
+		CategorieFournisseur categorieFournisseur = categoryFourService.getCategoryFournisseur(fournisseurDto.getCategoryFourId());
 		fournisseur.setCategorieFournisseur(categorieFournisseur);
 		
 		fournisseur.setNom(fournisseur.getNom());
@@ -103,10 +98,10 @@ private FournisseurRepository fournisseurRepository;
 		fournisseurEdit.setNom(fournisseurDto.getNom());
 		fournisseurEdit.setPrenom(fournisseurDto.getPrenom());
 		fournisseurEdit.setTel(fournisseurDto.getTel());
-		fournisseurEdit.setDateFour(fournisseurDto.getDate());
+		fournisseurEdit.setDateFour(fournisseurDto.getDateFour());
 		
-		if(fournisseurDto.getCategoryId() != null ) {
-			CategorieFournisseur categorieFournisseur = categoryFourService.getCategoryFournisseur(fournisseurDto.getCategoryId());
+		if(fournisseurDto.getCategoryFourId() != null ) {
+			CategorieFournisseur categorieFournisseur = categoryFourService.getCategoryFournisseur(fournisseurDto.getCategoryFourId());
 			fournisseurEdit.setCategorieFournisseur(categorieFournisseur);
 		}
 		
@@ -187,12 +182,24 @@ private FournisseurRepository fournisseurRepository;
        fournisseurDto.setId(fournisseur.getId());
        fournisseurDto.setNom(fournisseur.getNom());
        fournisseurDto.setPrenom(fournisseur.getPrenom());
-       fournisseurDto.setDate(fournisseur.getDateFour());
-       
+       fournisseurDto.setDateFour(fournisseur.getDateFour());
+       fournisseurDto.setTel(fournisseur.getTel());
+       fournisseurDto.setCategoryFourId(fournisseur.getCategorieFournisseur().getId());
        fournisseurDto.setCategoryFourNom(fournisseur.getCategorieFournisseur().getDescription());
       
        return fournisseurDto;
    }
+   public FournisseurResponse addCategoryFournisseurToFournisseur(Long fournisseurId, Long categoryFourId) {
+Fournisseur fournisseur = getFournisseur(fournisseurId);
+		CategorieFournisseur categorieFournisseur = categoryFourService.getCategoryFournisseur(categoryFourId);
+		if(Objects.nonNull(fournisseur.getCategorieFournisseur())) {
+			throw new IllegalArgumentException("Il exist déjà un fournisseur avec cette categorie");
+		}
+		fournisseur.setCategorieFournisseur(categorieFournisseur);
+		fournisseur.addFournisseur(fournisseur);
+		return Mapper.fournisseurToFournisseurResponse(fournisseur);
+	}
+
 
     private Fournisseur mapToEntity(FournisseurDto fournisseurDto){
         //Fournisseur fournisseur = mapper.map(fournisseurDto, Fournisseur.class);
@@ -201,6 +208,8 @@ private FournisseurRepository fournisseurRepository;
         fournisseur.setNom(fournisseurDto.getNom());
         fournisseur.setPrenom(fournisseurDto.getPrenom());
         fournisseur.setTel(fournisseurDto.getTel());
+        fournisseur.setDateFour(fournisseurDto.getDateFour());
+       // fournisseur.setCategoryFourNom(fournisseur.getCategorieFournisseur().getId());
         return  fournisseur;
     }
 	

@@ -30,7 +30,7 @@ export class FournisseurService {
     return this.http.get<Fournisseur[]>(`${this.baseUrl + '/get'}/${id}`, httpOptions);
   }
 
-  create(data: any): Observable<any>{
+  addFournisseur(data: any): Observable<any>{
     return this.http.post(this.baseUrl + '/add', data, httpOptions)
   }
 

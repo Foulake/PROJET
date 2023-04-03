@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Fournisseur } from '../models/fournisseur';
 import { HttpClient } from '@angular/common/http';
 import { FournisseurService } from '../services/fournisseur.service';
@@ -13,7 +13,10 @@ import { NotificationServiceService } from '../services/notification.service';
   styleUrls: ['./fournisseur-list.component.scss']
 })
 export class FournisseurListComponent implements OnInit {
-  errorMessage!: string;
+
+
+
+   errorMessage!: string;
   fournisseurs: Fournisseur[]=[];
   currentFournisseur: Fournisseur = {};
   currentIndex = -1;
@@ -98,7 +101,7 @@ export class FournisseurListComponent implements OnInit {
         });
     }
   
-    updateFour(id: any): void {
+    updateFour(id: any ): void {
       this.router.navigate(['updateFour', id]);
     }
   

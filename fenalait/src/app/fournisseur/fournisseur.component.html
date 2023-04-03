@@ -23,7 +23,7 @@
               type="text"
               class="form-control"
               name="prenom"
-              [(ngModel)]="form.prenom"
+              [(ngModel)]="fournisseur.prenom"
               required
               minlength="3"
               maxlength="20"
@@ -48,7 +48,7 @@
               type="text"
               class="form-control"
               name="nom"
-              [(ngModel)]="form.nom"
+              [(ngModel)]="fournisseur.nom"
               required
               minlength="3"
               maxlength="20"
@@ -73,7 +73,7 @@
             type="text"
             class="form-control"
             name="tel"
-            [(ngModel)]="form.tel"
+            [(ngModel)]="fournisseur.tel"
             required
             #tel="ngModel"
             [ngClass]="{ 'is-invalid': f.submitted && tel.errors }"/>
@@ -92,7 +92,7 @@
               type="date"
               class="form-control"
               name="dateFour"
-              [(ngModel)]="form.dateFour"
+              [(ngModel)]="fournisseur.dateFour"
               required
               #dateFour="ngModel"
               [ngClass]="{ 'is-invalid': f.submitted && dateFour.errors }"/>
@@ -104,13 +104,17 @@
             </div>
           </div>
           <div class="form-group">
-            <label for="categoryFourNom">Categorie</label>
+            <label for="categoryFourId">Categorie</label>
           
-            <select class="form-control" name="categorieFournisseur" id="categorieFournisseur.id">
+            <!-- <select class="form-control" name="categorieFournisseur" id="categorieFournisseur">
               <option >Selectionnez une catégorie</option>
  
               <option *ngFor="let categorieFournisseur of listCategorieFournisseur" value="{{categorieFournisseur.id}}">{{categorieFournisseur.description}}</option>
 
+            </select> -->
+            <select class="form-select" aria-label="Default select example" name="categorieFournisseur" id="categorieFournisseur" [(ngModel)]="fournisseur.categoryFourId" >
+              <option [value]="0" >Selectionnez un Categorie</option>
+              <option *ngFor="let categorieFournisseur of listCategorieFournisseur" [value]="categorieFournisseur.id">{{categorieFournisseur.description}}</option>
             </select>
             
           </div>
@@ -130,7 +134,7 @@
   
       
       <div class="alert alert-success" *ngIf="isSuccessful">
-        fournisseur enrégistrer avec succès Mr/Mme {{form.nom}}!
+        fournisseur enrégistrer avec succès Mr/Mme {{fournisseur.nom}}!
 
       </div>
     </div>

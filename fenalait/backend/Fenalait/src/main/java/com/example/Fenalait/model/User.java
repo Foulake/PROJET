@@ -199,5 +199,17 @@ public class User extends BaseEntity implements UserDetails{
 	public void removeApprovissionnement(Approvissionnement approvissionnement) {
 		approvissionnements.remove(approvissionnement);
 	}
+
+
+	public void addVente(Vente vente) {
+		ventes.add(vente);
+		
+	}
+
+
+	public void removeVente(Vente vente) {
+		ventes.remove(vente);
+		
+	}
 	
 }

@@ -59,7 +59,17 @@ public class Produit extends  BaseEntity{
 	//	@JsonInclude(JsonInclude.Include.NON_NULL)
 //	@Transient
 	@OneToMany(mappedBy ="produit")
-	private List<Vente> ventes;
+       private List<Vente> ventes;
+	
+	public List<Vente> getVentes() {
+		return ventes;
+	}
+
+	public void setVentes(List<Vente> ventes) {
+		this.ventes = ventes;
+	}
+
+
 	
 	@OneToMany(mappedBy ="produit")
 	private List<Approvissionnement> approvissionnements;
@@ -85,5 +95,14 @@ public class Produit extends  BaseEntity{
 	
 	public void removeApprovissionnement(Approvissionnement approvissionnement) {
 		approvissionnements.remove(approvissionnement);
+	}
+
+	public void removeVente(Vente vente) {
+		ventes.add(vente);
+		
+	}
+
+	public void addVente(Vente vente) {
+		ventes.remove(vente);
 	}
 }

@@ -31,6 +31,7 @@ public interface FournisseurRepository extends JpaRepository<Fournisseur, Long>{
 	@Query("SELECT new com.example.Fenalait.dto.FournisseurResponse(c.nom , c.prenom, c.tel, p.qteAppro) FROM Fournisseur c JOIN c.approvissionnements p")
 	public List<FournisseurResponse> getFournisseursByAppro();
 
+	
 	List<Fournisseur> findByCategorieFournisseurId(Long categoryFourId);
 
 	boolean existsFournisseurByTel(String tel);

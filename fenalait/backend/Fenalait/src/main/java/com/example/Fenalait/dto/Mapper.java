@@ -152,8 +152,7 @@ public static List<MagasinResponse> magasinToMagasinResponses(List<Magasin> maga
 		FournisseurResponse fournisseurResponseDto = new FournisseurResponse();
 		fournisseurResponseDto.setId(fournisseur.getId());
 		fournisseurResponseDto.setCategoryFourNom(fournisseur.getCategorieFournisseur().getDescription());
-		
-		//neeew
+		fournisseurResponseDto.setCategoryFourId(fournisseur.getCategorieFournisseur().getId());
 		fournisseurResponseDto.setNom(fournisseur.getNom());
 		fournisseurResponseDto.setPrenom(fournisseur.getPrenom());
 		fournisseurResponseDto.setTel(fournisseur.getTel());
@@ -178,13 +177,16 @@ public static List<MagasinResponse> magasinToMagasinResponses(List<Magasin> maga
 		VenteResponse venteResponseDto = new VenteResponse();
 		venteResponseDto.setId(vente.getId());
 		venteResponseDto.setClientNom(vente.getClient().getPrenomClient());
+		venteResponseDto.setClientNom(vente.getClient().getNomClient());
+		venteResponseDto.setClientNom(vente.getClient().getTelClient());
 		venteResponseDto.setProduitNom(vente.getProduit().getNomPrdt());
-		//venteResponseDto.setUserNom(vente.getUser().getPrenom());
-		
+		venteResponseDto.setUserNom(vente.getUser().getEmail());
+		venteResponseDto.setClientId(vente.getClient().getId());
+		venteResponseDto.setProduitId(vente.getProduit().getId());
 		//neeew
 		venteResponseDto.setMontant(vente.getMontant());
 		venteResponseDto.setQuantite(vente.getQuantite());
-		
+		venteResponseDto.setDate(vente.getDate());
 		return venteResponseDto;
 	}
 

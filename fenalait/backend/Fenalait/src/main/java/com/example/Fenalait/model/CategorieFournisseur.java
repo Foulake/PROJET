@@ -42,6 +42,12 @@ public class CategorieFournisseur extends  BaseEntity {
 	}
 
 	public CategorieFournisseur() {	}
+
+	public void add(CategorieFournisseur categoriefournisseur) {
+		categoriefournisseur.add(categoriefournisseur);
+
+		
+	}
 	
 	
 

@@ -1,5 +1,6 @@
 package com.example.Fenalait.dto;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.validation.constraints.NotBlank;
@@ -7,9 +8,21 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 import com.example.Fenalait.model.Vente;
-import lombok.Data;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString
+@JsonIgnoreProperties(ignoreUnknown = true)
+@JsonInclude(value = Include.NON_DEFAULT)
+
 public class ClientDto {
 
 	private Long id;

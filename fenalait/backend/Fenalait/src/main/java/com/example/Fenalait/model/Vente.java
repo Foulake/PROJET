@@ -13,11 +13,10 @@ import javax.validation.constraints.Past;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
-
-
 @Data
 @EqualsAndHashCode(callSuper=false)
 @Entity
@@ -56,14 +55,20 @@ public class Vente extends  BaseEntity{
 	public Vente() {
 		super();
 	}
-	
-	public Vente(Long id, double quantite, double montant, boolean remise, Date date) {
+
+	public Vente(Long id, double quantite, double montant, boolean remise,
+			@Past(message = "La date ne peut être inférieur à la date courante !!") Date date, Produit produit,
+			Client client, User user) {
 		super();
 		this.id = id;
 		this.quantite = quantite;
 		this.montant = montant;
 		this.remise = remise;
 		this.date = date;
+		this.produit = produit;
+		this.client = client;
+		this.user = user;
 	}
-
+	
+	
 }

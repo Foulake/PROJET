@@ -1,0 +1,107 @@
+<div class="col-12 d-flex justify-content-between pt-2 mx-2">
+    <div class="col-md-3 p-0">
+      <h3>Liste des Ventes<select (change)="hadlePageSizeChange($event)">
+        <option *ngFor=" let size of totalPages" [ngValue]="size">
+          {{ size }}
+        </option>
+      </select></h3>
+    </div>
+
+    <div class="col-md-3 p-0 ">
+      <div class="input-group input-group-sm">
+        <input name="nomPrdt" [(ngModel)]="montant" 
+       (ngModelChange)="searchVenteName()" class="form-control form-control-navbar" 
+          class="form-control form-control-navbar" type="search" placeholder="Tapez ici pour rechercher" aria-label="Search" 
+        />
+      </div>
+    </div> 
+
+    
+  
+    <div class="d-flex mr-2">
+      <div class="flex-flill">
+        <button type="button" class="btn btn-sm btn-success"> <i class="fas fa-download"></i>Télécharger </button>
+      </div>
+      <div class="flex-flill">
+        <button type="button" class="btn btn-sm btn-primary" routerLink="/addVente"> <i class="fas fa-plus"></i>Nouveau </button>
+      </div>
+    </div>
+  </div>
+  <div class="modal-body">
+  <table class="table table-bordered table-striped">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Montant</th>
+        <th>Quantité</th>
+        <th>Remise</th>
+        <th>Produit</th>
+        <th>Client</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let vente of ventes | paginate: {
+          itemsPerPage:pageSize,
+          currentPage: page,
+          totalItems: count
+        };
+       let i = index"
+      [class.active]="i == currentIndex">
+        <td><span>{{vente.id}}</span></td>
+        <td><span>{{vente.montant}}</span></td>
+        <td><span>{{ vente.quantite }} fcfa</span></td>
+        <td><span>{{vente.remise}}</span></td>
+        <td><span>{{vente.date}}</span></td>
+        <td><span>{{vente.produitNom}}</span></td>
+        <td><span>{{vente.clientNom}}</span></td>
+        <td>
+          <button class="btn btn-sm btn-warning" (click)="editVente(vente.id)">
+            <i class="fa fa-edit"></i>Modifier</button>
+            
+          <button class="btn btn-sm btn-danger" data-toggle="modal" 
+            data-target="#exampleModalLong" 
+            (click)="selectedVentePourSupprimer(vente.id)">
+            <i class="fa fa-trash"></i>Supprimer</button>
+        </td>
+      </tr>
+    </tbody>
+    <!-- <div class="btn btn-danger text-center" *ngIf="errorMessage">
+      {{ errorMessage }}
+    </div>
+    <div class="btn btn-danger text-center" *ngIf="message"> -->
+      <!-- {{ message }}
+    </div>
+   -->
+  </table>
+  <div class="container col-md-12">
+    <pagination-controls previousLabel="Précedente"
+    nextLabel="Suivante"
+    [responsive]="true"
+     (pageChange)="hadlePageChange($event)">
+    </pagination-controls>
+  </div>
+  
+  <!-- Modal -->
+  <div class="modal fade" data-backdrop="static" data-beyboard="false" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 class="modal-title" id="exampleModalLongTitle">Confirmation de suppréssion</h3>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="btn btn-danger text-center" *ngIf="message">
+            {{ message }}
+        </div>
+          <h2 class="text-center">Voulez vous supprimer la vente {{ form.montant }}</h2>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="annulerSuppressionVente()"> <i class="fas fa-undo"></i> Annuler</button>
+          <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="confirmDelete()"> <i class="fas fa-trash"></i> Confirmer</button>
+        </div>
+      </div>
+    </div>
+  </div>

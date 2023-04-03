@@ -17,8 +17,8 @@ import javax.validation.constraints.Size;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
-
 @Data
+
 @EqualsAndHashCode(callSuper=false)
 @Entity
 @ToString
@@ -58,13 +58,29 @@ public class Client extends  BaseEntity {
 		super();
 		
 	}
-	
-	
-	public Client(Long id, String nomClient, String prenomClient, String telClient) {
+
+	public Client(Long id,
+			@NotBlank(message = "Veuillez entrer le nom du client !!") @Size(min = 2, max = 125, message = "La taille doit être comprise entre 2-125 ") String nomClient,
+			@NotBlank(message = "Veuillez entrer le prénom du client !!") @Size(min = 2, max = 125, message = "La taille doit être comprise entre 2-125 ") String prenomClient,
+			@NotBlank(message = "Le numéro ne peut pas être nul !") @Pattern(regexp = "^(\\+\\d{1,3}( )?)?(\\d{2}[ ]?)(\\d{2}[ ]?){2}\\d{2}$", message = "Voici le format : +223 65 20 14 12") String telClient,
+			List<Vente> ventes) {
 		super();
 		this.id = id;
 		this.nomClient = nomClient;
 		this.prenomClient = prenomClient;
 		this.telClient = telClient;
+		this.ventes = ventes;
 	}
+
+	public void removeVente(Vente vente) {
+		ventes.remove(vente);
+		
+	}
+
+	public void addVente(Vente vente) {
+		ventes.add(vente);
+		
+	}
+	
+	
 }

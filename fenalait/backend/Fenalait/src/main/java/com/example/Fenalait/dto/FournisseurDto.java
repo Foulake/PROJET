@@ -42,14 +42,16 @@ public class FournisseurDto {
 	
 	@Past(message = "La date ne peut être inférieur à la date courante !!")
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-	private Date date;
+	private Date dateFour;
 	
 	@NotBlank(message = "Le numéro ne peut pas être nul !")
 	@Pattern(regexp = "^(\\+\\d{1,3}( )?)?(\\d{2}[ ]?)(\\d{2}[ ]?){2}\\d{2}$" , message = "Voici le format : +223 65 20 14 12")	
 	private String tel;
 	
 	private Long categoryId;
+	private Long categoryFourId;
 	private String categoryFourNom;
 	
 	private List<Paiement> paiements;
+	
 }

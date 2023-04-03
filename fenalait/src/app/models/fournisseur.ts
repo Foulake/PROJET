@@ -5,5 +5,5 @@ prenom?: string;
 dateFour?: Date;
 tel?: string;
 categoryFourNom?:string;
-categoryFourId?:any;
+categoryFourId?:number;
 }

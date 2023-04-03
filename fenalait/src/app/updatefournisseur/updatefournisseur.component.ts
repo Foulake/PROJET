@@ -1,5 +1,7 @@
 import { Component ,OnInit} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { CategorieFournisseur } from '../models/categorie-fournisseur';
+import { Fournisseur } from '../models/fournisseur';
 import { CategorieFournisseurService } from '../services/categorie-fournisseur.service';
 import { FournisseurService } from '../services/fournisseur.service';
 
@@ -10,19 +12,14 @@ import { FournisseurService } from '../services/fournisseur.service';
   styleUrls: ['./updatefournisseur.component.scss']
 })
 export class UpdatefournisseurComponent implements OnInit {
-  form: any = {
-    nom: '',
-      prenom: '',
-      tel: '',
-      dateFour:'',
-      categoryFourId:'',
-      categoryFourNom:''
-  };
+  fournisseur: Fournisseur = {};
+  categorieFournisseur:CategorieFournisseur={}
+    listCategorieFournisseur: Array<CategorieFournisseur> = [];
+  
   isSuccessful = false;
   isSignUpFailed = false;
   errorMessage = '';
   successMessage = '';
-categorieFournisseurs: any[]=[];
   
   constructor(private fournisseurService: FournisseurService, private categorieFournisseurService:CategorieFournisseurService
     ,private route:ActivatedRoute
@@ -34,16 +31,17 @@ categorieFournisseurs: any[]=[];
     const id = this.route.snapshot.params['id'];
         if(id){
           this.fournisseurService.get(id).subscribe({
-            next: fournisseur => {
-              this.form = fournisseur;
-            }
-          })
+            next: (data: any) => {
+              this.fournisseur = data;
+             //this.pageTitle= `Modifier le produit ${this.fournisseur.nom}`;
+              console.log('test ', data);}
+                     })
         }
   }
 
 onSubmit(): void {
 
-  this.fournisseurService.update(this.form.id, this.form).subscribe({
+  this.fournisseurService.update(this.fournisseur.id, this.fournisseur).subscribe({
     next: data => {
       console.log(data);
       //this.isSuccessful = true;

@@ -2,6 +2,7 @@ package com.example.Fenalait.service.impl;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -11,6 +12,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import com.example.Fenalait.dto.Mapper;
@@ -23,6 +26,7 @@ import com.example.Fenalait.model.User;
 import com.example.Fenalait.model.Vente;
 import com.example.Fenalait.repository.ClientRepository;
 import com.example.Fenalait.repository.ProduitRepository;
+import com.example.Fenalait.repository.UserRepository;
 import com.example.Fenalait.repository.VenteRepository;
 import com.example.Fenalait.service.ClientService;
 import com.example.Fenalait.service.ProduitService;
@@ -36,18 +40,18 @@ private VenteRepository venteRepository;
 	
 	private ClientRepository clientRepository;
 	
-	private  ProduitRepository produitRepository;
+	private  UserRepository userRepository;
 	
 	private ClientService clientService;
 	
 	private  ProduitService produitService;
 	private  UserService userService;
 
-	public VenteServiceImpl(VenteRepository venteRepository, ClientRepository clientRepository, ProduitRepository produitRepository,ProduitService produitService,ClientService clientService,UserService userService) {
+	public VenteServiceImpl(VenteRepository venteRepository, ClientRepository clientRepository, UserRepository userRepository,ProduitService produitService,ClientService clientService,UserService userService) {
 		super();
 		this.venteRepository = venteRepository;
 		this.clientRepository = clientRepository;
-		this.produitRepository = produitRepository;
+		this.userRepository = userRepository;
 		this.clientService = clientService;
 		this.produitService = produitService;	
 		this.userService = userService;		
@@ -64,7 +68,7 @@ private VenteRepository venteRepository;
 		vente.setRemise(venteDto.isRemise());
 		
 		if(venteDto.getClientId() == null ) {
-			throw new IllegalArgumentException("Le vente manque de Categorie !");
+			throw new IllegalArgumentException("Le vente manque de Client !");
 		}
 		if(venteDto.getProduitId() == null) {
 			throw new IllegalArgumentException("Le vente manque de Produit !");
@@ -74,11 +78,13 @@ private VenteRepository venteRepository;
 		Client client = clientService.getClient(venteDto.getClientId());
 		vente.setClient(client);
 		
-		Produit produit = produitService.getProduit(venteDto.getClientId());
+		Produit produit = produitService.getProduit(venteDto.getProduitId());
 		vente.setProduit(produit);
 		
-		User user = userService.getUser(venteDto.getUserId());;
-		vente.setUser(user);
+Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		
+		User user = userRepository.findByEmail(auth.getName()).get();
+		produit.setUser(user);
 		
 		vente.setMontant(vente.getMontant());
 		vente.setQuantite(vente.getQuantite());
@@ -215,6 +221,15 @@ private VenteRepository venteRepository;
         venteDto.setMontant(vente.getMontant());
         venteDto.setRemise(vente.isRemise());
         venteDto.setQuantite(vente.getQuantite());
+        venteDto.setClientId(vente.getClient().getId());
+        venteDto.setClientNom(vente.getClient().getNomClient());
+        venteDto.setClientNom(vente.getClient().getTelClient());
+        venteDto.setClientNom(vente.getClient().getPrenomClient());
+        venteDto.setProduitId(vente.getProduit().getId());
+        venteDto.setProduitNom(vente.getProduit().getNomPrdt());
+        venteDto.setUserId(vente.getUser().getId());
+        venteDto.setUsernom(vente.getUser().getEmail());
+        
         return  venteDto;
     }
 
@@ -225,7 +240,84 @@ private VenteRepository venteRepository;
         vente.setDate(venteDto.getDate());
         vente.setQuantite(venteDto.getQuantite());
         vente.setRemise(venteDto.isRemise());
+        
         return  vente;
     }
+
+	@Override
+	public VenteResponse addClientToVente(Long venteId, Long clientId) {
+		Vente vente = getVente(venteId);
+		Client client = clientService.getClient(clientId);		
+		if(Objects.nonNull(vente.getClient())) {
+			throw new IllegalArgumentException("Il exist déjà un vente avec cet client");
+		}
+		vente.setClient(client);
+		client.addVente(vente);
+		return Mapper.venteToVenteResponse(vente);
+	}
+
+
+	@Override
+	public VenteResponse addProduitToVente(Long venteId, Long produitId) {
+		Vente vente = getVente(venteId);
+		Produit produit = produitService.getProduit(produitId);		
+		if(Objects.nonNull(vente.getProduit())) {
+			throw new IllegalArgumentException("Il exist déjà un vente avec cet produit");
+		}
+		vente.setProduit(produit);
+		produit.addVente(vente);
+		return Mapper.venteToVenteResponse(vente);
+	}
+
+	@Override
+	public VenteResponse removeClientFromVente(Long venteId, Long clientId) {
+		Vente vente = getVente(venteId);
+		Client client = clientService.getClient(clientId);
+		if(!(Objects.nonNull(vente.getClient()))) {
+			throw new IllegalArgumentException("Il exist pas un produit avec cet client ID " +clientService.getClient(clientId));
+		}
+		vente.setClient(null);
+		client.removeVente(vente);
+		return Mapper.venteToVenteResponse(vente);
+	
+	}
+
+	@Override
+	public VenteResponse removeProduitFromVente(Long venteId, Long produitId) {
+		Vente vente = getVente(venteId);
+		Produit produit = produitService.getProduit(produitId);
+		if(!(Objects.nonNull(vente.getProduit()))) {
+			throw new IllegalArgumentException("Il exist pas un produit avec cet produit ID " +produitService.getProduit(produitId));
+		}
+		vente.setProduit(null);
+		produit.removeVente(vente);
+		return Mapper.venteToVenteResponse(vente);
+	
+	}
+
+	@Override
+	public VenteResponse addUserTovente(Long venteId, Long userId) {
+		Vente vente = getVente(venteId);
+		User user = userService.getUser(userId);		
+		if(Objects.nonNull(vente.getUser())) {
+			throw new IllegalArgumentException("Il exist déjà un vente avec cet client");
+		}
+		vente.setUser(user);
+		user.addVente(vente);
+		return Mapper.venteToVenteResponse(vente);
+	}
+
+	@Override
+	public VenteResponse removeUserFromVente(Long venteId, Long userId) {
+		Vente vente = getVente(venteId);
+		User user = userService.getUser(userId);
+		if(!(Objects.nonNull(vente.getUser()))) {
+			throw new IllegalArgumentException("Il exist pas un produit avec cet user ID " +userService.getUser(userId));
+		}
+		vente.setUser(null);
+		user.removeVente(vente);
+		return Mapper.venteToVenteResponse(vente);
+	
+	}
     
 }
