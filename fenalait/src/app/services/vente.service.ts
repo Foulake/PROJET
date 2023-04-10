@@ -20,8 +20,8 @@ export class VenteService {
     return this.httpClient.get<Vente[]>(this.baseURL + '/getAll', {params});
   }
 
-  get(productId: any): Observable<Vente> {
-    return this.httpClient.get(`${this.baseURL + '/get'}/${productId}`, httpOptions);
+  get(id: any): Observable<Vente> {
+    return this.httpClient.get(`${this.baseURL + '/get'}/${id}`, httpOptions);
   }
 
   addVente(data: any): Observable<any>{

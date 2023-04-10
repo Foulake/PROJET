@@ -34,6 +34,7 @@ import com.example.Fenalait.utils.AppConstants;
 @RestController
 @RequestMapping("/api/v1/approvissionnements")
 @CrossOrigin(origins = "http://localhost:4200")
+
 public class ApproController {
 	
 	private ApproService approService;
@@ -45,19 +46,19 @@ public class ApproController {
 
     @PostMapping("/add")
 	//@RolesAllowed({"ROLE_ADMIN"})
-	public ResponseEntity<ApproResponse> addProduct(@Valid @RequestBody ApproDto approDto){
+	public ResponseEntity<ApproResponse> addApprovi(@Valid @RequestBody ApproDto approDto){
 		ApproResponse approResponse = approService.addApprovissionnement(approDto);
 		return new ResponseEntity<ApproResponse>(approResponse, HttpStatus.OK);
 	}
    
     @GetMapping("/get/{id}")
-	public ResponseEntity<ApproResponse> getProduct(@PathVariable final Long approId){
+	public ResponseEntity<ApproResponse> getAppro(@PathVariable final Long approId){
     	ApproResponse approDto = approService.getApprovissionnementById(approId);
 		return new ResponseEntity<ApproResponse>(approDto, HttpStatus.OK);
 	}
     
     @GetMapping("/getAll")
-    public ApproResponse getAllProducts(
+    public ApproResponse getAllApprovis(
             @RequestParam(value = "pageNo", defaultValue = AppConstants.DEFAULT_PAGE_NUMBER, required = false) int pageNo,
             @RequestParam(value = "pageSize", defaultValue = AppConstants.DEFAULT_PAGE_SIZE, required = false) int pageSize,
             @RequestParam(value = "sortBy", defaultValue = AppConstants.DEFAULT_SORT_BY, required = false) String sortBy,
@@ -79,14 +80,14 @@ public class ApproController {
   	}
 
     @PutMapping("/edit/{id}")
-	public ResponseEntity<ApproResponse> editProduct(@Valid @RequestBody final ApproDto approDto, @PathVariable final Long id){
+	public ResponseEntity<ApproResponse> editApprovi(@Valid @RequestBody final ApproDto approDto, @PathVariable final Long id){
     	ApproResponse approResponse = approService.editApprovissionnement(id, approDto);
 		return new ResponseEntity<>(approResponse, HttpStatus.OK);
 	}
     
     @DeleteMapping("/delete/{id}")
 	//@RolesAllowed({"ROLE_ADMIN"})
-	public ResponseEntity<Map<String, Boolean>> deletePrroduct(@PathVariable final Long id){
+	public ResponseEntity<Map<String, Boolean>> deleteApprovi(@PathVariable final Long id){
 		approService.deleteApprovissionnement(id);
 		Map<String, Boolean> response =new  HashMap<>();
     	response.put("Le approvissionnement a été supprimé avec succès", Boolean.TRUE);
@@ -95,7 +96,7 @@ public class ApproController {
 	}
 
     @GetMapping("/search/full/{keywords}")
-	public  ResponseEntity<ApproResponse> searchProductByFull(
+	public  ResponseEntity<ApproResponse> searchApproviByFull(
 			 @RequestParam(value = "pageNo", defaultValue = AppConstants.DEFAULT_PAGE_NUMBER, required = false) int pageNo,
 	            @RequestParam(value = "pageSize", defaultValue = AppConstants.DEFAULT_PAGE_SIZE, required = false) int pageSize,
 	            @RequestParam(value = "sortBy", defaultValue = AppConstants.DEFAULT_SORT_BY, required = false) String sortBy,

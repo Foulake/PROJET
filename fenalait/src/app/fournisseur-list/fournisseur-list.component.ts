@@ -102,7 +102,7 @@ export class FournisseurListComponent implements OnInit {
     }
   
     updateFour(id: any ): void {
-      this.router.navigate(['updateFour', id]);
+      this.router.navigate(['addFournisseur', id]);
     }
   
     hadlePageChange(event: number): void {

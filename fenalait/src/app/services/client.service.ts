@@ -27,6 +27,10 @@ export class ClientService {
   getAllClient(params: any): Observable<Client[]> {
     return this.http.get<Client[]>(this.baseUrl + '/getAll', {params});
 }
+getAllSmall(): Observable<Client[]>{
+  return this.http.get<Client[]>(this.baseUrl + '/getAll', httpOptions);
+}
+
 
   get(id: any): Observable<Client[]> {
     return this.http.get<Client[]>(`${this.baseUrl + '/get'}/${id}`, httpOptions);

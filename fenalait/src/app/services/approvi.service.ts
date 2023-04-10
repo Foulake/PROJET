@@ -1,34 +1,36 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Produit } from '../models/produit';
+import { Approvi } from '../models/approvi';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' , 'Access-Control-Allow-origin': '*'})
 
 };
 
+
 @Injectable({
   providedIn: 'root'
 })
-export class ProduitService {
-  private baseURL= "http://localhost:8181/api/v1/produits"
+export class ApproviService {
+
+  private baseURL= "http://localhost:8181/api/v1/approvissionnements"
 
   constructor( private httpClient:HttpClient) { }
-
-  public getAllProduct(params: any): Observable<Produit[]>{
-    return this.httpClient.get<Produit[]>(this.baseURL + '/getAll', {params});
-  }
-  getAllSmal(): Observable<Produit[]>{
-    return this.httpClient.get<Produit[]>(this.baseURL + '/getAll', httpOptions);
-  }
+  header = new HttpHeaders()
+  .set('Content-Type', 'application/json')
+  .set('Access-Control-Allow-origin', '*');
 
 
-  get(productId: any): Observable<any> {
-    return this.httpClient.get(`${this.baseURL + '/get'}/${productId}`, httpOptions);
+  public getAllApprovis(params: any): Observable<Approvi[]>{
+    return this.httpClient.get<Approvi[]>(this.baseURL + '/getAll', {params});
   }
 
-  addProduit(data: any): Observable<any>{
+  get(id: any): Observable<any> {
+    return this.httpClient.get(`${this.baseURL + '/get'}/${id}`, httpOptions);
+  }
+
+  addApprovi(data: any): Observable<any>{
     return this.httpClient.post(this.baseURL + '/add', data, httpOptions);
   }
 

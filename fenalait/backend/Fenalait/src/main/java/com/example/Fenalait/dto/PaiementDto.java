@@ -12,7 +12,8 @@ import lombok.Data;
 public class PaiementDto {
 
 	private Long id;
-	
+	private Long fournisseurId;
+	private String fournisseurNom;
 	@NotBlank(message = "Veuillez entrer la date de la paiement !!")
 	private Date date;
 	

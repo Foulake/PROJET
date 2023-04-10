@@ -37,22 +37,22 @@ constructor( private produitService: ProduitService,
     this.vente.produitId = 0;
     this.vente.clientId = 0;
 
-  //  this.clientService.getAll()
-  //    .subscribe({
-  //     next: (res: any) => {
-  //       this.listClient = res.content;
-  //       console.log('res ', this.listClient);
+    this.clientService.getAllSmall()
+     .subscribe({
+      next: (res: any) => {
+        this.listClient = res.content;
+       console.log('res ', this.listClient);
         
-  //     }
-  //   });
+      }
+   });
 
-  //    this.produitService.get()
-  //      .subscribe({
-  //       next: (res: any) =>{
-  //          this.listProduit = res.content;
-  //         console.log(this.listProduit);
-  //       }
-  //      });
+     this.produitService.getAllSmal()
+       .subscribe({
+        next: (res: any) =>{
+            this.listProduit = res.content;
+          console.log(this.listProduit);
+        }
+     });
 
     const id = this.route.snapshot.params['id'];
      console.log('id =', id);

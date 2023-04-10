@@ -25,6 +25,10 @@ export class FournisseurService {
   getAllFournisseur(params:any): Observable<Fournisseur[]> {
       return this.http.get<Fournisseur[]>(this.baseUrl + '/getAll', {params});
   }
+  getAllSmall(): Observable<Fournisseur[]>{
+    return this.http.get<Fournisseur[]>(this.baseUrl + '/getAll', httpOptions);
+  }
+
 
   get(id: any): Observable<Fournisseur[]> {
     return this.http.get<Fournisseur[]>(`${this.baseUrl + '/get'}/${id}`, httpOptions);

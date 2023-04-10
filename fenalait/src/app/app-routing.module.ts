@@ -1,7 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ApprovissionnementListComponent } from './approvissionnement-list/approvissionnement-list.component';
-import { ApprovissionnementComponent } from './approvissionnement/approvissionnement.component';
 import { CategorieFournisseurListComponent } from './categorie-fournisseur-list/categorie-fournisseur-list.component';
 import { CategorieFournisseurComponent } from './categorie-fournisseur/categorie-fournisseur.component';
 import { CategoryComponent } from './components/category/category.component';
@@ -34,6 +32,8 @@ import { UpdatefournisseurComponent } from './updatefournisseur/updatefournisseu
 import { UpdateMagasinComponent } from './update-magasin/update-magasin.component';
 import { VenteListComponent } from './components/vente-list/vente-list.component';
 import { AddVenteComponent } from './components/add-vente/add-vente.component';
+import { ApproviListComponent } from './components/approvi-list/approvi-list.component';
+import { AddApproviComponent } from './components/add-approvi/add-approvi.component';
 
 const routes: Routes = [
   {path:"login",component:LoginComponent},
@@ -139,7 +139,7 @@ const routes: Routes = [
       { path:"addFournisseur",component:FournisseurComponent,
       canActivate: [AplicationGuard]},
 
-      { path:"updateFour/:id",component:UpdatefournisseurComponent ,
+      { path:"addFournisseur/:id",component:FournisseurComponent ,
       canActivate: [AplicationGuard]},
       
       
@@ -197,11 +197,11 @@ const routes: Routes = [
         canActivate: [AplicationGuard]
       },
       { 
-        path:"appro",component:ApprovissionnementListComponent,
+        path:"appro",component:ApproviListComponent,
         canActivate: [AplicationGuard]
       },
       {
-        path:"addAppro",component:ApprovissionnementComponent,
+        path:"addApprovi",component:AddApproviComponent,
         canActivate: [AplicationGuard]
       },
         

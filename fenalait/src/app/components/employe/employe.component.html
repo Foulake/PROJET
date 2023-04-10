@@ -1,1 +1,120 @@
-<app-employe-list></app-employe-list>
+<div class="container my-container ">
+    <div class="card justify-content-md-center">
+    <div class="card-header header-color text-center pb-0">
+        <h2>Ajouter Employe </h2>
+    </div>
+    <div class="card-body">
+        
+        <div class="btn btn-danger" *ngIf="errorMessage">
+            {{ errorMessage }}
+        </div>
+    <form
+        *ngIf="!isSuccessful"
+        name="form"
+        (ngSubmit)="f.form.valid && onSubmit()"
+        #f="ngForm"
+        novalidate>
+  
+        <div class="form-group">
+            <label for="prenomClient">Prénom</label>
+            <input
+              type="text"
+              class="form-control"
+              name="firstName"
+              [(ngModel)]="employe.firstName"
+              required
+              minlength="3"
+              maxlength="20"
+              #firstName="ngModel"
+              [ngClass]="{ 'is-invalid': f.submitted && firstName.errors }" />
+            <div class="invalid-feedback" *ngIf="firstName.errors && f.submitted">
+              <div *ngIf="firstName.errors['required']">Le prénom ne peut pas être vide !</div>
+              <div *ngIf="firstName.errors['minlength']">
+                Le prénom doit contenir au moins 20 charactères
+              </div>
+              <div *ngIf="firstName.errors['maxlength']">
+                Le prénom doit contenir au plus 20 charactères
+              </div>
+            </div>
+          </div>
+  
+          <div class="form-group">
+            <label for="lastName">Nom</label>
+            <input
+              type="text"
+              class="form-control"
+              name="lastName"
+              [(ngModel)]="employe.lastName"
+              required
+              minlength="3"
+              maxlength="20"
+              #lastName="ngModel"
+              [ngClass]="{ 'is-invalid': f.submitted && lastName.errors }" />
+  
+          <div class="invalid-feedback" *ngIf="lastName.errors && f.submitted">
+            <div *ngIf="lastName.errors['required']">Le nom ne peut pas être vide !</div>
+            <div *ngIf="lastName.errors['minlength']">
+              Le Nom doit contenir au moins 3 charactères
+            </div>
+            <div *ngIf="lastName.errors['maxlength']">
+              Le Nom doit contenir au plus 20 charactères
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="telEmploye">Telephone</label>
+          <input
+            type="text"
+            class="form-control"
+            name="telEmploye"
+            [(ngModel)]="employe.telEmploye"
+            required
+            telEmploye
+            #telEmploye="ngModel"
+            [ngClass]="{ 'is-invalid': f.submitted && telEmploye.errors }"/>
+          <div class="invalid-feedback" *ngIf="telEmploye.errors && f.submitted">
+            <div *ngIf="telEmploye.errors['required']">le tel  ne peut pas être vide !</div>
+            <div *ngIf="telEmploye.errors['telEmploye']">
+                telEmploye n'est pas doit être  valide !
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+            <label for="titre">Titre</label>
+            <input
+              type="text"
+              class="form-control"
+              name="titre"
+              [(ngModel)]="employe.titre"
+              required
+              titre
+              #titre="ngModel"
+              [ngClass]="{ 'is-invalid': f.submitted && titre.errors }"/>
+            <div class="invalid-feedback" *ngIf="titre.errors && f.submitted">
+              <div *ngIf="titre.errors['required']">Le titre ne peut pas être vide !</div>
+              <div *ngIf="titre.errors['titre']">
+               Le  Titre doit pas  être  valide !
+              </div>
+            </div>
+          </div>
+          
+        
+        <div class="form-group d-flex justify-content-between">
+            
+          <button type="button" class="btn btn-danger" routerLink="/employe">
+            <i class="fas fa-ban"></i> annuler
+          </button>
+            <button type="submit" class="btn btn-primary">
+              <i class="fas fa-save"></i> enrégistrer
+            </button>
+          </div>
+      </form>
+  
+      
+      <div class="alert alert-success" *ngIf="isSuccessful">
+        Employe enrégistrer avec succès Mr/Mme {{employe.lastName}}!
+      </div>
+    </div>
+    </div>
+  </div>
+  

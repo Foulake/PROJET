@@ -1,0 +1,114 @@
+<div class="container my-container ">
+    <div class="card justify-content-md-center">
+    <div class="card-header header-color text-center pb-0">
+        <h2> {{ pageTitle }} </h2>
+    </div>
+    <div class="card-body">
+        
+        <div class="btn btn-danger text-center" *ngIf="errorMessage">
+            {{ errorMessage }}
+        </div>
+    <form
+        *ngIf="!isSuccessful"
+        name="form"
+        (ngSubmit)="f.form.valid && onSubmit()"
+        #f="ngForm"
+        novalidate>
+  
+        <div class="form-group">
+            <label for="nomPrdt">QteAppro</label>
+            <input
+              type="number"
+              class="form-control"
+              name="qteAppro"
+              [(ngModel)]="approvi.qteAppro"
+              required
+              minlength="3"
+              maxlength="20"
+              #qteAppro="ngModel"
+              [ngClass]="{ 'is-invalid': f.submitted && qteAppro.errors }" />
+            <div class="invalid-feedback" *ngIf="qteAppro.errors && f.submitted">
+              <div *ngIf="qteAppro.errors['required']">Le préqte ne peut pas être vide !</div>
+              <div *ngIf="qteAppro.errors['minlength']">
+                Le préqte doit contenir au moins 20 charactères
+              </div>
+              <div *ngIf="qteAppro.errors['maxlength']">
+                La quantté doit contenir au plus 20 charactères
+              </div>
+            </div>
+          </div>
+  
+          <!-- <div class="form-group">
+            <label for="qte">QteTotal</label>
+            <input
+              type="number"
+              class="form-control"
+              name="qteTotal"
+              [(ngModel)]="approvi.qteTotal"
+              #qteTotal="ngModel"
+              required
+              minlength="3"
+              maxlength="20"
+              [ngClass]="{ 'is-invalid': f.submitted && qteTotal.errors }" />
+            <div class="invalid-feedback" *ngIf="qteTotal.errors && f.submitted">
+              <div *ngIf="qteTotal.errors['required']">Le préqte ne peut pas être vide !</div>
+              <div *ngIf="qteTotal.errors['minlength']">
+                Le préqte doit contenir au moins 20 charactères
+              </div>
+              <div *ngIf="qteTotal.errors['maxlength']">
+                La quantté doit contenir au plus 20 charactères
+              </div>
+            </div>
+          </div> -->
+  
+  
+        
+        <div class="form-group">
+            <label for="code">Date</label>
+            <input
+              type="date"
+              class="form-control"
+              name="code"
+              [(ngModel)]="approvi.dateAppro"
+              required
+              dateAppro
+              #dateAppro="ngModel"
+              [ngClass]="{ 'is-invalid': f.submitted && dateAppro.errors }"/>
+            <div class="invalid-feedback" *ngIf="dateAppro.errors && f.submitted">
+              <div *ngIf="dateAppro.errors['required']">La date ne peut pas être vide !</div>
+              <div *ngIf="dateAppro.errors['code']">
+                date doit être une adresse date valide !
+              </div>
+            </div>
+          </div>
+
+       
+        <div class="form-group">
+          <label for="produitId">Produit</label>
+          <select class="form-select" aria-label="Default select example" name="produit" id="produit" [(ngModel)]="approvi.produitId" >
+            <option [value]="0" >Selectionnez un produit</option>
+            <option *ngFor="let produit of listProduit" [value]="produit.id">{{produit.nomPrdt}}</option>
+          </select>
+        </div>
+        <div class="form-group">
+            <label for="Id" >Fournisseur</label>
+            <select class="form-select" aria-label="Default select example" name="fournisseur" [(ngModel)]="approvi.fournisseurId">
+              <option [value]="0" selected>Selectionnez une fournisseur</option>
+              <option *ngFor="let fournisseur of listFournisseur" [value]="fournisseur.id">{{fournisseur.tel}}</option>
+            </select>
+          </div>
+        
+        <div class="form-group d-flex justify-content-between">
+            
+          <button type="button" class="btn btn-danger" routerLink="/produit">
+            <i class="fas fa-ban"></i> annuler
+          </button>
+            <button type="submit" class="btn btn-primary">
+              <i class="fas fa-save"></i> enrégistrer
+            </button>
+          </div>
+      </form>
+    </div>
+    </div>
+  </div>
+  

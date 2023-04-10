@@ -12,6 +12,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import com.example.Fenalait.dto.ApproDto;
@@ -24,6 +26,7 @@ import com.example.Fenalait.model.User;
 import com.example.Fenalait.model.Approvissionnement;
 import com.example.Fenalait.repository.FournisseurRepository;
 import com.example.Fenalait.repository.ProduitRepository;
+import com.example.Fenalait.repository.UserRepository;
 import com.example.Fenalait.repository.ApproRepository;
 import com.example.Fenalait.service.ApproService;
 import com.example.Fenalait.service.FournisseurService;
@@ -39,11 +42,12 @@ public class ApproServiceImpl implements ApproService{
 	private final UserService userService;
 	private final ProduitService produitService;
 	private final ProduitRepository produitRepository;
+	private final UserRepository userRepository;
 	private final FournisseurRepository fournisseurRepository;
 	
 	@Autowired
 	public ApproServiceImpl(ApproRepository approvissionnementRepository, FournisseurService fournisseurService, UserService userService,
-			ProduitService produitService, ProduitRepository produitRepository, FournisseurRepository fournisseurRepository) {
+			ProduitService produitService, ProduitRepository produitRepository, FournisseurRepository fournisseurRepository, UserRepository userRepository) {
 		
 		this.approvissionnementRepository = approvissionnementRepository;
 		this.fournisseurService = fournisseurService;
@@ -51,6 +55,7 @@ public class ApproServiceImpl implements ApproService{
 		this.produitService = produitService;
 		this.produitRepository = produitRepository;
 		this.fournisseurRepository = fournisseurRepository;
+		this.userRepository = userRepository;
 	}
 
 	@Transactional     
@@ -69,9 +74,9 @@ public class ApproServiceImpl implements ApproService{
 		if(approDto.getProduitId() == null) {
 			throw new IllegalArgumentException("Le approvissionnement manque de Produit !");
 		}
-		if(approDto.getUserId() == null) {
-			throw new IllegalArgumentException("Le approvissionnement manque du nom de l'utilisateur !");
-		}
+		//if(approDto.getUserId() == null) {
+		//	throw new IllegalArgumentException("Le approvissionnement manque du nom de l'utilisateur !");
+		//}
 		
 		Fournisseur fournisseur = fournisseurService.getFournisseur(approDto.getFournisseurId());
 		approvissionnement.setFournisseur(fournisseur);
@@ -79,8 +84,10 @@ public class ApproServiceImpl implements ApproService{
 		Produit produit = produitService.getProduit(approDto.getProduitId());
 		approvissionnement.setProduit(produit);
 		
-		User user = userService.getUser(approDto.getUserId());;
-		approvissionnement.setUser(user);
+Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		
+		User user = userRepository.findByEmail(auth.getName()).get();
+		produit.setUser(user);
 		
 		approvissionnement.setQteAppro(approvissionnement.getQteAppro());
 		approvissionnement.setDateAppro(approvissionnement.getDateAppro());

@@ -11,8 +11,6 @@ import { MagasinComponent } from './magasin/magasin.component';
 import { MagasinListComponent } from './magasin-list/magasin-list.component';
 import { EmployeComponent } from './components/employe/employe.component';
 import { EmployeListComponent } from './components/employe-list/employe-list.component';
-import { ApprovissionnementComponent } from './approvissionnement/approvissionnement.component';
-import { ApprovissionnementListComponent } from './approvissionnement-list/approvissionnement-list.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MenuComponent } from './menu/menu.component';
@@ -53,6 +51,12 @@ import { CategoryComponent } from './components/category/category.component';
 import { VenteListComponent } from './components/vente-list/vente-list.component';
 import { AddVenteComponent } from './components/add-vente/add-vente.component';
 import { UpdateVenteComponent } from './components/update-vente/update-vente.component';
+import { ApproviListComponent } from './components/approvi-list/approvi-list.component';
+import { AddApproviComponent } from './components/add-approvi/add-approvi.component';
+import { PaiementComponent } from './components/paiement/paiement.component';
+import { AddPaiementComponent } from './components/add-paiement/add-paiement.component';
+import { PaiementEmpListComponent } from './components/paiement-emp-list/paiement-emp-list.component';
+import { AddPaiementEmplComponent } from './components/add-paiement-empl/add-paiement-empl.component';
 
 
 @NgModule({
@@ -73,8 +77,6 @@ import { UpdateVenteComponent } from './components/update-vente/update-vente.com
     ProduitListComponent,
     AddProduitComponent,
     EmployeListComponent,
-    ApprovissionnementComponent,
-    ApprovissionnementListComponent,
     MenuComponent,
     AuthComponent,
     RegistreComponent,
@@ -95,6 +97,12 @@ import { UpdateVenteComponent } from './components/update-vente/update-vente.com
     VenteListComponent,
     AddVenteComponent,
     UpdateVenteComponent,
+    ApproviListComponent,
+    AddApproviComponent,
+    PaiementComponent,
+    AddPaiementComponent,
+    PaiementEmpListComponent,
+    AddPaiementEmplComponent,
 
   ],
   imports: [

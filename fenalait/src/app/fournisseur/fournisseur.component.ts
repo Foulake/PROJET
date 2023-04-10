@@ -45,12 +45,19 @@ export class FournisseurComponent implements OnInit{
     
     const id = this.route.snapshot.params['id'];
      console.log('id =', id);
+     if(!id){
+      this.pageTitle= 'Ajouter un Fournisseur';
+    }else{
      
-        if(!id){
-          this.pageTitle= 'Ajout un fournisseur';
+      this.fournisseurService.get(id).subscribe({
+        next: (data: any) => {
+          this.fournisseur = data;
+          this.pageTitle= `Modifier le fournisseur ${this.fournisseur.nom}`;
+          console.log('test ', data);
         }
-  }
-
+      }); 
+    }
+}
 
   
 onSubmit(): void {
@@ -74,7 +81,25 @@ onSubmit(): void {
         this.isSignUpFailed = true;
       }
     });
-  }
+  }else{
+    this.fournisseurService.update(this.fournisseur.id, this.fournisseur).subscribe({
+     next: data => {
+       console.log(data);
+       this.notifyService.showSuccess("Fournisseur modifié avec succès!", "Edit");
+       
+       if(this.isSuccessful=true){
+       this.router.navigate(['/fournisseur']);
+       this.successMessage = "Fournisseur enrégistre avec succès !";
+       }
+     },
+     error: err => {
+       this.errorMessage = err.error.message;
+       console.log(this.errorMessage);
+       this.isSignUpFailed = true;
+     }
+   });
+ }
 }
 
 }
+
