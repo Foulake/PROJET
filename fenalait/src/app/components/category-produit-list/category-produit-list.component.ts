@@ -60,7 +60,7 @@ export class CategoryProduitListComponent implements OnInit{
    }
   
    editCatProd(id: number): void{
-    this.router.navigate(['catProd']);
+    this.router.navigate(['addCategory', id]);
    } 
 
   getAllCategoryProd(): void{
@@ -131,7 +131,9 @@ export class CategoryProduitListComponent implements OnInit{
     return of(catprods);
   }
 
-  searchCatProdtName(){
+  
+
+  searchCategoryName(){
     if(this.nom == ''){
       this.getAllCategoryProd();
     }else{

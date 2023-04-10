@@ -50,6 +50,7 @@ import { ProduitListComponent } from './components/produit-list/produit-list.com
 import { AddProduitComponent } from './components/add-produit/add-produit.component';
 import { CategoryProduitListComponent } from './components/category-produit-list/category-produit-list.component';
 import { CategoryComponent } from './components/category/category.component';
+import { AddCatProduitComponent } from './components/add-cat-produit/add-cat-produit.component';
 
 
 @NgModule({
@@ -89,6 +90,7 @@ import { CategoryComponent } from './components/category/category.component';
     UserListComponent,
     UpdateUserComponent,
     UpdateMagasinComponent,
+    AddCatProduitComponent,
 
   ],
   imports: [

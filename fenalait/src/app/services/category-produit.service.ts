@@ -17,8 +17,20 @@ export class CategoryProduitService {
 
   constructor(private http:HttpClient) { }
 
+  addCategory(data: any): Observable<any>{
+    return this.http.post(`${this.baseUrl + '/add'}`, data, httpOptions)
+  }
+
   getAll(params: any): Observable<Category[]>{
     return this.http.get<Category[]>(this.baseUrl + '/getAll', {params});
+  }
+
+  findById(id: number): Observable<any>{
+    return this.http.get(`${this.baseUrl + '/get'} + ${id}`, httpOptions);
+  }
+
+  update(categoryId: any, data: any): Observable<Category[]>{
+    return this.http.put<Category[]>(`${this.baseUrl + '/edit'} + ${categoryId}`, data, httpOptions)
   }
 
   getAllSmall(): Observable<Category[]>{

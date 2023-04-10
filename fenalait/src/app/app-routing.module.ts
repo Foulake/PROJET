@@ -32,6 +32,7 @@ import { ProduitListComponent } from './components/produit-list/produit-list.com
 import { UpdateCatfourComponent } from './update-catfour/update-catfour.component';
 import { UpdatefournisseurComponent } from './updatefournisseur/updatefournisseur.component';
 import { UpdateMagasinComponent } from './update-magasin/update-magasin.component';
+import { AddCatProduitComponent } from './components/add-cat-produit/add-cat-produit.component';
 
 const routes: Routes = [
   {path:"login",component:LoginComponent},
@@ -88,10 +89,17 @@ const routes: Routes = [
         canActivate: [AplicationGuard]
       },
 
-      { path:"catProd",component:CategoryComponent,
+      { path:"catProd",component:CategoryProduitListComponent,
         canActivate: [AplicationGuard]
       },
-      
+      {
+        path:"addCategory/:id",component:AddCatProduitComponent,
+        canActivate: [AplicationGuard]
+      },
+      {
+        path:"addCategory",component:AddCatProduitComponent,
+        canActivate: [AplicationGuard]
+      },
       {
         path: "catProdListe", component: CategoryProduitListComponent,
         canActivate: [AplicationGuard]
@@ -180,10 +188,7 @@ const routes: Routes = [
         path:"category", component:CategoryComponent,
         canActivate: [AplicationGuard]
       },
-      {
-        path:"addCategory",component:CategoryComponent,
-        canActivate: [AplicationGuard]
-      },
+      
       { 
         path:"appro",component:ApprovissionnementListComponent,
         canActivate: [AplicationGuard]
