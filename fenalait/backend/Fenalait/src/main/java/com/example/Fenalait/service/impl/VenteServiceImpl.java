@@ -25,7 +25,6 @@ import com.example.Fenalait.model.Produit;
 import com.example.Fenalait.model.User;
 import com.example.Fenalait.model.Vente;
 import com.example.Fenalait.repository.ClientRepository;
-import com.example.Fenalait.repository.ProduitRepository;
 import com.example.Fenalait.repository.UserRepository;
 import com.example.Fenalait.repository.VenteRepository;
 import com.example.Fenalait.service.ClientService;
@@ -61,8 +60,9 @@ private VenteRepository venteRepository;
 	@Override
 	public VenteResponse addVente(VenteDto venteDto) {
 		Vente vente = new Vente();
-	
-		vente.setMontant(venteDto.getQuantite()*vente.getProduit().getPrice());
+		double qteVendue = 0.0;
+		double qterestante = 0.0;
+		vente.setMontant(venteDto.getMontant());
 		vente.setQuantite(venteDto.getQuantite());
 		vente.setDate(new Date());
 		vente.setRemise(venteDto.isRemise());
@@ -74,23 +74,33 @@ private VenteRepository venteRepository;
 			throw new IllegalArgumentException("Le vente manque de Produit !");
 		}
 		
+//		if(venteDto.isRemise()) {
+//			qterestante = (venteDto.getQuantite()*qteVendue)/100;
+//		}
 		
 		Client client = clientService.getClient(venteDto.getClientId());
 		vente.setClient(client);
 		
 		Produit produit = produitService.getProduit(venteDto.getProduitId());
+		//On recupère la qte restantes du produit après une vente
+		qteVendue =venteDto.getQuantite();
+		qterestante = produit.getQte() - qteVendue;
+		//On modifie la qte restantes du produit après une vente
+		produit.setQte(qterestante);
 		vente.setProduit(produit);
 		
-Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		
 		User user = userRepository.findByEmail(auth.getName()).get();
-		produit.setUser(user);
+		vente.setUser(user);
 		
-		vente.setMontant(vente.getMontant());
+		
+		vente.setMontant(qteVendue * produit.getPrice());
 		vente.setQuantite(vente.getQuantite());
-		vente.setMontant(venteDto.getQuantite()*vente.getProduit().getPrice());
+		//vente.setMontant(venteDto.getQuantite()*vente.getProduit().getPrice());
 		vente.setRemise(vente.isRemise());
 		vente.setDate(new Date());
+		//vente.setUser(user);
 		
 		Vente vente1 = venteRepository.save(vente);
 		return Mapper.venteToVenteResponse(vente1);
@@ -112,7 +122,16 @@ Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 	
 	@Override
 	public VenteResponse deleteVente(Long venteId) {
+		double qteRestante = 0.0;
+		
 		Vente vente = getVente(venteId);
+		Produit prod = produitService.getProduit(vente.getProduit().getId());
+		
+		if(prod != null) {
+			qteRestante = prod.getQte() + vente.getQuantite();
+			prod.setQte(qteRestante);
+		}
+		
 		venteRepository.delete(vente);
 		return Mapper.venteToVenteResponse(vente);
 	}
@@ -122,7 +141,10 @@ Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 	public VenteResponse editVente(Long venteId, VenteDto venteDto) {
 		Vente venteEdit = getVente(venteId);
 		
-		venteEdit.setQuantite(venteDto.getQuantite());
+		double qteEdit =0;
+		double qteRest =0;
+		
+		
 		venteEdit.setMontant(venteDto.getQuantite()*venteEdit.getProduit().getPrice());
 		venteEdit.setDate(new Date());
 		venteEdit.setRemise(venteDto.isRemise());
@@ -134,8 +156,15 @@ Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		}
 		if(venteDto.getProduitId() != null ) {
 			Produit produit = produitService.getProduit(venteDto.getProduitId());
+			
+			qteRest = produit.getQte() + venteEdit.getQuantite();
+			qteEdit = qteRest - venteDto.getQuantite();
+			produit.setQte(qteEdit);
+			
+			
 			venteEdit.setProduit(produit);
 		}
+		venteEdit.setQuantite(venteDto.getQuantite());
 		
 		if(venteDto.getUserId() != null ) {
 			User user = userService.getUser(venteDto.getUserId());

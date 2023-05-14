@@ -79,12 +79,13 @@ public class Produit extends  BaseEntity{
 		
 	}
 	
-	public Produit(Long id, String nomPrdt, Double qte, Date date,
+	public Produit(Long id, String nomPrdt, Double qte, float price,Date date,
 			java.sql.Date dateExp) {
 		super();
 		this.id = id;
 		this.nomPrdt = nomPrdt;
 		this.qte = qte;
+		this.price = price;
 		this.date = date;
 		this.dateExp = dateExp;
 	}

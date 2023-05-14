@@ -3,7 +3,9 @@ package com.example.Fenalait.dto;
 import java.util.Date;
 
 import javax.persistence.Column;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Past;
+import javax.validation.constraints.Positive;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -32,7 +34,7 @@ public class VenteDto {
 	private String produitNom;
 	private String usernom;
 	private Long userId;
-	//@NotBlank(message = "Veuillez entrer la quantité de vente !!")
+	@Positive(message = "Veuillez entrer une quantité valide de lait à vendre !!")
 	private double quantite;
 	
 	//@NotBlank(message = "Le montant ne peut pas être vide !")

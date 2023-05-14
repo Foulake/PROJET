@@ -1,6 +1,5 @@
 package com.example.Fenalait.service.impl;
 
-
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -26,7 +25,6 @@ import com.example.Fenalait.model.Category;
 import com.example.Fenalait.model.Produit;
 import com.example.Fenalait.model.User;
 import com.example.Fenalait.model.Magasin;
-import com.example.Fenalait.repository.CategoryRepository;
 import com.example.Fenalait.repository.MagasinRepository;
 import com.example.Fenalait.repository.ProduitRepository;
 import com.example.Fenalait.repository.UserRepository;
