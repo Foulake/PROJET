@@ -1,14 +1,15 @@
 export class Vente {
         id?:any;
-        quantite?:DoubleRange;
-        montant?:DoubleRange;
+        quantite?:number;
+        pourcentage?:number;
+        montant?:number;
         remise?:boolean;
         date?:Date;
-       produitId?:number;
-	   clientId?:number;
-	  userId?:number;
-     clientNom?:string;
-	 produitNom?:string;
-	 userNom?:string;
+        produitId?:number;
+	clientId?:number;
+	userId?:number;
+        clientNom?:string;
+	produitNom?:string;
+	userNom?:string;
 
 }

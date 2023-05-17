@@ -32,6 +32,8 @@ public class Vente extends  BaseEntity{
 	//@NotBlank(message = "Veuillez entrer la quantité de la vente !!")
 	private double quantite;
 	
+	private double pourcentage;
+	
 	@Column(name="montant")
 	//@NotBlank(message = "Le montant ne peut pas être vide !")
 	private double montant;

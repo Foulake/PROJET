@@ -98,6 +98,10 @@ const routes: Routes = [
         path: "addVente", component:AddVenteComponent,
         canActivate: [AplicationGuard]
       },
+      {
+        path: "addVente/:venteId", component:AddVenteComponent,
+        canActivate: [AplicationGuard]
+      },
 
 
       { path:"catProd",component:CategoryComponent,

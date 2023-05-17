@@ -186,6 +186,7 @@ public static List<MagasinResponse> magasinToMagasinResponses(List<Magasin> maga
 		//neeew
 		venteResponseDto.setMontant(vente.getMontant());
 		venteResponseDto.setQuantite(vente.getQuantite());
+		venteResponseDto.setRemise(vente.isRemise());
 		venteResponseDto.setDate(vente.getDate());
 		return venteResponseDto;
 	}

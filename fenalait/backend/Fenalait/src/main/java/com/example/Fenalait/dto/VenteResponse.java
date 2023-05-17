@@ -26,7 +26,7 @@ public class VenteResponse {
 	private double quantite;
 	private boolean remise;
 	private Date date;
-	    
+	private double pourcentage;
     private Long produitId;
     
 	private Long clientId;

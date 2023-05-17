@@ -14,78 +14,48 @@
         (ngSubmit)="f.form.valid && onSubmit()"
         #f="ngForm"
         novalidate>
+
+        <div class="form-group">
+          <label for="produitId">Produit</label>
+          <select class="form-select" aria-label="Default select example" name="produit" id="produit" [(ngModel)]="vente.produitId" (ngModelChange)="onChange($event)" >
+            <option [value]="0" >Selectionnez un produit</option>
+            <option *ngFor="let produit of listProduit" [value]="produit.id">{{produit.nomPrdt}}</option>
+          </select>
+        </div>
   
-          <div class="form-group">
+        <div class="form-group">
             <label for="quantite">Quantité</label>
             <input
               type="number"
               class="form-control"
               name="quantite"
               [(ngModel)]="vente.quantite"
+              (ngModelChange)="calcul()"
               #quantite="ngModel"/>
   
         </div>
+
         <div class="form-group">
-            <label for="montant">Montant</label>
-            <input
-              type="number"
-              class="form-control"
-              name="code"
-              [(ngModel)]="vente.montant"
-              required
-              montant
-              #montant="ngModel"
-              [ngClass]="{ 'is-invalid': f.submitted && montant.errors }"/>
-            <div class="invalid-feedback" *ngIf="montant.errors && f.submitted">
-              <div *ngIf="montant.errors['required']">Le montant ne peut pas être vide !</div>
-              <div *ngIf="montant.errors['montant']">
-                montant doit être une adresse montant valide !
-              </div>
-            </div>
+          <div class="form-check form-switch p-0">
+            <label class="form-check-label" for="flexSwitchCheckChecked">Remise ?</label>
+            <input class="form-check-input mx-3" name="remise" (change)="toggleField()"
+            [(ngModel)]="vente.remise" type="checkbox" role="switch" id="flexSwitchCheckChecked">
+            
           </div>
+        </div>
+        
         <div class="form-group">
-          <label for="date">Date</label>
+          <label for="pourcentage">Pourcentage</label>
           <input
-            type="date"
+            type="number"
             class="form-control"
-            name="date"
-            [(ngModel)]="vente.date"
-            required
-            date
-            #date="ngModel"
-            [ngClass]="{ 'is-invalid': f.submitted && date.errors }"/>
-          <div class="invalid-feedback" *ngIf="date.errors && f.submitted">
-            <div *ngIf="date.errors['required']">date ne peut pas être vide !</div>
-            <div *ngIf="date.errors['date']">
-             La  date doit pas   être une  valide !
-            </div>
-          </div>
-        </div>
-        <div class="form-group">
-          <label for="dateExp">Remise</label>
-          <input
-            type="boolean"
-            class="form-control"
-            name="remise"
-            [(ngModel)]="vente.remise"
-            required
-            remise
-            #remise="ngModel"
-            [ngClass]="{ 'is-invalid': f.submitted && remise.errors }"/>
-          <div class="invalid-feedback" *ngIf="remise.errors && f.submitted">
-            <div *ngIf="remise.errors['required']">remise ne peut pas être vide !</div>
-            <div *ngIf="remise.errors['remise']">
-              remise doit pas être    valide !
-            </div>
-          </div>
-        </div>
-        <div class="form-group">
-          <label for="produitId">Produit</label>
-          <select class="form-select" aria-label="Default select example" name="magasin" id="magasin" [(ngModel)]="vente.produitId" >
-            <option [value]="0" >Selectionnez un produit</option>
-            <option *ngFor="let produit of listProduit" [value]="produit.id">{{produit.nomPrdt}}</option>
-          </select>
-        </div>
+            name="pourcentage"
+            [disabled]="isFieldDisabled"
+            [(ngModel)]="vente.pourcentage"
+            (ngModelChange)="calcul()"
+            #pourcentage="ngModel"/>
+
+      </div>
         
         <div class="form-group">
             <label for="clientId" >Client</label>
@@ -93,10 +63,22 @@
               <option [value]="0" selected>Selectionnez une Client</option>
               <option *ngFor="let client of listClient" [value]="client.id">{{client.nomClient}}</option>
             </select>
-          </div>
+        </div>
+        <div class="form-group">
+          <label for="montant">Montant</label>
+          <input disabled="montant"
+            type="number"
+            class="form-control"
+            name="montant"
+            [(ngModel)]="vente.montant"
+            
+            [placeholder]="result"
+            />
+        </div>
+
         <div class="form-group d-flex justify-content-between">
             
-          <button type="button" class="btn btn-danger" routerLink="/vente">
+          <button type="button" class="btn btn-danger" routerLink="/venteListe">
             <i class="fas fa-ban"></i> annuler
           </button>
             <button type="submit" class="btn btn-primary">
