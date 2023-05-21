@@ -28,7 +28,7 @@ export class VenteListComponent implements OnInit {
   form: any = {
     montant: '',
     quantite: '',
-    remise: '',
+    remise: false,
     date: '',
     clientNom: '',
     produitNom: ''

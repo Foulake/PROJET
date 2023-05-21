@@ -28,7 +28,6 @@ public class VenteDto {
 	
 	private Long id;
     private Long produitId;
-    
 	private Long clientId;
 	private String clientNom;
 	private String produitNom;
@@ -36,6 +35,7 @@ public class VenteDto {
 	private Long userId;
 	@Positive(message = "Veuillez entrer une quantité valide de lait à vendre !!")
 	private double quantite;
+	private double pourcentage;
 	
 	//@NotBlank(message = "Le montant ne peut pas être vide !")
 	private double montant;

@@ -62,8 +62,10 @@ private VenteRepository venteRepository;
 		Vente vente = new Vente();
 		double qteVendue = 0.0;
 		double qterestante = 0.0;
+		double total = 0.0;
 		vente.setMontant(venteDto.getMontant());
 		vente.setQuantite(venteDto.getQuantite());
+		vente.setPourcentage(venteDto.getPourcentage());
 		vente.setDate(new Date());
 		vente.setRemise(venteDto.isRemise());
 		
@@ -74,9 +76,6 @@ private VenteRepository venteRepository;
 			throw new IllegalArgumentException("Le vente manque de Produit !");
 		}
 		
-//		if(venteDto.isRemise()) {
-//			qterestante = (venteDto.getQuantite()*qteVendue)/100;
-//		}
 		
 		Client client = clientService.getClient(venteDto.getClientId());
 		vente.setClient(client);
@@ -94,8 +93,16 @@ private VenteRepository venteRepository;
 		User user = userRepository.findByEmail(auth.getName()).get();
 		vente.setUser(user);
 		
+		if(venteDto.isRemise()) {
+			total = (produit.getPrice()*qteVendue)  - (produit.getPrice()*qteVendue*venteDto.getPourcentage())/100;
+			vente.setMontant(total);
+		}else {
+			vente.setMontant(qteVendue * produit.getPrice());
+		}
 		
-		vente.setMontant(qteVendue * produit.getPrice());
+		
+		
+		vente.setPourcentage(vente.getPourcentage());
 		vente.setQuantite(vente.getQuantite());
 		//vente.setMontant(venteDto.getQuantite()*vente.getProduit().getPrice());
 		vente.setRemise(vente.isRemise());
@@ -143,9 +150,9 @@ private VenteRepository venteRepository;
 		
 		double qteEdit =0;
 		double qteRest =0;
+		double total =0;
 		
-		
-		venteEdit.setMontant(venteDto.getQuantite()*venteEdit.getProduit().getPrice());
+		//venteEdit.setMontant(venteDto.getQuantite()*venteEdit.getProduit().getPrice());
 		venteEdit.setDate(new Date());
 		venteEdit.setRemise(venteDto.isRemise());
 		
@@ -164,6 +171,17 @@ private VenteRepository venteRepository;
 			
 			venteEdit.setProduit(produit);
 		}
+		
+		//Le montant s'il y'a remise et non
+		if(venteDto.isRemise()) {
+			Produit produit = produitService.getProduit(venteDto.getProduitId());
+			total = (produit.getPrice()*venteDto.getQuantite())  - (produit.getPrice()*venteDto.getQuantite()*venteDto.getPourcentage())/100;
+			venteEdit.setMontant(total);
+		}else {
+			Produit produit = produitService.getProduit(venteDto.getProduitId());
+			venteEdit.setMontant(venteDto.getQuantite() * produit.getPrice());
+		}
+		
 		venteEdit.setQuantite(venteDto.getQuantite());
 		
 		if(venteDto.getUserId() != null ) {

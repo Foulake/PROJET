@@ -32,10 +32,11 @@
     <thead>
       <tr>
         <th>ID</th>
-        <th>Montant</th>
-        <th>Quantité</th>
-        <th>Remise</th>
         <th>Produit</th>
+        <th>Quantité</th>
+        <th>Montant</th>
+        <th>Remise</th>
+        <th>Date</th>
         <th>Client</th>
         <th>Actions</th>
       </tr>
@@ -49,30 +50,24 @@
        let i = index"
       [class.active]="i == currentIndex">
         <td><span>{{vente.id}}</span></td>
-        <td><span>{{vente.montant}}</span></td>
-        <td><span>{{ vente.quantite }} fcfa</span></td>
+        <td><span>{{vente.produitNom}}</span></td>
+        <td><span>{{ vente.quantite }} </span></td>
+        <td><span>{{vente.montant}} fcfa </span></td>
         <td><span>{{vente.remise}}</span></td>
         <td><span>{{vente.date}}</span></td>
-        <td><span>{{vente.produitNom}}</span></td>
         <td><span>{{vente.clientNom}}</span></td>
         <td>
           <button class="btn btn-sm btn-warning" (click)="editVente(vente.id)">
-            <i class="fa fa-edit"></i>Modifier</button>
+            <span class="text-center"><i class="fa fa-edit"></i></span></button>
             
           <button class="btn btn-sm btn-danger" data-toggle="modal" 
             data-target="#exampleModalLong" 
             (click)="selectedVentePourSupprimer(vente.id)">
-            <i class="fa fa-trash"></i>Supprimer</button>
+            <i class="fa fa-trash"></i></button>
         </td>
       </tr>
     </tbody>
-    <!-- <div class="btn btn-danger text-center" *ngIf="errorMessage">
-      {{ errorMessage }}
-    </div>
-    <div class="btn btn-danger text-center" *ngIf="message"> -->
-      <!-- {{ message }}
-    </div>
-   -->
+    
   </table>
   <div class="container col-md-12">
     <pagination-controls previousLabel="Précedente"

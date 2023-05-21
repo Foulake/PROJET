@@ -4,10 +4,10 @@ import { Magasin } from "./magasin";
 export class Produit{
     id?: any;
     nomPrdt?: string;
-    qte?: DoubleRange;
+    qte?: number;
     dateExp?: Date;
     code?: string;
-    price?: string;
+    price?: number;
     categoryId?: number;
     magasinId?: number;
     categoryNom?: string;

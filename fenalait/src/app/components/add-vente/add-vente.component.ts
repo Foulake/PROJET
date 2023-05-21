@@ -24,6 +24,29 @@ export class AddVenteComponent  implements OnInit{
   isSignUpFailed = false;
   errorMessage = '';
   successMessage = '';
+  result: number = 0;
+
+  isFieldDisabled: boolean = true;
+
+  toggleField(): void {
+    this.isFieldDisabled = !this.isFieldDisabled;
+  }
+  
+  calcul(): void{
+    console.log(" qte", this.vente.quantite);
+    console.log(" price", this.produit.price);
+    console.log("pourcentage", this.vente.pourcentage);
+
+    if(this.vente.remise){
+      this.result = (this.vente.quantite! * this.produit.price!) - (this.vente.quantite! * this.produit.price! * this.vente.pourcentage!)/100;
+    }else{
+      this.result = (this.vente.quantite! * this.produit.price!);
+    }
+    
+    
+  }
+
+  
 
 constructor( private produitService: ProduitService,
   private router: Router,
@@ -36,7 +59,6 @@ constructor( private produitService: ProduitService,
   ngOnInit(): void {
     this.vente.produitId = 0;
     this.vente.clientId = 0;
-
     this.clientService.getAllSmall()
      .subscribe({
       next: (res: any) => {
@@ -49,22 +71,21 @@ constructor( private produitService: ProduitService,
      this.produitService.getAllSmal()
        .subscribe({
         next: (res: any) =>{
-            this.listProduit = res.content;
+          this.listProduit = res.content;
           console.log(this.listProduit);
         }
      });
 
-    const id = this.route.snapshot.params['id'];
-     console.log('id =', id);
+    const venteId = this.route.snapshot.params['venteId'];
+     console.log('id =', venteId);
      
-        if(!id){
-          this.pageTitle= 'Ajouter un vente';
+        if(!venteId){
+          this.pageTitle= 'Ajouter une vente';
         }else{
-         
-          this.venteService.get(id).subscribe({
+          this.venteService.get(venteId).subscribe({
             next: (data: any) => {
               this.vente = data;
-              this.pageTitle= `Modifier le vente ${this.vente.montant}`;
+              this.pageTitle= 'Modifier une vente';
               console.log('test ', data);
              
               
@@ -74,6 +95,15 @@ constructor( private produitService: ProduitService,
         }
   }
 
+  onChange(idProduit: any) {
+    console.log("produit choisis ",idProduit);
+    this.produitService.get(idProduit).subscribe({
+      next: (data: any) => {
+        this.produit = data;
+      }
+               
+      });
+  }
 
   
 onSubmit(): void {

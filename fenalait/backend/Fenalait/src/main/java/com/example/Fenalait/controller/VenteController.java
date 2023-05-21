@@ -42,7 +42,7 @@ public class VenteController {
 			return new ResponseEntity<VenteResponse>(venteResponseDto, HttpStatus.OK);
 		}
 	   
-	    @GetMapping("/get/{id}")
+	    @GetMapping("/get/{venteId}")
 		public ResponseEntity<VenteResponse> getVente(@PathVariable final Long venteId){
 	    	VenteResponse venteDto = venteService.getVenteById(venteId);
 			return new ResponseEntity<VenteResponse>(venteDto, HttpStatus.OK);
