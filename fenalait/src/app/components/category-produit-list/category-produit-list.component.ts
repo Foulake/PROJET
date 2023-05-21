@@ -93,7 +93,7 @@ export class CategoryProduitListComponent implements OnInit{
     this.getAllCategoryProd();
   }
 
-  selectedClientPourSupprimer(id: number): void{
+  selectedCatProdPourSupprimer(id: number): void{
     this.selectedProdtToDelete = id;
 }
 
@@ -117,16 +117,16 @@ export class CategoryProduitListComponent implements OnInit{
     }
   }
 
-  annulerSuppressionClient(): void{
+  annulerSuppressionCatProd(): void{
     this.selectedProdtToDelete = -1;
   }
 
   showToasterSuccess(){
-    this.notifyService.showSuccess("Client modifier avec succès !!", "Edit")
+    this.notifyService.showSuccess("Categorie modifier avec succès !!", "Edit")
   }
 
   
-  searchClients(keyword:string): Observable<Category[]>{
+  searchCatProds(keyword:string): Observable<Category[]>{
     let catprods = this.catprods.filter(c=>c.nom!.includes(keyword));
     return of(catprods);
   }

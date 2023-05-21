@@ -101,7 +101,7 @@ export class FournisseurListComponent implements OnInit {
         });
     }
   
-    updateFour(id: any ): void {
+    updateFour(id: number ): void {
       this.router.navigate(['addFournisseur', id]);
     }
   
@@ -115,6 +115,11 @@ export class FournisseurListComponent implements OnInit {
       this.page= 1;
       this.getAll();
     }
+    refreshList(): void {
+      this.getAll();
+      this.currentFournisseur = {}
+      this.currentIndex = -1;
+    }
   
      
     selectedFournisseurPourSupprimer(id: number): void{
@@ -126,18 +131,18 @@ export class FournisseurListComponent implements OnInit {
         this.fournisseurService.delete(this.selectedCltToDelete)
         .subscribe({
           next: (res) =>{
-            //this.refreshList();
+            this.refreshList();
             console.log(res);
             this.notifyService.showError("fournisseur supprimer avec succès !", "Suppréssion")
-            //this.message= "Client supprimer avec succès !"
+            this.message= "Fournisseur supprimer avec succès !"
             this.getAll();
-            //this.route.navigate(['/client']);
-            //window.location.reload();
+             this.router.navigate(['/fournisseur']);
+              window.location.reload();
             
           },
           error: err => {
             this.errorMessage = err.error.message;
-            //console.log(this.message);
+             console.log(this.message);
           }
         });
       }
@@ -146,6 +151,18 @@ export class FournisseurListComponent implements OnInit {
     annulerSuppressionFournisseur(): void{
       this.selectedCltToDelete = -1;
     }
+
+
+    searchFournisseurName(){
+      if(this.nom == ''){
+        this.getAll();
+      }else{
+        this.fournisseurs = this.fournisseurs.filter( res => {
+          return res.nom?.toLocaleLowerCase().match(this.nom.toLocaleLowerCase());
+        })
+      }
+    }
+  
   
     searchFournisseur(): void {
       this.page = 1;

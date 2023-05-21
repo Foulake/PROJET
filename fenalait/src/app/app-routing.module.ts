@@ -103,6 +103,9 @@ const routes: Routes = [
       { path:"catProd",component:CategoryComponent,
         canActivate: [AplicationGuard]
       },
+      { path:"catProd/:id",component:CategoryComponent,
+      canActivate: [AplicationGuard]
+    },
       
       {
         path: "catProdListe", component: CategoryProduitListComponent,

@@ -20,7 +20,7 @@ export class ApproviListComponent  implements OnInit{
   currentApprovi: Approvi = {};
   currentIndex = -1;
   selectedPrtToDelete? = -1;
-  nomPrdt = '';
+  qteAppro = '';
   closeResult!:string;
   message = '';
 
@@ -56,7 +56,7 @@ export class ApproviListComponent  implements OnInit{
     private fb: FormBuilder,
     private notifyService: NotificationServiceService){}
 
-  editProduit(id: number): void{
+  editApprovi(id: number): void{
     this.router.navigate(['addApprovi', id]);
   }
 
@@ -79,7 +79,7 @@ export class ApproviListComponent  implements OnInit{
    }
 
    getAll(): void{
-    const params = this.getRequestParams(this.nomPrdt, this.page, this.pageSize);
+    const params = this.getRequestParams(this.qteAppro, this.page, this.pageSize);
 
     this.approviService.getAllApprovis(params)
       .subscribe({

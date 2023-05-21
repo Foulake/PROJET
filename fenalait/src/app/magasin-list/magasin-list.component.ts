@@ -16,7 +16,7 @@ export class MagasinListComponent implements OnInit {
   magasins: Magasin[] = [];
   currentMagasin: Magasin = {};
   currentIndex = -1;
-    nom = '';
+    nomMagasin = '';
   closeResult!:string;
   message = '';
   selectedCltToDelete= -1;
@@ -62,7 +62,7 @@ export class MagasinListComponent implements OnInit {
   
     getAll(): void{
       
-      const params = this.getRequestParams(this.nom ,this.page, this.pageSize);
+      const params = this.getRequestParams(this.nomMagasin ,this.page, this.pageSize);
   
       this.magasinService.getAllMagasin(params)
     
@@ -96,6 +96,7 @@ export class MagasinListComponent implements OnInit {
       this.page= 1;
       this.getAll();
     }
+
   
      
     selectedMagasinPourSupprimer(id: number): void{
@@ -126,6 +127,16 @@ export class MagasinListComponent implements OnInit {
     annulerSuppressionMagasin(): void{
       this.selectedCltToDelete = -1;
     }
+    searchMagasinName(){
+      if(this.nomMagasin == ''){
+        this.getAll();
+      }else{
+        this.magasins = this.magasins.filter( res => {
+          return res.nomMagasin?.toLocaleLowerCase().match(this.nomMagasin.toLocaleLowerCase());
+        })
+      }
+    }
+  
   
     searchMagasin(): void {
       this.page = 1;

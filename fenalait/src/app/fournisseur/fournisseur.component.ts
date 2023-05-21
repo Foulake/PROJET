@@ -43,13 +43,13 @@ export class FournisseurComponent implements OnInit{
     });
 
     
-    const id = this.route.snapshot.params['id'];
-     console.log('id =', id);
-     if(!id){
+    const fournisseurId = this.route.snapshot.params['fournisseurId'];
+     console.log('id =', fournisseurId);
+     if(!fournisseurId){
       this.pageTitle= 'Ajouter un Fournisseur';
     }else{
      
-      this.fournisseurService.get(id).subscribe({
+      this.fournisseurService.get(fournisseurId).subscribe({
         next: (data: any) => {
           this.fournisseur = data;
           this.pageTitle= `Modifier le fournisseur ${this.fournisseur.nom}`;

@@ -16,14 +16,14 @@
         novalidate>
   
         <div class="form-group">
-            <label for="nomPrdt">QteAppro</label>
+            <label for="qteAppro">QteAppro</label>
             <input
               type="number"
               class="form-control"
               name="qteAppro"
               [(ngModel)]="approvi.qteAppro"
               required
-              minlength="3"
+              minlength="1"
               maxlength="20"
               #qteAppro="ngModel"
               [ngClass]="{ 'is-invalid': f.submitted && qteAppro.errors }" />
@@ -64,7 +64,7 @@
   
         
         <div class="form-group">
-            <label for="code">Date</label>
+            <label for="date">Date</label>
             <input
               type="date"
               class="form-control"

@@ -80,7 +80,7 @@ onSubmit(): void {
   console.log("vente contenu",this.vente);
   if(!this.vente.id){
     //var body = JSON.parse(body)
-   this.produitService.addProduit(this.vente).subscribe({
+   this.venteService.addVente(this.vente).subscribe({
       next: data => {
         console.log(data);
         this.notifyService.showSuccess("vente ajouté avec succès!", "Ajout");

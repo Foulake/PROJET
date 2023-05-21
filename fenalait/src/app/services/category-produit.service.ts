@@ -24,6 +24,18 @@ export class CategoryProduitService {
   getAllSmall(): Observable<Category[]>{
     return this.http.get<Category[]>(this.baseUrl + '/getAll', httpOptions);
   }
+  get(id: any): Observable<any> {
+    return this.http.get(`${this.baseUrl + '/get'}/${id}`, httpOptions);
+  }
+  create(data: any): Observable<any>{
+    return this.http.post(this.baseUrl + '/add', data, httpOptions);
+  }
+  update(id: any, data: any): Observable<any>{
+    return this.http.put(`${this.baseUrl + '/edit'}/${id}`, data, httpOptions);
+  }
+
+
+
 
   delete(id: any): Observable<any>{
     return this.http.delete(`${this.baseUrl + '/delete'}/${id}`, httpOptions);

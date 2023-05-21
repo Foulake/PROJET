@@ -19,8 +19,8 @@ export class FournisseurService {
 
   
    header = new HttpHeaders()
-  .set('Content-Type', 'application/json')
-  .set('Access-Control-Allow-origin', '*');
+   .set('Content-Type', 'application/json')
+   .set('Access-Control-Allow-origin', '*');
 
   getAllFournisseur(params:any): Observable<Fournisseur[]> {
       return this.http.get<Fournisseur[]>(this.baseUrl + '/getAll', {params});
@@ -30,8 +30,8 @@ export class FournisseurService {
   }
 
 
-  get(id: any): Observable<Fournisseur[]> {
-    return this.http.get<Fournisseur[]>(`${this.baseUrl + '/get'}/${id}`, httpOptions);
+  get(fournisseurId: any): Observable<Fournisseur[]> {
+    return this.http.get<Fournisseur[]>(`${this.baseUrl + '/get'}/${fournisseurId}`, httpOptions);
   }
 
   addFournisseur(data: any): Observable<any>{

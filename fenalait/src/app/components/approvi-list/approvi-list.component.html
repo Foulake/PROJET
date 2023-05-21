@@ -9,7 +9,7 @@
 
     <div class="col-md-3 p-0 ">
       <div class="input-group input-group-sm">
-        <input name="nomPrdt" [(ngModel)]="nomPrdt" 
+        <input name="qteAppro" [(ngModel)]="qteAppro" 
        (ngModelChange)="searchApproviName()" class="form-control form-control-navbar" 
           class="form-control form-control-navbar" type="search" placeholder="Tapez ici pour rechercher" aria-label="Search" 
         />
@@ -50,12 +50,12 @@
       [class.active]="i == currentIndex">
         <td><span>{{approvi.id}}</span></td>
         <td><span>{{approvi.qteAppro }}</span></td>
-        <td><span>{{approvi.qteTotal }}+{{approvi.qteAppro}}</span></td>
+        <td><span>{{approvi.qteTotal }}|{{approvi.qteAppro}}</span></td>
         <td><span>{{approvi.dateAppro}}</span></td>
         <td><span>{{approvi.fournisseurNom}}</span></td>
         <td><span>{{approvi.produitNom}}</span></td>
         <td>
-          <button class="btn btn-sm btn-warning" (click)="editProduit(approvi.id)">
+          <button class="btn btn-sm btn-warning" (click)="  editApprovi(approvi.id)">
             <i class="fa fa-edit"></i>Modifier</button>
             
           <button class="btn btn-sm btn-danger" data-toggle="modal" 
@@ -95,7 +95,7 @@
           <div class="btn btn-danger text-center" *ngIf="message">
             {{ message }}
         </div>
-          <h2 class="text-center">Voulez vous supprimer le Appro {{ form.prenomClient }}</h2>
+          <h2 class="text-center">Voulez vous supprimer le Appro {{ form.qteAppro }}</h2>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="annulerSuppressionApprovi()"> <i class="fas fa-undo"></i> Annuler</button>

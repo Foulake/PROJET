@@ -97,6 +97,11 @@ export class CategorieFournisseurListComponent {
       this.page= 1;
       this.getAll();
     }
+    refreshList(): void {
+      this.getAll();
+      this.currentCategorieFournisseur = {}
+      this.currentIndex = -1;
+    }
   
      
     selectedCategorieFournisseurPourSupprimer(id: number): void{
@@ -108,13 +113,13 @@ export class CategorieFournisseurListComponent {
         this.categorieFournisseurService.delete(this.selectedCltToDelete)
         .subscribe({
           next: (res) =>{
-            //this.refreshList();
+            this.refreshList();
             console.log(res);
             this.notifyService.showError("categoriefournisseur supprimer avec succès !", "Suppréssion")
-            //this.message= "Client supprimer avec succès !"
+            this.message= "CategorieFour supprimer avec succès !"
             this.getAll();
-            //this.route.navigate(['/client']);
-            //window.location.reload();
+            this.router.navigate(['/categorieFournisseur']);
+            window.location.reload();
             
           },
           error: err => {
@@ -127,6 +132,15 @@ export class CategorieFournisseurListComponent {
   
     annulerSuppressionCategorieFournisseur(): void{
       this.selectedCltToDelete = -1;
+    }
+    searchCatFourName(){
+      if(this.description == ''){
+        this.getAll();
+      }else{
+        this.categorieFournisseurs = this.categorieFournisseurs.filter( res => {
+          return res.description?.toLocaleLowerCase().match(this.description.toLocaleLowerCase());
+        })
+      }
     }
   
     searchCatfournisseur(): void {
