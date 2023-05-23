@@ -69,6 +69,8 @@ private VenteRepository venteRepository;
 		vente.setDate(new Date());
 		vente.setRemise(venteDto.isRemise());
 		
+		
+		
 		if(venteDto.getClientId() == null ) {
 			throw new IllegalArgumentException("Le vente manque de Client !");
 		}
@@ -81,6 +83,10 @@ private VenteRepository venteRepository;
 		vente.setClient(client);
 		
 		Produit produit = produitService.getProduit(venteDto.getProduitId());
+		
+		if(produit.getQte() <= venteDto.getQuantite() ) {
+			throw new IllegalArgumentException("La quante de cette produit est indisponiqble !");
+		}
 		//On recupère la qte restantes du produit après une vente
 		qteVendue =venteDto.getQuantite();
 		qterestante = produit.getQte() - qteVendue;
@@ -155,6 +161,7 @@ private VenteRepository venteRepository;
 		//venteEdit.setMontant(venteDto.getQuantite()*venteEdit.getProduit().getPrice());
 		venteEdit.setDate(new Date());
 		venteEdit.setRemise(venteDto.isRemise());
+		venteEdit.setPourcentage(venteDto.getPourcentage());
 		
 		if(venteDto.getClientId() != null ) {
 			Client client = clientService.getClient(venteDto.getClientId());
@@ -266,6 +273,7 @@ private VenteRepository venteRepository;
         venteDto.setId(vente.getId());
         venteDto.setDate(vente.getDate());
         venteDto.setMontant(vente.getMontant());
+        venteDto.setPourcentage(vente.getPourcentage());
         venteDto.setRemise(vente.isRemise());
         venteDto.setQuantite(vente.getQuantite());
         venteDto.setClientId(vente.getClient().getId());

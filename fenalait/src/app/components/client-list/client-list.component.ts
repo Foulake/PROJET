@@ -167,6 +167,7 @@ getAllClients(): void{
       this.clientService.delete(this.selectedCltToDelete)
       .subscribe({
         next: (res) =>{
+          this.ngOnInit();
           console.log('data', res);
           this.notifyService.showSuccess("Client supprimé avec succès!", "Suppréssion");
           this.clientAdded.emit();

@@ -1,14 +1,15 @@
-<div class="container my-container ">
+<div class="container my-container animated fadeIn">
     <div class="card justify-content-md-center">
     <div class="card-header header-color text-center pb-0">
         <h2> Ajouter une vente </h2>
     </div>
     <div class="card-body">
         
-        <div class="btn btn-danger text-center" *ngIf="errorMessage">
-            {{ errorMessage }}
+        <div class="btn btn-danger offset-2 mb-2" *ngIf="errorMessage">
+          <span class="text-align-center">{{ errorMessage }}</span>  
+          
         </div>
-    <form
+    <form class="form-scroll" id="test"
         *ngIf="!isSuccessful"
         name="form"
         (ngSubmit)="f.form.valid && onSubmit()"
@@ -19,7 +20,7 @@
           <label for="produitId">Produit</label>
           <select class="form-select" aria-label="Default select example" name="produit" id="produit" [(ngModel)]="vente.produitId" (ngModelChange)="onChange($event)" >
             <option [value]="0" >Selectionnez un produit</option>
-            <option *ngFor="let produit of listProduit" [value]="produit.id">{{produit.nomPrdt}}</option>
+            <option *ngFor="let produit of listProduit" [value]="produit.id" >{{produit.nomPrdt}} - {{produit.id}}</option>
           </select>
         </div>
   
@@ -31,7 +32,15 @@
               name="quantite"
               [(ngModel)]="vente.quantite"
               (ngModelChange)="calcul()"
-              #quantite="ngModel"/>
+              required="required"
+              #quantite="ngModel"
+            [ngClass]="{ 'is-invalid': f.submitted && quantite.errors }"/>
+          <div class="invalid-feedback" *ngIf="quantite.errors && f.submitted">
+            <div *ngIf="quantite.errors['required']">Veuillez entrée la quantité !</div>
+            <div *ngIf="quantite.errors['dateExp']">
+              la quantite doit être une quantité valide !
+            </div>
+          </div>
   
         </div>
 
@@ -66,13 +75,12 @@
         </div>
         <div class="form-group">
           <label for="montant">Montant</label>
-          <input disabled="montant"
+          <input disabled="montant" readonly
             type="number"
             class="form-control"
             name="montant"
-            [(ngModel)]="vente.montant"
+            [(ngModel)]="result"
             
-            [placeholder]="result"
             />
         </div>
 
@@ -89,4 +97,6 @@
     </div>
     </div>
   </div>
+
+  
   
