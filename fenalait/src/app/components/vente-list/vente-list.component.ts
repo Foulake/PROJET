@@ -22,6 +22,7 @@ export class VenteListComponent implements OnInit {
   currentIndex = -1;
   selectedPrtToDelete? = -1;
   montant = '';
+  date = '';
   closeResult!:string;
   message = '';
 
@@ -115,6 +116,7 @@ export class VenteListComponent implements OnInit {
       this.venteService.delete(this.selectedPrtToDelete)
       .subscribe({
         next: (res) =>{
+          this.ngOnInit();
           console.log(res);
           this.notifyService.showSuccess("vente supprimer avec succès !", "Suppréssion");
           this.venteAdded.emit();
@@ -133,31 +135,14 @@ export class VenteListComponent implements OnInit {
     this.selectedPrtToDelete = -1;
   }
 
-  //searchVentes(keyword:string): Observable<Vente[]>{
-    //let ventes = this.ventes.filter(c=>c.montant!.includes(keyword));
-   // return of(ventes);
- // }
-
-  // handleSearchVentes(){
-  //   let keyword = this.searFormGroup.value.keyword;
-  //   this.searchVentes(keyword).subscribe({
-  //     next: (response) =>{
-  //       this.ventes = response;
-  //       console.log(this.ventes);
-        
-  //     }
-  //   });
-  // }
-
   searchVenteName(){
-    if(this.montant == ''){
+    if(this.date == ''){
       this.getAll();
+    }else{
+       this.ventes = this.ventes.filter( res => {
+         return res.date?.toLocaleString().match(this.date);
+       })
     }
-    // else{
-    //   this.ventes = this.ventes.filter( res => {
-    //     return res.montant?.toLocaleLowerCase().match(this.montant.toLocaleLowerCase());
-    //   })
-    // }
   }
 
 

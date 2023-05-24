@@ -102,10 +102,11 @@ export class CategoryProduitListComponent implements OnInit{
       this.catprodService.delete(this.selectedProdtToDelete)
       .subscribe({
         next: (res) =>{
+          this.ngOnInit();
           let index = this.catprods.indexOf(this.currentClient.id);
           this.catprods.splice(index, 1);
           this.notifyService.showSuccess("Client supprimé avec succès!", "Suppréssion");
-          this.getAllCategoryProd();
+          //this.getAllCategoryProd();
           
         },
         error: err => {

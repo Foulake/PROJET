@@ -30,6 +30,7 @@ export class AddVenteComponent  implements OnInit{
 
   toggleField(): void {
     this.isFieldDisabled = !this.isFieldDisabled;
+    this.calcul()
   }
   
   calcul(): void{
@@ -37,16 +38,18 @@ export class AddVenteComponent  implements OnInit{
     console.log(" price", this.produit.price);
     console.log("pourcentage", this.vente.pourcentage);
 
-    if(this.vente.remise){
-      this.result = (this.vente.quantite! * this.produit.price!) - (this.vente.quantite! * this.produit.price! * this.vente.pourcentage!)/100;
-    }else{
-      this.result = (this.vente.quantite! * this.produit.price!);
+    if(this.produit.id && this.vente.quantite != null){
+      if(this.vente.remise){
+        this.result = (this.vente.quantite! * this.produit.price!) - (this.vente.quantite! * this.produit.price! * this.vente.pourcentage!)/100;
+      }else{
+        this.vente.pourcentage = 0;
+        this.result = (this.vente.quantite! * this.produit.price!);
+      }
+      console.log("resulta", this.result);
+      
     }
     
-    
   }
-
-  
 
 constructor( private produitService: ProduitService,
   private router: Router,
@@ -59,6 +62,7 @@ constructor( private produitService: ProduitService,
   ngOnInit(): void {
     this.vente.produitId = 0;
     this.vente.clientId = 0;
+
     this.clientService.getAllSmall()
      .subscribe({
       next: (res: any) => {
@@ -76,20 +80,20 @@ constructor( private produitService: ProduitService,
         }
      });
 
+    //On recupère id de la vente 
     const venteId = this.route.snapshot.params['venteId'];
      console.log('id =', venteId);
-     
+    
         if(!venteId){
           this.pageTitle= 'Ajouter une vente';
         }else{
           this.venteService.get(venteId).subscribe({
             next: (data: any) => {
               this.vente = data;
+              this.onChange(this.vente.produitId);
+              this.calcul();
               this.pageTitle= 'Modifier une vente';
               console.log('test ', data);
-             
-              
-                     
             }
           }); 
         }
@@ -100,11 +104,12 @@ constructor( private produitService: ProduitService,
     this.produitService.get(idProduit).subscribe({
       next: (data: any) => {
         this.produit = data;
+
+        this.calcul();
       }
                
       });
   }
-
   
 onSubmit(): void {
   console.log("vente contenu",this.vente);
@@ -130,7 +135,6 @@ onSubmit(): void {
       next: data => {
         console.log(data);
         this.notifyService.showSuccess("Vente modifié avec succès!", "Edit");
-        
         if(this.isSuccessful=true){
         this.router.navigate(['/venteListe']);
         this.successMessage =" Vente enrégistre avec succès !";
