@@ -54,14 +54,14 @@ constructor( private approviService: ApproviService,
         }
       });
 
-    const id = this.activetedRoute.snapshot.params['id'];
-     console.log('id =', id);
+    const approId = this.activetedRoute.snapshot.params['approId'];
+     console.log('id =', approId);
      
-        if(!id){
+        if(!approId){
           this.pageTitle= 'Ajouter un approvi';
         }else{
          
-          this.approviService.get(id).subscribe({
+          this.approviService.get(approId).subscribe({
             next: (data: any) => {
               this.approvi = data;
               this.pageTitle= `Modifier le approvi ${this.approvi.qteAppro}`;
@@ -104,7 +104,7 @@ onSubmit(): void {
         this.notifyService.showSuccess("approvi modifié avec succès!", "Edit");
         
         if(this.isSuccessful=true){
-        this.route.navigate(['/approvi']);
+        this.route.navigate(['/appro']);
         this.successMessage = "approvi enrégistre avec succès !";
         }
       },

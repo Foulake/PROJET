@@ -94,7 +94,7 @@
             <label for="Id" >Fournisseur</label>
             <select class="form-select" aria-label="Default select example" name="fournisseur" [(ngModel)]="approvi.fournisseurId">
               <option [value]="0" selected>Selectionnez une fournisseur</option>
-              <option *ngFor="let fournisseur of listFournisseur" [value]="fournisseur.id">{{fournisseur.tel}}</option>
+              <option *ngFor="let fournisseur of listFournisseur" [value]="fournisseur.id">{{fournisseur.prenom}} {{fournisseur.nom}} - {{fournisseur.tel}}</option>
             </select>
           </div>
         

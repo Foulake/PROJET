@@ -43,9 +43,9 @@ public class FournisseurController {
 		return new ResponseEntity<FournisseurResponse>(fournisseurResponseDto, HttpStatus.OK);
 	}
    
-    @GetMapping("/get/{id}")
-	public ResponseEntity<FournisseurResponse> getFournisseur(@PathVariable final Long categoryFourId){
-    	FournisseurResponse fournisseurDto = fournisseurService.getFournisseurById(categoryFourId);
+    @GetMapping("/get/{fournisseurId}")
+	public ResponseEntity<FournisseurResponse> getFournisseur(@PathVariable final Long fournisseurId){
+    	FournisseurResponse fournisseurDto = fournisseurService.getFournisseurById(fournisseurId);
 		return new ResponseEntity<FournisseurResponse>(fournisseurDto, HttpStatus.OK);
 	}
     

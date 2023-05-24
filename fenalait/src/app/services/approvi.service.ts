@@ -26,8 +26,8 @@ export class ApproviService {
     return this.httpClient.get<Approvi[]>(this.baseURL + '/getAll', {params});
   }
 
-  get(id: any): Observable<any> {
-    return this.httpClient.get(`${this.baseURL + '/get'}/${id}`, httpOptions);
+  get(approId: any): Observable<any> {
+    return this.httpClient.get(`${this.baseURL + '/get'}/${approId}`, httpOptions);
   }
 
   addApprovi(data: any): Observable<any>{

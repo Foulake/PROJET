@@ -14,38 +14,7 @@
           class="form-control form-control-navbar" type="search" placeholder="Tapez ici pour rechercher" aria-label="Search" 
         />
       </div>
-    </div> 
-
-    
-   <!-- 
-    <div class="col-md-4 p-0">
-      <form [formGroup]="searFormGroup" (ngSubmit)="handleSearchProduits()">
-        <div class="input-group">
-          <input type="text" formControlName="keyword" class="form-control" 
-          placeholder=" Rechercher par prénom" 
-          />
-          <div class="input-group-append">
-            <button type="submit" class="btn btn-default">
-              <i class="fas fa-search"></i>
-            </button>
-          </div>
-        </div>
-      </form>
     </div>
-
-    <div class="col-md-4 p-0 ">
-      <div class="input-group">
-        <input type="text" [(ngModel)]="prenomClient" class="form-control" 
-        placeholder=" rechercher par prenom" 
-        />
-        <div class="input-group-append">
-          <button type="submit" class="btn btn-default" (click)="searchClient()">
-            <i class="fas fa-search"></i>
-          </button>
-        </div>
-      </div>
-    </div> -->
-  
     <div class="d-flex mr-2">
       <div class="flex-flill">
         <button type="button" class="btn btn-sm btn-success"> <i class="fas fa-download"></i>Télécharger </button>
@@ -86,12 +55,12 @@
         <td><span>{{produit.magasinNom}}</span></td>
         <td>
           <button class="btn btn-sm btn-warning" (click)="editProduit(produit.id)">
-            <i class="fa fa-edit"></i>Modifier</button>
+            <i class="fa fa-edit"></i></button>
             
           <button class="btn btn-sm btn-danger" data-toggle="modal" 
             data-target="#exampleModalLong" 
             (click)="selectedProduitPourSupprimer(produit.id)">
-            <i class="fa fa-trash"></i>Supprimer</button>
+            <i class="fa fa-trash"></i></button>
         </td>
       </tr>
     </tbody>

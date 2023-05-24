@@ -33,7 +33,7 @@
       <tr>
         <th>ID</th>
         <th>Qte Appro</th>
-        <th>TotalAppro</th>
+        <!-- <th>TotalAppro</th> -->
         <th>DateAppro</th>
         <th>Fournisseur</th>
         <th>Produit</th>
@@ -50,18 +50,17 @@
       [class.active]="i == currentIndex">
         <td><span>{{approvi.id}}</span></td>
         <td><span>{{approvi.qteAppro }}</span></td>
-        <td><span>{{approvi.qteTotal }}|{{approvi.qteAppro}}</span></td>
         <td><span>{{approvi.dateAppro}}</span></td>
         <td><span>{{approvi.fournisseurNom}}</span></td>
         <td><span>{{approvi.produitNom}}</span></td>
         <td>
           <button class="btn btn-sm btn-warning" (click)="  editApprovi(approvi.id)">
-            <i class="fa fa-edit"></i>Modifier</button>
+            <i class="fa fa-edit"></i></button>
             
           <button class="btn btn-sm btn-danger" data-toggle="modal" 
             data-target="#exampleModalLong" 
             (click)="selectedApproviPourSupprimer(approvi.id)">
-            <i class="fa fa-trash"></i>Supprimer</button>
+            <i class="fa fa-trash"></i></button>
         </td>
       </tr>
     </tbody>

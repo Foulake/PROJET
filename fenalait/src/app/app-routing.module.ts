@@ -146,7 +146,7 @@ const routes: Routes = [
       { path:"addFournisseur",component:FournisseurComponent,
       canActivate: [AplicationGuard]},
 
-      { path:"addFournisseur/:id",component:FournisseurComponent ,
+      { path:"addFournisseur/:fournisseurId",component:FournisseurComponent ,
       canActivate: [AplicationGuard]},
       
       
@@ -211,6 +211,11 @@ const routes: Routes = [
         path:"addApprovi",component:AddApproviComponent,
         canActivate: [AplicationGuard]
       },
+      {
+        path:"addApprovi/:approId",component:AddApproviComponent,
+        canActivate: [AplicationGuard]
+      },
+      
         
       { 
         path:"payer",component:EmployeListComponent,

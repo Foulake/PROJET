@@ -32,7 +32,7 @@ public class ApproResponse {
 	private String userNom;
 	private String fournisseurNom;
 	private String categoryFournisseur;
-	
+	private String email;
 	private List<ApproDto> content;
     private int pageNo;
     private int pageSize;

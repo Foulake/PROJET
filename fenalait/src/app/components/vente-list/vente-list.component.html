@@ -54,7 +54,7 @@
         <td><span>{{ vente.quantite }} </span></td>
         <td><span>{{vente.montant}} fcfa </span></td>
         <td><span>{{vente.remise}}</span></td>
-        <td><span>{{vente.date}}</span></td>
+        <td><span>{{vente.date | date: 'medium'}}</span></td>
         <td><span>{{vente.clientNom}}</span></td>
         <td>
           <button class="btn btn-sm btn-warning" (click)="editVente(vente.id)">

@@ -51,7 +51,7 @@ public class ApproController {
 		return new ResponseEntity<ApproResponse>(approResponse, HttpStatus.OK);
 	}
    
-    @GetMapping("/get/{id}")
+    @GetMapping("/get/{approId}")
 	public ResponseEntity<ApproResponse> getAppro(@PathVariable final Long approId){
     	ApproResponse approDto = approService.getApprovissionnementById(approId);
 		return new ResponseEntity<ApproResponse>(approDto, HttpStatus.OK);

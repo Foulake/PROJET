@@ -84,10 +84,10 @@ public class ApproServiceImpl implements ApproService{
 		Produit produit = produitService.getProduit(approDto.getProduitId());
 		approvissionnement.setProduit(produit);
 		
-Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		
 		User user = userRepository.findByEmail(auth.getName()).get();
-		produit.setUser(user);
+		approvissionnement.setUser(user);
 		
 		approvissionnement.setQteAppro(approvissionnement.getQteAppro());
 		approvissionnement.setDateAppro(approvissionnement.getDateAppro());
@@ -125,6 +125,9 @@ Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 	@Transactional
 	@Override
 	public ApproResponse editApprovissionnement(Long approId, ApproDto approDto) {
+		double qteRest=0.0;
+		double qteEdit=0.0;
+		
 		Approvissionnement approvissionnementEdit = getApprovissionnement(approId);
 		
 		approvissionnementEdit.setDateAppro(approDto.getDateAppro());
@@ -137,6 +140,10 @@ Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		}
 		if(approDto.getProduitId() != null ) {
 			Produit produit = produitService.getProduit(approDto.getProduitId());
+			
+			qteRest = produit.getQte() +  approvissionnementEdit.getQteAppro();
+			qteEdit = qteRest - approDto.getQteAppro();
+			produit.setQte(qteEdit);
 			approvissionnementEdit.setProduit(produit);
 		}
 		
@@ -193,7 +200,7 @@ Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         approDto.setQteAppro(appro.getQteAppro());
         
         approDto.setFournisseurNom(appro.getFournisseur().getPrenom());
-        approDto.setUserNom(appro.getUser().getPrenom());
+        approDto.setEmail(appro.getUser().getEmail());
         approDto.setProduitNom(appro.getProduit().getNomPrdt());
         return  approDto;
     }

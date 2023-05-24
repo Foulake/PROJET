@@ -33,7 +33,7 @@ public class ApproDto {
 	private Long produitId;
 	private Long userId;
 	private Long fournisseurId;
-	
+	private String email;
 	private String produitNom;
 	private String userNom;
 	private String fournisseurNom;
